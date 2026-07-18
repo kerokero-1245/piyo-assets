@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="にじ">
+  <!-- white die-cut underlay -->
+  <g fill="none" stroke="#ffffff" stroke-width="24" stroke-linecap="butt">
+    <path d="M45.5,150 A54.5,54.5 0 0 1 154.5,150"/>
+  </g>
+  <g fill="#ffffff" stroke="#ffffff" stroke-width="15" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M18,152 Q14,136 30,136 Q34,122 48,128 Q62,124 62,140 Q72,140 70,154 Z"/>
+    <path d="M182,152 Q186,136 170,136 Q166,122 152,128 Q138,124 138,140 Q128,140 130,154 Z"/>
+  </g>
+  <!-- rainbow bands -->
+  <g fill="none" stroke-linecap="butt">
+    <path d="M20,150 A80,80 0 0 1 180,150" stroke="#FF5A4D" stroke-width="8.6"/>
+    <path d="M28.5,150 A71.5,71.5 0 0 1 171.5,150" stroke="#FF9A3D" stroke-width="8.6"/>
+    <path d="M37,150 A63,63 0 0 1 163,150" stroke="#FFD23D" stroke-width="8.6"/>
+    <path d="M45.5,150 A54.5,54.5 0 0 1 154.5,150" stroke="#5FBF7A" stroke-width="8.6"/>
+    <path d="M54,150 A46,46 0 0 1 146,150" stroke="#4B9FE0" stroke-width="8.6"/>
+    <path d="M62.5,150 A37.5,37.5 0 0 1 137.5,150" stroke="#5E62C8" stroke-width="8.6"/>
+    <path d="M71,150 A29,29 0 0 1 129,150" stroke="#9B63C4" stroke-width="8.6"/>
+  </g>
+  <!-- edge outlines -->
+  <path d="M15.7,150 A84.3,84.3 0 0 1 184.3,150" fill="none" stroke="#3d2a1c" stroke-width="2.4"/>
+  <path d="M75.3,150 A24.7,24.7 0 0 1 124.7,150" fill="none" stroke="#3d2a1c" stroke-width="2.4"/>
+  <!-- clouds -->
+  <path d="M18,152 Q14,136 30,136 Q34,122 48,128 Q62,124 62,140 Q72,140 70,154 Z" fill="#FFFFFF" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round"/>
+  <path d="M182,152 Q186,136 170,136 Q166,122 152,128 Q138,124 138,140 Q128,140 130,154 Z" fill="#FFFFFF" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round"/>
+  <!-- cloud shading -->
+  <path d="M26,148 Q40,146 60,148" fill="none" stroke="#CFE3EE" stroke-width="2.4" stroke-linecap="round" opacity="0.8"/>
+  <path d="M140,148 Q160,146 174,148" fill="none" stroke="#CFE3EE" stroke-width="2.4" stroke-linecap="round" opacity="0.8"/>
+</svg>

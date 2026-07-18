@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="けむり">
+  <!-- white die-cut underlay -->
+  <g fill="#ffffff" stroke="#ffffff" stroke-width="15" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M98,170 Q84,162 92,150 Q76,148 80,132 Q64,128 72,110 Q58,102 74,90 Q70,70 96,74 Q104,54 128,66 Q152,58 154,84 Q170,90 156,108 Q166,124 146,130 Q148,146 126,142 Q120,156 104,150 Q104,162 98,170 Z"/>
+  </g>
+  <!-- smoke body -->
+  <path d="M98,170 Q84,162 92,150 Q76,148 80,132 Q64,128 72,110 Q58,102 74,90 Q70,70 96,74 Q104,54 128,66 Q152,58 154,84 Q170,90 156,108 Q166,124 146,130 Q148,146 126,142 Q120,156 104,150 Q104,162 98,170 Z" fill="#E8EBEF" stroke="#3d2a1c" stroke-width="3" stroke-linejoin="round"/>
+  <!-- underside shading -->
+  <path d="M74,110 Q58,102 74,90 Q72,104 88,108 Q80,118 92,124 Q80,124 80,132 Q64,128 72,110 Z" fill="#C9CFD6" opacity="0.65"/>
+  <path d="M104,150 Q104,162 98,170 Q84,162 92,150 Q100,156 104,150 Z" fill="#C9CFD6" opacity="0.6"/>
+  <!-- highlights -->
+  <ellipse cx="108" cy="82" rx="16" ry="10" fill="#ffffff" opacity="0.75" transform="rotate(-14 108 82)"/>
+  <ellipse cx="90" cy="118" rx="9" ry="6" fill="#ffffff" opacity="0.5"/>
+</svg>

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="さる">
+  <!-- white die-cut underlay -->
+  <g fill="#ffffff" stroke="#ffffff" stroke-width="15" stroke-linejoin="round" stroke-linecap="round">
+    <circle cx="54" cy="94" r="17"/>
+    <circle cx="146" cy="94" r="17"/>
+    <circle cx="100" cy="100" r="46"/>
+  </g>
+  <!-- ears (behind head) -->
+  <circle cx="54" cy="94" r="17" fill="#9E6B3D" stroke="#3d2a1c" stroke-width="3.2"/>
+  <circle cx="146" cy="94" r="17" fill="#9E6B3D" stroke="#3d2a1c" stroke-width="3.2"/>
+  <circle cx="54" cy="94" r="9" fill="#F3C89B"/>
+  <circle cx="146" cy="94" r="9" fill="#F3C89B"/>
+  <!-- head -->
+  <circle cx="100" cy="100" r="46" fill="#9E6B3D" stroke="#3d2a1c" stroke-width="3.2"/>
+  <!-- face -->
+  <path d="M100,72 Q140,76 138,110 Q136,145 100,146 Q64,145 62,110 Q60,76 100,72 Z" fill="#F3C89B" stroke="#3d2a1c" stroke-width="3"/>
+  <!-- cheeks -->
+  <ellipse cx="76" cy="114" rx="8.5" ry="6" fill="#ff7ba0" opacity="0.6"/>
+  <ellipse cx="124" cy="114" rx="8.5" ry="6" fill="#ff7ba0" opacity="0.6"/>
+  <!-- eyes -->
+  <circle cx="84" cy="96" r="8" fill="#2a1e16"/>
+  <circle cx="116" cy="96" r="8" fill="#2a1e16"/>
+  <circle cx="87" cy="93" r="2.8" fill="#fff"/>
+  <circle cx="119" cy="93" r="2.8" fill="#fff"/>
+  <!-- nostrils -->
+  <ellipse cx="94" cy="116" rx="2.4" ry="3.4" fill="#8A5A34"/>
+  <ellipse cx="106" cy="116" rx="2.4" ry="3.4" fill="#8A5A34"/>
+  <!-- mouth -->
+  <path d="M87,124 Q100,134 113,124" fill="none" stroke="#3d2a1c" stroke-width="2.8" stroke-linecap="round"/>
+</svg>

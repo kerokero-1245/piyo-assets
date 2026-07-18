@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="きゅうきゅうしゃ">
+  <!-- white die-cut underlay -->
+  <g fill="#ffffff" stroke="#ffffff" stroke-width="15" stroke-linejoin="round" stroke-linecap="round">
+    <rect x="24" y="80" width="154" height="64" rx="12"/>
+    <circle cx="58" cy="146" r="18"/>
+    <circle cx="146" cy="146" r="18"/>
+  </g>
+  <!-- wheels (behind body) -->
+  <circle cx="58" cy="146" r="18" fill="#33302f" stroke="#3d2a1c" stroke-width="3"/>
+  <circle cx="146" cy="146" r="18" fill="#33302f" stroke="#3d2a1c" stroke-width="3"/>
+  <!-- body -->
+  <rect x="24" y="80" width="154" height="64" rx="12" fill="#ffffff" stroke="#3d2a1c" stroke-width="3.2"/>
+  <!-- red stripe -->
+  <rect x="26" y="116" width="150" height="11" fill="#f0463a"/>
+  <path d="M26,116 L176,116 M26,127 L176,127" fill="none" stroke="#3d2a1c" stroke-width="2.4"/>
+  <!-- red cross -->
+  <rect x="64" y="90" width="14" height="34" rx="2" fill="#f0463a" stroke="#3d2a1c" stroke-width="2.4" stroke-linejoin="round"/>
+  <rect x="54" y="100" width="34" height="14" rx="2" fill="#f0463a" stroke="#3d2a1c" stroke-width="2.4" stroke-linejoin="round"/>
+  <!-- cab window -->
+  <rect x="150" y="88" width="22" height="22" rx="4" fill="#55c2e0" stroke="#3d2a1c" stroke-width="2.6"/>
+  <!-- cab door line -->
+  <path d="M138,82 L138,142" fill="none" stroke="#3d2a1c" stroke-width="2.2" opacity="0.7"/>
+  <!-- beacon (red+blue) -->
+  <rect x="58" y="72" width="10" height="10" rx="3" fill="#f0463a" stroke="#3d2a1c" stroke-width="2.2"/>
+  <rect x="68" y="72" width="10" height="10" rx="3" fill="#3a7bd6" stroke="#3d2a1c" stroke-width="2.2"/>
+  <!-- wheel hubs -->
+  <circle cx="58" cy="146" r="7" fill="#cfd3d6" stroke="#3d2a1c" stroke-width="2.2"/>
+  <circle cx="146" cy="146" r="7" fill="#cfd3d6" stroke="#3d2a1c" stroke-width="2.2"/>
+</svg>

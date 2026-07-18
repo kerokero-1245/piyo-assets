@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="くさ">
+  <!-- white die-cut underlay -->
+  <g fill="#ffffff" stroke="#ffffff" stroke-width="15" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M100,178 L100,88"/>
+    <path d="M100,122 C62,120 48,86 56,64 Q96,74 100,114 Z"/>
+    <path d="M100,122 C138,120 152,86 144,64 Q104,74 100,114 Z"/>
+    <path d="M100,94 Q86,80 94,66 Q104,58 110,72 Q112,86 100,94 Z"/>
+  </g>
+  <!-- stem -->
+  <path d="M100,178 L100,92" fill="none" stroke="#4AA854" stroke-width="8.5" stroke-linecap="round"/>
+  <path d="M100,170 L100,104" fill="none" stroke="#3B9E4A" stroke-width="2.6" stroke-linecap="round" opacity="0.55"/>
+  <!-- left leaf -->
+  <path d="M100,122 C62,120 48,86 56,64 Q96,74 100,114 Z" fill="#5FBF7A" stroke="#3d2a1c" stroke-width="3.4" stroke-linejoin="round"/>
+  <path d="M62,72 Q84,86 98,110" fill="none" stroke="#3B9E4A" stroke-width="2.6" stroke-linecap="round" opacity="0.7"/>
+  <!-- right leaf -->
+  <path d="M100,122 C138,120 152,86 144,64 Q104,74 100,114 Z" fill="#54B85E" stroke="#3d2a1c" stroke-width="3.4" stroke-linejoin="round"/>
+  <path d="M138,72 Q116,86 102,110" fill="none" stroke="#3B9E4A" stroke-width="2.6" stroke-linecap="round" opacity="0.7"/>
+  <!-- center bud -->
+  <path d="M100,94 Q86,80 94,66 Q104,58 110,72 Q112,86 100,94 Z" fill="#7AD07E" stroke="#3d2a1c" stroke-width="3" stroke-linejoin="round"/>
+  <!-- highlights -->
+  <ellipse cx="70" cy="82" rx="9" ry="5" fill="#ffffff" opacity="0.32" transform="rotate(-32 70 82)"/>
+  <ellipse cx="130" cy="82" rx="9" ry="5" fill="#ffffff" opacity="0.32" transform="rotate(32 130 82)"/>
+  <ellipse cx="99" cy="78" rx="4" ry="6" fill="#B7E8B9" opacity="0.7"/>
+</svg>

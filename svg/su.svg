@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="す">
+  <!-- white die-cut underlay -->
+  <g fill="#ffffff" stroke="#ffffff" stroke-width="15" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M36,110 Q40,160 100,162 Q160,160 164,110 Q140,128 100,128 Q60,128 36,110 Z"/>
+    <path d="M52,104 Q40,84 54,78 Q66,90 66,108 Z"/>
+    <path d="M150,104 Q162,82 148,78 Q136,92 138,108 Z"/>
+  </g>
+  <!-- leaves -->
+  <path d="M52,104 Q40,84 54,78 Q66,90 66,108 Z" fill="#5FC57E" stroke="#3d2a1c" stroke-width="2.8" stroke-linejoin="round"/>
+  <path d="M150,104 Q162,82 148,78 Q136,92 138,108 Z" fill="#5FC57E" stroke="#3d2a1c" stroke-width="2.8" stroke-linejoin="round"/>
+  <path d="M55,100 Q52,88 56,82" fill="none" stroke="#3A9457" stroke-width="2" stroke-linecap="round"/>
+  <path d="M147,100 Q150,88 146,82" fill="none" stroke="#3A9457" stroke-width="2" stroke-linecap="round"/>
+  <!-- nest bowl -->
+  <path d="M36,110 Q40,160 100,162 Q160,160 164,110 Q140,128 100,128 Q60,128 36,110 Z" fill="#E0A94A" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round"/>
+  <!-- inner cavity shadow -->
+  <path d="M44,110 Q100,130 156,110 Q140,124 100,124 Q60,124 44,110 Z" fill="#B77E2E" opacity="0.55"/>
+  <!-- woven straw strands (under eggs) -->
+  <g fill="none" stroke-linecap="round">
+    <path d="M42,120 Q100,150 158,120" stroke="#C98A2E" stroke-width="3.4"/>
+    <path d="M46,132 Q100,158 154,132" stroke="#F0C878" stroke-width="3"/>
+    <path d="M52,142 Q100,162 148,142" stroke="#C98A2E" stroke-width="3"/>
+    <path d="M62,116 L70,132" stroke="#B77E2E" stroke-width="2.4"/>
+    <path d="M126,120 L120,138" stroke="#B77E2E" stroke-width="2.4"/>
+    <path d="M140,128 L134,142" stroke="#F0C878" stroke-width="2.4"/>
+  </g>
+  <!-- eggs nestled in the hollow -->
+  <ellipse cx="90" cy="126" rx="11" ry="13" fill="#FFF6E0" stroke="#3d2a1c" stroke-width="2.6"/>
+  <ellipse cx="110" cy="128" rx="10.5" ry="12.5" fill="#FBEBCB" stroke="#3d2a1c" stroke-width="2.6"/>
+  <ellipse cx="86" cy="120" rx="3.2" ry="4.2" fill="#ffffff" opacity="0.85"/>
+  <!-- front rim strand to seat the eggs -->
+  <path d="M60,130 Q100,152 150,130" fill="none" stroke="#C98A2E" stroke-width="3.2" stroke-linecap="round"/>
+</svg>

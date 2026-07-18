@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="へりこぷたー">
+  <!-- white die-cut underlay -->
+  <g fill="#ffffff" stroke="#ffffff" stroke-width="15" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M62,90 L20,94 Q13,95 13,100 L13,101 Q13,106 20,106 L62,112 Z"/>
+    <path d="M22,96 L15,70 L36,94 Z"/>
+    <path d="M56,100 Q56,72 104,72 Q152,72 158,100 Q152,124 104,124 Q56,124 56,100 Z"/>
+    <rect x="52" y="132" width="100" height="6" rx="3"/>
+    <rect x="34" y="55" width="136" height="7" rx="3"/>
+  </g>
+  <!-- skids -->
+  <path d="M78,124 L78,133 M126,124 L126,133" fill="none" stroke="#9aa0a6" stroke-width="5" stroke-linecap="round"/>
+  <rect x="52" y="132" width="100" height="6" rx="3" fill="#b9bec6" stroke="#3d2a1c" stroke-width="2.6"/>
+  <!-- tail fin -->
+  <path d="M22,96 L15,70 L36,94 Z" fill="#ffcf3f" stroke="#3d2a1c" stroke-width="3"/>
+  <!-- tail boom -->
+  <path d="M62,90 L20,94 Q13,95 13,100 L13,101 Q13,106 20,106 L62,112 Z" fill="#ffcf3f" stroke="#3d2a1c" stroke-width="3"/>
+  <!-- tail rotor -->
+  <path d="M13,85 L13,115" fill="none" stroke="#2f5fbf" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="13" cy="100" r="4" fill="#3a3f45" stroke="#3d2a1c" stroke-width="1.8"/>
+  <!-- body -->
+  <path d="M56,100 Q56,72 104,72 Q152,72 158,100 Q152,124 104,124 Q56,124 56,100 Z" fill="#ffcf3f" stroke="#3d2a1c" stroke-width="3.2"/>
+  <!-- cockpit window -->
+  <path d="M124,80 Q150,84 152,100 Q150,113 126,117 Q117,100 124,80 Z" fill="#55c2e0" stroke="#3d2a1c" stroke-width="2.8"/>
+  <!-- mast -->
+  <rect x="97" y="60" width="8" height="14" rx="2" fill="#8f959c" stroke="#3d2a1c" stroke-width="2.2"/>
+  <!-- main rotor -->
+  <rect x="34" y="55" width="136" height="7" rx="3.5" fill="#2f5fbf" stroke="#3d2a1c" stroke-width="2.6"/>
+  <circle cx="101" cy="58" r="6" fill="#3a3f45" stroke="#3d2a1c" stroke-width="2.2"/>
+  <!-- gloss -->
+  <path d="M72,86 Q88,80 104,82" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.55"/>
+</svg>

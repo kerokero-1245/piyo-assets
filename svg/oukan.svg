@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="おうかん">
+  <!-- white die-cut underlay -->
+  <g fill="#ffffff" stroke="#ffffff" stroke-width="15" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M40,148 L40,100 L64,74 L82,104 L100,62 L118,104 L136,74 L160,100 L160,148 Z"/>
+    <rect x="40" y="126" width="120" height="24" rx="7"/>
+    <circle cx="64" cy="70" r="8.5"/>
+    <circle cx="100" cy="58" r="9.5"/>
+    <circle cx="136" cy="70" r="8.5"/>
+  </g>
+  <!-- crown body -->
+  <path d="M40,148 L40,100 L64,74 L82,104 L100,62 L118,104 L136,74 L160,100 L160,148 Z" fill="#FFC63A" stroke="#3d2a1c" stroke-width="3.4" stroke-linejoin="round"/>
+  <!-- gold gloss on points -->
+  <path d="M46,102 L61,80 M100,72 L100,102 M154,102 L139,80" fill="none" stroke="#FFE18A" stroke-width="3" stroke-linecap="round" opacity="0.75"/>
+  <!-- band -->
+  <rect x="40" y="126" width="120" height="22" rx="7" fill="#F5B12A" stroke="#3d2a1c" stroke-width="3.4"/>
+  <path d="M45,138 L155,138" fill="none" stroke="#D98F16" stroke-width="2.4" opacity="0.6"/>
+  <!-- peak gems -->
+  <circle cx="64" cy="70" r="8.5" fill="#4B9FE0" stroke="#3d2a1c" stroke-width="2.8"/>
+  <circle cx="100" cy="58" r="9.5" fill="#F0384A" stroke="#3d2a1c" stroke-width="2.8"/>
+  <circle cx="136" cy="70" r="8.5" fill="#4B9FE0" stroke="#3d2a1c" stroke-width="2.8"/>
+  <!-- band gems -->
+  <circle cx="72" cy="137" r="6.5" fill="#F0384A" stroke="#3d2a1c" stroke-width="2.6"/>
+  <circle cx="100" cy="137" r="7.5" fill="#4BC46E" stroke="#3d2a1c" stroke-width="2.6"/>
+  <circle cx="128" cy="137" r="6.5" fill="#F0384A" stroke="#3d2a1c" stroke-width="2.6"/>
+  <!-- highlights -->
+  <circle cx="61" cy="67" r="2.4" fill="#fff" opacity="0.9"/>
+  <circle cx="97" cy="55" r="2.6" fill="#fff" opacity="0.9"/>
+  <circle cx="133" cy="67" r="2.4" fill="#fff" opacity="0.9"/>
+  <circle cx="69.5" cy="134.5" r="1.8" fill="#fff" opacity="0.85"/>
+  <circle cx="97.5" cy="134.5" r="2" fill="#fff" opacity="0.85"/>
+  <circle cx="125.5" cy="134.5" r="1.8" fill="#fff" opacity="0.85"/>
+</svg>

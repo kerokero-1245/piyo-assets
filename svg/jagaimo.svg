@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="じゃがいも">
+  <!-- white die-cut underlay -->
+  <g fill="#ffffff" stroke="#ffffff" stroke-width="15" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M52,104 C48,80 68,54 98,54 C122,54 140,62 152,80 C164,96 160,124 146,140 C130,158 100,160 78,152 C58,144 54,124 52,104 Z"/>
+  </g>
+  <!-- body -->
+  <path fill="#d9a967" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round"
+        d="M52,104 C48,80 68,54 98,54 C122,54 140,62 152,80 C164,96 160,124 146,140 C130,158 100,160 78,152 C58,144 54,124 52,104 Z"/>
+  <!-- bottom shading -->
+  <path fill="#bd8b4c" opacity="0.5" d="M60,128 C74,150 104,158 128,150 C142,146 152,134 156,120 C150,140 128,150 100,150 C80,150 66,142 60,128 Z"/>
+  <!-- highlight -->
+  <ellipse fill="#ffffff" opacity="0.30" cx="82" cy="80" rx="18" ry="12" transform="rotate(-18 82 80)"/>
+  <!-- eye dimples -->
+  <g fill="none" stroke="#9c6f38" stroke-width="3" stroke-linecap="round" opacity="0.85">
+    <path d="M64,110 Q69,113 68,118"/>
+    <path d="M138,92 Q143,95 142,100"/>
+    <path d="M128,132 Q133,135 132,140"/>
+  </g>
+  <circle fill="#9c6f38" opacity="0.7" cx="72" cy="76" r="2.2"/>
+  <circle fill="#9c6f38" opacity="0.7" cx="118" cy="66" r="2.2"/>
+  <!-- face -->
+  <g>
+    <ellipse fill="#ff7ba0" opacity="0.7" cx="82" cy="116" rx="8" ry="5.5"/>
+    <ellipse fill="#ff7ba0" opacity="0.7" cx="120" cy="116" rx="8" ry="5.5"/>
+    <circle fill="#2a1e16" cx="91" cy="104" r="7"/>
+    <circle fill="#2a1e16" cx="113" cy="104" r="7"/>
+    <circle fill="#ffffff" cx="93.5" cy="101.5" r="2.6"/>
+    <circle fill="#ffffff" cx="115.5" cy="101.5" r="2.6"/>
+    <path fill="none" stroke="#7a5230" stroke-width="3" stroke-linecap="round" d="M95,116 Q102,122 109,116"/>
+  </g>
+</svg>

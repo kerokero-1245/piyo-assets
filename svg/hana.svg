@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="はな">
+  <!-- white die-cut underlay -->
+  <g fill="#ffffff" stroke="#ffffff" stroke-width="14" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M100,150 L100,184"/>
+    <path d="M100,150 C124,152 142,138 141,116 Q112,120 100,144 Z"/>
+    <ellipse cx="100" cy="52" rx="9" ry="18" transform="rotate(0 100 84)"/>
+    <ellipse cx="100" cy="52" rx="9" ry="18" transform="rotate(36 100 84)"/>
+    <ellipse cx="100" cy="52" rx="9" ry="18" transform="rotate(72 100 84)"/>
+    <ellipse cx="100" cy="52" rx="9" ry="18" transform="rotate(108 100 84)"/>
+    <ellipse cx="100" cy="52" rx="9" ry="18" transform="rotate(144 100 84)"/>
+    <ellipse cx="100" cy="52" rx="9" ry="18" transform="rotate(180 100 84)"/>
+    <ellipse cx="100" cy="52" rx="9" ry="18" transform="rotate(216 100 84)"/>
+    <ellipse cx="100" cy="52" rx="9" ry="18" transform="rotate(252 100 84)"/>
+    <ellipse cx="100" cy="52" rx="9" ry="18" transform="rotate(288 100 84)"/>
+    <ellipse cx="100" cy="52" rx="9" ry="18" transform="rotate(324 100 84)"/>
+    <circle cx="100" cy="84" r="21"/>
+  </g>
+  <!-- stem -->
+  <path d="M100,150 L100,184" fill="none" stroke="#4AA854" stroke-width="8" stroke-linecap="round"/>
+  <!-- leaf -->
+  <path d="M100,150 C124,152 142,138 141,116 Q112,120 100,144 Z" fill="#54B85E" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round"/>
+  <path d="M138,120 Q118,130 104,146" fill="none" stroke="#3B9E4A" stroke-width="2.4" stroke-linecap="round" opacity="0.7"/>
+  <!-- petals -->
+  <g fill="#FFD4E4" stroke="#3d2a1c" stroke-width="2.6" stroke-linejoin="round">
+    <ellipse cx="100" cy="52" rx="9" ry="18" transform="rotate(0 100 84)"/>
+    <ellipse cx="100" cy="52" rx="9" ry="18" transform="rotate(36 100 84)"/>
+    <ellipse cx="100" cy="52" rx="9" ry="18" transform="rotate(72 100 84)"/>
+    <ellipse cx="100" cy="52" rx="9" ry="18" transform="rotate(108 100 84)"/>
+    <ellipse cx="100" cy="52" rx="9" ry="18" transform="rotate(144 100 84)"/>
+    <ellipse cx="100" cy="52" rx="9" ry="18" transform="rotate(180 100 84)"/>
+    <ellipse cx="100" cy="52" rx="9" ry="18" transform="rotate(216 100 84)"/>
+    <ellipse cx="100" cy="52" rx="9" ry="18" transform="rotate(252 100 84)"/>
+    <ellipse cx="100" cy="52" rx="9" ry="18" transform="rotate(288 100 84)"/>
+    <ellipse cx="100" cy="52" rx="9" ry="18" transform="rotate(324 100 84)"/>
+  </g>
+  <!-- petal tips (soft pink) -->
+  <g fill="#FF9DC0" opacity="0.55">
+    <circle cx="100" cy="38" r="4.5"/>
+    <circle cx="127" cy="47" r="4.5" transform="rotate(36 100 84)"/>
+    <circle cx="127" cy="47" r="4.5" transform="rotate(-36 100 84)"/>
+  </g>
+  <!-- center -->
+  <circle cx="100" cy="84" r="21" fill="#FFC838" stroke="#3d2a1c" stroke-width="3.2"/>
+  <!-- seeds -->
+  <g fill="#E8901E">
+    <circle cx="100" cy="84" r="3.4"/>
+    <circle cx="90" cy="80" r="2.6"/>
+    <circle cx="110" cy="80" r="2.6"/>
+    <circle cx="94" cy="92" r="2.6"/>
+    <circle cx="107" cy="92" r="2.6"/>
+    <circle cx="100" cy="74" r="2.4"/>
+  </g>
+  <path d="M86,76 Q88,72 93,72" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+</svg>

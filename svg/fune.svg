@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="ふね">
+  <!-- white die-cut underlay -->
+  <g fill="#ffffff" stroke="#ffffff" stroke-width="15" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M18,150 Q38,138 58,150 Q78,162 98,150 Q118,138 138,150 Q158,162 178,150 L182,182 L16,182 Z"/>
+    <path d="M42,116 L158,116 L146,146 Q144,152 136,152 L64,152 Q56,152 54,146 Z"/>
+    <rect x="66" y="90" width="68" height="28" rx="6"/>
+    <rect x="92" y="60" width="22" height="32" rx="5"/>
+  </g>
+  <!-- hull -->
+  <path d="M42,116 L158,116 L146,146 Q144,152 136,152 L64,152 Q56,152 54,146 Z" fill="#ee4237" stroke="#3d2a1c" stroke-width="3.2"/>
+  <!-- cabin -->
+  <rect x="66" y="90" width="68" height="28" rx="6" fill="#ffffff" stroke="#3d2a1c" stroke-width="3"/>
+  <!-- funnel -->
+  <rect x="92" y="60" width="22" height="32" rx="5" fill="#ee4237" stroke="#3d2a1c" stroke-width="3"/>
+  <rect x="92" y="69" width="22" height="8" fill="#ffffff"/>
+  <path d="M92,69 L114,69 M92,77 L114,77" fill="none" stroke="#3d2a1c" stroke-width="2.2"/>
+  <!-- flag -->
+  <path d="M114,60 L128,64 L114,68 Z" fill="#f0463a" stroke="#3d2a1c" stroke-width="2"/>
+  <!-- cabin windows -->
+  <rect x="74" y="98" width="12" height="12" rx="3" fill="#55c2e0" stroke="#3d2a1c" stroke-width="2.2"/>
+  <rect x="114" y="98" width="12" height="12" rx="3" fill="#55c2e0" stroke="#3d2a1c" stroke-width="2.2"/>
+  <!-- portholes -->
+  <circle cx="74" cy="130" r="6" fill="#55c2e0" stroke="#3d2a1c" stroke-width="2.4"/>
+  <circle cx="100" cy="130" r="6" fill="#55c2e0" stroke="#3d2a1c" stroke-width="2.4"/>
+  <circle cx="126" cy="130" r="6" fill="#55c2e0" stroke="#3d2a1c" stroke-width="2.4"/>
+  <!-- waves (front) -->
+  <path d="M18,150 Q38,138 58,150 Q78,162 98,150 Q118,138 138,150 Q158,162 178,150 L182,182 L16,182 Z" fill="#3aa5e0" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round"/>
+  <path d="M22,152 Q40,142 58,152 Q78,163 98,152 Q118,142 138,152 Q158,163 176,152" fill="none" stroke="#bfe6f5" stroke-width="3.5" stroke-linecap="round" opacity="0.9"/>
+</svg>

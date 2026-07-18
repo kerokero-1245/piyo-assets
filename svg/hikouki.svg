@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="ひこうき">
+  <g transform="rotate(-18 100 100)">
+    <!-- white die-cut underlay -->
+    <g fill="#ffffff" stroke="#ffffff" stroke-width="15" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M52,84 L44,54 L74,82 Z"/>
+      <path d="M110,112 L80,150 Q76,154 82,153 L106,140 L128,116 Z"/>
+      <path d="M36,100 Q36,84 58,82 L138,82 Q168,84 180,100 Q168,116 138,118 L58,118 Q36,116 36,100 Z"/>
+    </g>
+    <!-- tail fin -->
+    <path d="M52,84 L44,54 L74,82 Z" fill="#eef1f4" stroke="#3d2a1c" stroke-width="3"/>
+    <path d="M52,80 L47,63 L61,80 Z" fill="#ff8a2e" stroke="#3d2a1c" stroke-width="2"/>
+    <!-- wing -->
+    <path d="M110,112 L80,150 Q76,154 82,153 L106,140 L128,116 Z" fill="#d7dce2" stroke="#3d2a1c" stroke-width="3"/>
+    <!-- fuselage -->
+    <path d="M36,100 Q36,84 58,82 L138,82 Q168,84 180,100 Q168,116 138,118 L58,118 Q36,116 36,100 Z" fill="#ffffff" stroke="#3d2a1c" stroke-width="3.2"/>
+    <!-- cheatline -->
+    <path d="M42,110 Q100,113 170,105" fill="none" stroke="#f0463a" stroke-width="5" stroke-linecap="round"/>
+    <!-- windows -->
+    <circle cx="78" cy="99" r="4.5" fill="#55c2e0" stroke="#3d2a1c" stroke-width="1.8"/>
+    <circle cx="96" cy="99" r="4.5" fill="#55c2e0" stroke="#3d2a1c" stroke-width="1.8"/>
+    <circle cx="114" cy="99" r="4.5" fill="#55c2e0" stroke="#3d2a1c" stroke-width="1.8"/>
+    <!-- cockpit window -->
+    <path d="M150,89 Q163,91 167,100 Q163,107 150,107 Q145,98 150,89 Z" fill="#55c2e0" stroke="#3d2a1c" stroke-width="2.4"/>
+    <!-- gloss -->
+    <path d="M60,88 Q100,85 138,88" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+  </g>
+</svg>

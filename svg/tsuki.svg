@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="つき">
+  <!-- white die-cut underlay -->
+  <g fill="#ffffff" stroke="#ffffff" stroke-width="15" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M124,46 A58,58 0 1 0 124,154 A46,46 0 1 1 124,46 Z"/>
+  </g>
+  <!-- crescent body -->
+  <path d="M124,46 A58,58 0 1 0 124,154 A46,46 0 1 1 124,46 Z" fill="#FFD23D" stroke="#3d2a1c" stroke-width="3.4" stroke-linejoin="round"/>
+  <!-- inner shading -->
+  <path d="M124,54 A50,50 0 1 0 124,146 A44,44 0 1 1 124,54 Z" fill="#F3B429" opacity="0.4"/>
+  <!-- highlight -->
+  <ellipse cx="66" cy="76" rx="10" ry="16" fill="#ffffff" opacity="0.35" transform="rotate(18 66 76)"/>
+  <!-- craters -->
+  <circle cx="58" cy="118" r="6" fill="#F0B028" opacity="0.6"/>
+  <circle cx="74" cy="138" r="4" fill="#F0B028" opacity="0.55"/>
+  <!-- subtle sleepy face -->
+  <ellipse cx="70" cy="106" rx="8" ry="5" fill="#FF8FA8" opacity="0.5"/>
+  <ellipse cx="98" cy="102" rx="8" ry="5" fill="#FF8FA8" opacity="0.5"/>
+  <path d="M64,92 Q70,98 76,92" fill="none" stroke="#2a1e16" stroke-width="3" stroke-linecap="round"/>
+  <path d="M92,90 Q98,96 104,90" fill="none" stroke="#2a1e16" stroke-width="3" stroke-linecap="round"/>
+  <path d="M78,104 Q84,109 90,104" fill="none" stroke="#2a1e16" stroke-width="2.6" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="かんらんしゃ">
+  <!-- white die-cut underlay -->
+  <g fill="#ffffff" stroke="#ffffff" stroke-width="14" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M74,180 L100,92 L126,180"/>
+    <rect x="44" y="176" width="112" height="14" rx="7"/>
+    <circle cx="100" cy="92" r="66" fill="none" stroke-width="24"/>
+    <g stroke-width="22">
+      <rect x="155" y="80" width="24" height="24" rx="6"/>
+      <rect x="134" y="126" width="24" height="24" rx="6"/>
+      <rect x="88" y="146" width="24" height="24" rx="6"/>
+      <rect x="42" y="126" width="24" height="24" rx="6"/>
+      <rect x="21" y="80" width="24" height="24" rx="6"/>
+      <rect x="42" y="34" width="24" height="24" rx="6"/>
+      <rect x="88" y="14" width="24" height="24" rx="6"/>
+      <rect x="134" y="34" width="24" height="24" rx="6"/>
+    </g>
+  </g>
+  <!-- support legs -->
+  <path d="M74,180 L100,92 L126,180" fill="none" stroke="#3d2a1c" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M74,180 L100,92 L126,180" fill="none" stroke="#B98F3A" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- base -->
+  <rect x="44" y="176" width="112" height="14" rx="7" fill="#8A5A32" stroke="#3d2a1c" stroke-width="3.2"/>
+  <!-- spokes -->
+  <g stroke="#3d2a1c" stroke-width="5" stroke-linecap="round">
+    <path d="M100,92 L166,92"/>
+    <path d="M100,92 L146.7,138.7"/>
+    <path d="M100,92 L100,158"/>
+    <path d="M100,92 L53.3,138.7"/>
+    <path d="M100,92 L34,92"/>
+    <path d="M100,92 L53.3,45.3"/>
+    <path d="M100,92 L100,26"/>
+    <path d="M100,92 L146.7,45.3"/>
+  </g>
+  <g stroke="#D9B24E" stroke-width="2.6" stroke-linecap="round">
+    <path d="M100,92 L166,92"/>
+    <path d="M100,92 L146.7,138.7"/>
+    <path d="M100,92 L100,158"/>
+    <path d="M100,92 L53.3,138.7"/>
+    <path d="M100,92 L34,92"/>
+    <path d="M100,92 L53.3,45.3"/>
+    <path d="M100,92 L100,26"/>
+    <path d="M100,92 L146.7,45.3"/>
+  </g>
+  <!-- rim -->
+  <circle cx="100" cy="92" r="66" fill="none" stroke="#3d2a1c" stroke-width="9"/>
+  <circle cx="100" cy="92" r="66" fill="none" stroke="#EDE7DC" stroke-width="4.6"/>
+  <!-- gondolas -->
+  <g stroke="#3d2a1c" stroke-width="2.8" stroke-linejoin="round">
+    <rect x="155" y="81" width="22" height="18" rx="5" fill="#F0384A"/>
+    <rect x="135.7" y="127.7" width="22" height="18" rx="5" fill="#FF9A3D"/>
+    <rect x="89" y="147" width="22" height="18" rx="5" fill="#FFD23D"/>
+    <rect x="42.3" y="127.7" width="22" height="18" rx="5" fill="#5FBF7A"/>
+    <rect x="23" y="81" width="22" height="18" rx="5" fill="#4B9FE0"/>
+    <rect x="42.3" y="34.3" width="22" height="18" rx="5" fill="#9B63C4"/>
+    <rect x="89" y="15" width="22" height="18" rx="5" fill="#FF6F91"/>
+    <rect x="135.7" y="34.3" width="22" height="18" rx="5" fill="#3FBFB0"/>
+  </g>
+  <!-- hub -->
+  <circle cx="100" cy="92" r="11" fill="#E0B84E" stroke="#3d2a1c" stroke-width="3.2"/>
+  <circle cx="100" cy="92" r="3.6" fill="#8A5A32"/>
+</svg>

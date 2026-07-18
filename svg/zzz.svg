@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="すやすや">
+  <!-- white die-cut underlay -->
+  <g fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M60,132 L82,132 L60,158 L82,158" stroke-width="13"/>
+    <path d="M92,102 L120,102 L92,134 L120,134" stroke-width="15"/>
+    <path d="M126,58 L162,58 L126,98 L162,98" stroke-width="17"/>
+  </g>
+  <!-- dark outline layer -->
+  <g fill="none" stroke="#3d2a1c" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M60,132 L82,132 L60,158 L82,158" stroke-width="8.6"/>
+    <path d="M92,102 L120,102 L92,134 L120,134" stroke-width="10.4"/>
+    <path d="M126,58 L162,58 L126,98 L162,98" stroke-width="12"/>
+  </g>
+  <!-- blue fill layer -->
+  <g fill="none" stroke="#7FC8E8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M60,132 L82,132 L60,158 L82,158" stroke-width="4.6"/>
+    <path d="M92,102 L120,102 L92,134 L120,134" stroke-width="5.8"/>
+    <path d="M126,58 L162,58 L126,98 L162,98" stroke-width="7"/>
+  </g>
+  <!-- glossy highlight streaks -->
+  <g fill="none" stroke="#DFF3FB" stroke-linecap="round" opacity="0.85">
+    <path d="M128,62 L156,62" stroke-width="2.2"/>
+    <path d="M94,105 L116,105" stroke-width="1.9"/>
+  </g>
+</svg>

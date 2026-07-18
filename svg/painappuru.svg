@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="ぱいなっぷる">
+  <!-- white die-cut underlay -->
+  <g fill="#ffffff" stroke="#ffffff" stroke-width="15" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M100,74 L84,30 Q100,44 100,74 Z"/>
+    <path d="M100,74 L116,30 Q100,44 100,74 Z"/>
+    <path d="M100,72 L70,44 Q92,50 100,72 Z"/>
+    <path d="M100,72 L130,44 Q108,50 100,72 Z"/>
+    <path d="M100,70 L100,26 Q108,48 100,70 Z"/>
+    <path d="M100,70 L58,60 Q84,58 100,70 Z"/>
+    <path d="M100,70 L142,60 Q116,58 100,70 Z"/>
+    <ellipse cx="100" cy="120" rx="48" ry="56"/>
+  </g>
+  <!-- color -->
+  <path d="M100,74 L84,30 Q100,44 100,74 Z" fill="#57B85F" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M100,74 L116,30 Q100,44 100,74 Z" fill="#57B85F" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M100,72 L70,44 Q92,50 100,72 Z" fill="#4CA453" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M100,72 L130,44 Q108,50 100,72 Z" fill="#4CA453" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M100,70 L100,26 Q108,48 100,70 Z" fill="#63C468" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M100,70 L58,60 Q84,58 100,70 Z" fill="#4CA453" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M100,70 L142,60 Q116,58 100,70 Z" fill="#4CA453" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+  <ellipse cx="100" cy="120" rx="48" ry="56" fill="#FBC02D" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+  <clipPath id="pinec"><ellipse cx="100" cy="120" rx="45" ry="53"/></clipPath>
+  <g clip-path="url(#pinec)" stroke="#B5792A" stroke-width="3" stroke-linecap="round" opacity="0.85">
+  <line x1="-60.0" y1="64" x2="52.0" y2="176"/>
+  <line x1="-42.0" y1="64" x2="70.0" y2="176"/>
+  <line x1="-24.0" y1="64" x2="88.0" y2="176"/>
+  <line x1="-6.0" y1="64" x2="106.0" y2="176"/>
+  <line x1="12.0" y1="64" x2="124.0" y2="176"/>
+  <line x1="30.0" y1="64" x2="142.0" y2="176"/>
+  <line x1="48.0" y1="64" x2="160.0" y2="176"/>
+  <line x1="66.0" y1="64" x2="178.0" y2="176"/>
+  <line x1="84.0" y1="64" x2="196.0" y2="176"/>
+  <line x1="102.0" y1="64" x2="214.0" y2="176"/>
+  <line x1="120.0" y1="64" x2="232.0" y2="176"/>
+  <line x1="138.0" y1="64" x2="250.0" y2="176"/>
+  <line x1="52.0" y1="64" x2="-60.0" y2="176"/>
+  <line x1="70.0" y1="64" x2="-42.0" y2="176"/>
+  <line x1="88.0" y1="64" x2="-24.0" y2="176"/>
+  <line x1="106.0" y1="64" x2="-6.0" y2="176"/>
+  <line x1="124.0" y1="64" x2="12.0" y2="176"/>
+  <line x1="142.0" y1="64" x2="30.0" y2="176"/>
+  <line x1="160.0" y1="64" x2="48.0" y2="176"/>
+  <line x1="178.0" y1="64" x2="66.0" y2="176"/>
+  <line x1="196.0" y1="64" x2="84.0" y2="176"/>
+  <line x1="214.0" y1="64" x2="102.0" y2="176"/>
+  <line x1="232.0" y1="64" x2="120.0" y2="176"/>
+  <line x1="250.0" y1="64" x2="138.0" y2="176"/>
+</g>
+  <ellipse cx="78" cy="98" rx="12" ry="20" fill="#fff" opacity="0.22" transform="rotate(-14 78 98)"/>
+  <ellipse cx="80" cy="138" rx="9" ry="6" fill="#ff7ba0" opacity="0.8"/>
+  <ellipse cx="120" cy="138" rx="9" ry="6" fill="#ff7ba0" opacity="0.8"/>
+  <circle cx="86" cy="124" r="8" fill="#2a1e16"/>
+  <circle cx="114" cy="124" r="8" fill="#2a1e16"/>
+  <circle cx="89" cy="121" r="3" fill="#fff"/>
+  <circle cx="117" cy="121" r="3" fill="#fff"/>
+  <path d="M92,138 Q100,145 108,138" fill="none" stroke="#3d2a1c" stroke-width="3" stroke-linecap="round"/>
+</svg>

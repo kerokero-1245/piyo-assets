@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="ぶろっこりー">
+  <defs>
+    <clipPath id="head"><path d="M52,94 Q48,72 64,68 Q66,50 84,54 Q90,40 104,46 Q120,42 128,56 Q146,54 148,72 Q160,80 152,98 Q158,116 140,120 L64,120 Q44,114 52,94 Z"/></clipPath>
+  </defs>
+  <!-- white die-cut underlay -->
+  <g fill="#ffffff" stroke="#ffffff" stroke-width="15" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M82,110 C78,138 72,156 78,166 Q86,174 92,166 L96,150 L106,150 L110,166 Q118,174 124,166 C130,156 124,138 120,110 Z"/>
+    <path d="M52,94 Q48,72 64,68 Q66,50 84,54 Q90,40 104,46 Q120,42 128,56 Q146,54 148,72 Q160,80 152,98 Q158,116 140,120 L64,120 Q44,114 52,94 Z"/>
+  </g>
+  <!-- stalk -->
+  <path fill="#aad07c" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round"
+        d="M82,110 C78,138 72,156 78,166 Q86,174 92,166 L96,150 L106,150 L110,166 Q118,174 124,166 C130,156 124,138 120,110 Z"/>
+  <path fill="#8bbf5e" opacity="0.55" d="M110,116 C114,140 116,156 112,166 Q118,174 124,166 C130,156 124,138 120,112 Z"/>
+  <!-- floret head -->
+  <path fill="#459a3d" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round"
+        d="M52,94 Q48,72 64,68 Q66,50 84,54 Q90,40 104,46 Q120,42 128,56 Q146,54 148,72 Q160,80 152,98 Q158,116 140,120 L64,120 Q44,114 52,94 Z"/>
+  <!-- floret bumps -->
+  <g clip-path="url(#head)">
+    <g fill="#5cb84e">
+      <circle cx="66" cy="82" r="12"/><circle cx="90" cy="70" r="14"/>
+      <circle cx="114" cy="72" r="13"/><circle cx="136" cy="86" r="12"/>
+      <circle cx="78" cy="102" r="12"/><circle cx="104" cy="98" r="14"/>
+      <circle cx="128" cy="104" r="11"/>
+    </g>
+    <g fill="#3d8236" opacity="0.6">
+      <circle cx="58" cy="98" r="6"/><circle cx="98" cy="82" r="5"/>
+      <circle cx="120" cy="90" r="6"/><circle cx="82" cy="86" r="5"/>
+      <circle cx="146" cy="96" r="6"/>
+    </g>
+    <g fill="#7ccf66">
+      <circle cx="72" cy="74" r="4"/><circle cx="106" cy="64" r="4"/>
+      <circle cx="132" cy="76" r="4"/><circle cx="94" cy="92" r="4"/>
+    </g>
+  </g>
+  <!-- face on stalk -->
+  <g>
+    <ellipse fill="#ff7ba0" opacity="0.7" cx="86" cy="140" rx="6.5" ry="4.5"/>
+    <ellipse fill="#ff7ba0" opacity="0.7" cx="114" cy="140" rx="6.5" ry="4.5"/>
+    <circle fill="#2a1e16" cx="92" cy="132" r="6"/>
+    <circle fill="#2a1e16" cx="108" cy="132" r="6"/>
+    <circle fill="#ffffff" cx="94" cy="129.5" r="2.2"/>
+    <circle fill="#ffffff" cx="110" cy="129.5" r="2.2"/>
+    <path fill="none" stroke="#5c7a30" stroke-width="2.8" stroke-linecap="round" d="M95,141 Q100,146 105,141"/>
+  </g>
+</svg>

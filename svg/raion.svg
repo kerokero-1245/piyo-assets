@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="らいおん">
+  <!-- white die-cut underlay (mane union) -->
+  <g fill="#ffffff" stroke="#ffffff" stroke-width="15" stroke-linejoin="round">
+    <circle cx="100" cy="100" r="48"/>
+    <circle cx="152" cy="100" r="15"/><circle cx="145" cy="74" r="15"/><circle cx="126" cy="55" r="15"/>
+    <circle cx="100" cy="48" r="15"/><circle cx="74" cy="55" r="15"/><circle cx="55" cy="74" r="15"/>
+    <circle cx="48" cy="100" r="15"/><circle cx="55" cy="126" r="15"/><circle cx="74" cy="145" r="15"/>
+    <circle cx="100" cy="152" r="15"/><circle cx="126" cy="145" r="15"/><circle cx="145" cy="126" r="15"/>
+  </g>
+  <!-- mane brown rim layer -->
+  <g fill="#3d2a1c" stroke="#3d2a1c" stroke-width="6" stroke-linejoin="round">
+    <circle cx="100" cy="100" r="48"/>
+    <circle cx="152" cy="100" r="15"/><circle cx="145" cy="74" r="15"/><circle cx="126" cy="55" r="15"/>
+    <circle cx="100" cy="48" r="15"/><circle cx="74" cy="55" r="15"/><circle cx="55" cy="74" r="15"/>
+    <circle cx="48" cy="100" r="15"/><circle cx="55" cy="126" r="15"/><circle cx="74" cy="145" r="15"/>
+    <circle cx="100" cy="152" r="15"/><circle cx="126" cy="145" r="15"/><circle cx="145" cy="126" r="15"/>
+  </g>
+  <!-- mane color fill -->
+  <g fill="#CE7C2A">
+    <circle cx="100" cy="100" r="48"/>
+    <circle cx="152" cy="100" r="15"/><circle cx="145" cy="74" r="15"/><circle cx="126" cy="55" r="15"/>
+    <circle cx="100" cy="48" r="15"/><circle cx="74" cy="55" r="15"/><circle cx="55" cy="74" r="15"/>
+    <circle cx="48" cy="100" r="15"/><circle cx="55" cy="126" r="15"/><circle cx="74" cy="145" r="15"/>
+    <circle cx="100" cy="152" r="15"/><circle cx="126" cy="145" r="15"/><circle cx="145" cy="126" r="15"/>
+  </g>
+  <!-- face -->
+  <circle cx="100" cy="100" r="44" fill="#F5C56B" stroke="#3d2a1c" stroke-width="3.2"/>
+  <!-- ears -->
+  <circle cx="70" cy="64" r="12" fill="#F5C56B" stroke="#3d2a1c" stroke-width="3"/>
+  <circle cx="130" cy="64" r="12" fill="#F5C56B" stroke="#3d2a1c" stroke-width="3"/>
+  <circle cx="70" cy="65" r="5.5" fill="#E39B49"/>
+  <circle cx="130" cy="65" r="5.5" fill="#E39B49"/>
+  <!-- muzzle -->
+  <ellipse cx="100" cy="112" rx="25" ry="18" fill="#FBE1A4" stroke="#3d2a1c" stroke-width="2.6"/>
+  <!-- cheeks -->
+  <ellipse cx="76" cy="108" rx="8" ry="5.5" fill="#ff7ba0" opacity="0.7"/>
+  <ellipse cx="124" cy="108" rx="8" ry="5.5" fill="#ff7ba0" opacity="0.7"/>
+  <!-- eyes -->
+  <circle cx="84" cy="94" r="7.5" fill="#2a1e16"/>
+  <circle cx="116" cy="94" r="7.5" fill="#2a1e16"/>
+  <circle cx="87" cy="91" r="2.7" fill="#fff"/>
+  <circle cx="119" cy="91" r="2.7" fill="#fff"/>
+  <!-- nose -->
+  <path d="M92,102 Q100,98 108,102 Q108,110 100,113 Q92,110 92,102 Z" fill="#5A3D22"/>
+  <!-- mouth -->
+  <path d="M100,113 L100,118 M100,118 Q92,125 86,119 M100,118 Q108,125 114,119" fill="none" stroke="#3d2a1c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

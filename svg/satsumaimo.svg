@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="さつまいも">
+  <defs>
+    <clipPath id="imo"><path d="M42,140 C40,120 62,96 96,84 C126,74 158,70 164,80 C168,100 146,124 112,136 C82,146 50,150 42,140 Z"/></clipPath>
+  </defs>
+  <!-- white die-cut underlay -->
+  <g fill="#ffffff" stroke="#ffffff" stroke-width="15" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M42,140 C40,120 62,96 96,84 C126,74 158,70 164,80 C168,100 146,124 112,136 C82,146 50,150 42,140 Z"/>
+  </g>
+  <!-- body -->
+  <path fill="#b24a86" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round"
+        d="M42,140 C40,120 62,96 96,84 C126,74 158,70 164,80 C168,100 146,124 112,136 C82,146 50,150 42,140 Z"/>
+  <!-- shading + cut-flesh hint -->
+  <g clip-path="url(#imo)">
+    <path fill="#8a2f66" opacity="0.5" d="M52,142 C70,148 98,142 126,128 C150,116 164,96 164,84 C160,110 138,128 106,138 C80,146 58,148 52,142 Z"/>
+    <ellipse fill="#f4d268" cx="152" cy="82" rx="13" ry="11"/>
+    <ellipse fill="#e7b84a" opacity="0.75" cx="154" cy="83" rx="6" ry="6"/>
+  </g>
+  <!-- glossy highlight -->
+  <path fill="#ffffff" opacity="0.28" d="M58,120 C60,104 80,90 108,84 C132,80 148,80 152,84 C130,88 100,98 78,112 C66,120 60,122 58,120 Z"/>
+  <!-- root tip -->
+  <path fill="none" stroke="#8a2f66" stroke-width="2.6" stroke-linecap="round" d="M43,140 Q35,140 31,136"/>
+  <!-- face -->
+  <g>
+    <ellipse fill="#ff7ba0" opacity="0.7" cx="70" cy="128" rx="8" ry="5"/>
+    <ellipse fill="#ff7ba0" opacity="0.7" cx="104" cy="120" rx="8" ry="5"/>
+    <circle fill="#2a1e16" cx="78" cy="116" r="6.5"/>
+    <circle fill="#2a1e16" cx="100" cy="110" r="6.5"/>
+    <circle fill="#ffffff" cx="80" cy="113.5" r="2.4"/>
+    <circle fill="#ffffff" cx="102" cy="107.5" r="2.4"/>
+    <path fill="none" stroke="#ffd9ec" stroke-width="2.8" stroke-linecap="round" d="M83,126 Q90,131 97,124"/>
+  </g>
+</svg>

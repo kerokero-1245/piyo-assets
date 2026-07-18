@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="こいのぼり">
+  <!-- white die-cut underlay -->
+  <g fill="#ffffff" stroke="#ffffff" stroke-width="14" stroke-linejoin="round" stroke-linecap="round">
+    <rect x="28" y="16" width="9" height="170" rx="4"/>
+    <circle cx="32.5" cy="20" r="9"/>
+    <path d="M42,26 Q66,20 90,28" />
+    <path d="M40,54 Q33,76 40,98 L128,90 L150,106 Q140,76 150,46 L128,62 Z"/>
+    <path d="M40,94 Q33,116 40,138 L124,130 L146,146 Q136,116 146,86 L124,102 Z"/>
+    <path d="M40,132 Q34,152 40,172 L120,164 L142,180 Q132,152 142,124 L120,140 Z"/>
+  </g>
+  <!-- pole -->
+  <rect x="28" y="16" width="9" height="170" rx="4" fill="#9A6A3A" stroke="#3d2a1c" stroke-width="3"/>
+  <!-- pinwheel -->
+  <circle cx="32.5" cy="20" r="8" fill="#E0B84E" stroke="#3d2a1c" stroke-width="2.6"/>
+  <path d="M32.5,12 L32.5,28 M24.5,20 L40.5,20 M27,14.5 L38,25.5 M27,25.5 L38,14.5" stroke="#3d2a1c" stroke-width="1.6"/>
+  <!-- streamer ribbons -->
+  <g fill="none" stroke-width="3.4" stroke-linecap="round">
+    <path d="M42,24 Q66,18 90,24" stroke="#F0384A"/>
+    <path d="M42,29 Q66,25 90,31" stroke="#FF9A3D"/>
+    <path d="M42,34 Q66,32 90,38" stroke="#FFD23D"/>
+    <path d="M42,39 Q66,39 88,45" stroke="#5FBF7A"/>
+    <path d="M42,44 Q64,46 84,52" stroke="#4B9FE0"/>
+  </g>
+  <!-- ===== red carp ===== -->
+  <path d="M40,54 Q33,76 40,98 L128,90 L150,106 Q140,76 150,46 L128,62 Z" fill="#F0384A" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round"/>
+  <path d="M130,64 L148,50 M130,88 L148,104 M133,76 L150,76" fill="none" stroke="#C42A3A" stroke-width="2.4" opacity="0.8"/>
+  <g fill="none" stroke="#C42A3A" stroke-width="2.6" stroke-linecap="round">
+    <path d="M70,62 Q78,72 86,62 M70,76 Q78,86 86,76 M70,90 Q78,98 86,90"/>
+    <path d="M94,62 Q102,72 110,62 M94,76 Q102,86 110,76 M94,90 Q102,98 110,90"/>
+  </g>
+  <ellipse cx="46" cy="76" rx="4" ry="17" fill="#FFFFFF" opacity="0.9" stroke="#3d2a1c" stroke-width="2"/>
+  <circle cx="60" cy="66" r="8" fill="#FFFFFF" stroke="#3d2a1c" stroke-width="2.6"/>
+  <circle cx="61" cy="67" r="4" fill="#2a1e16"/>
+  <!-- ===== blue carp ===== -->
+  <path d="M40,94 Q33,116 40,138 L124,130 L146,146 Q136,116 146,86 L124,102 Z" fill="#3B8FD0" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round"/>
+  <path d="M126,104 L144,90 M126,128 L144,144 M129,116 L146,116" fill="none" stroke="#2C6FA8" stroke-width="2.4" opacity="0.8"/>
+  <g fill="none" stroke="#2C6FA8" stroke-width="2.6" stroke-linecap="round">
+    <path d="M68,102 Q76,112 84,102 M68,116 Q76,126 84,116 M68,130 Q76,138 84,130"/>
+    <path d="M92,102 Q100,112 108,102 M92,116 Q100,126 108,116 M92,130 Q100,138 108,130"/>
+  </g>
+  <ellipse cx="46" cy="116" rx="4" ry="17" fill="#FFFFFF" opacity="0.9" stroke="#3d2a1c" stroke-width="2"/>
+  <circle cx="60" cy="106" r="8" fill="#FFFFFF" stroke="#3d2a1c" stroke-width="2.6"/>
+  <circle cx="61" cy="107" r="4" fill="#2a1e16"/>
+  <!-- ===== black carp ===== -->
+  <path d="M40,132 Q34,152 40,172 L120,164 L142,180 Q132,152 142,124 L120,140 Z" fill="#454444" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round"/>
+  <path d="M122,142 L140,128 M122,164 L140,178 M125,153 L142,153" fill="none" stroke="#2a2a2a" stroke-width="2.4" opacity="0.85"/>
+  <g fill="none" stroke="#2a2a2a" stroke-width="2.6" stroke-linecap="round">
+    <path d="M66,140 Q74,150 82,140 M66,153 Q74,162 82,153 M66,166 Q74,174 82,166"/>
+    <path d="M90,140 Q98,150 106,140 M90,153 Q98,162 106,153 M90,166 Q98,174 106,166"/>
+  </g>
+  <ellipse cx="46" cy="153" rx="4" ry="16" fill="#FFFFFF" opacity="0.9" stroke="#3d2a1c" stroke-width="2"/>
+  <circle cx="60" cy="144" r="8" fill="#FFFFFF" stroke="#3d2a1c" stroke-width="2.6"/>
+  <circle cx="61" cy="145" r="4" fill="#2a1e16"/>
+</svg>

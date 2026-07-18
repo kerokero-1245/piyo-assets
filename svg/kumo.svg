@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="くも">
+  <!-- white die-cut underlay -->
+  <g fill="#ffffff" stroke="#ffffff" stroke-width="15" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M56,132 Q30,132 38,108 Q32,86 58,86 Q62,66 90,72 Q104,56 126,70 Q152,64 156,90 Q174,98 158,118 Q162,132 140,132 Z"/>
+  </g>
+  <!-- cloud body -->
+  <path d="M56,132 Q30,132 38,108 Q32,86 58,86 Q62,66 90,72 Q104,56 126,70 Q152,64 156,90 Q174,98 158,118 Q162,132 140,132 Z" fill="#F4FBFF" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round"/>
+  <!-- lower blue shading -->
+  <path d="M52,122 Q100,140 160,120 Q160,132 140,132 L56,132 Q40,132 44,120 Z" fill="#D7ECF8" opacity="0.75"/>
+  <!-- top highlight -->
+  <ellipse cx="76" cy="82" rx="18" ry="8" fill="#ffffff" opacity="0.7" transform="rotate(-12 76 82)"/>
+  <!-- subtle face -->
+  <ellipse cx="82" cy="108" rx="8" ry="5.5" fill="#9FD4EE" opacity="0.7"/>
+  <ellipse cx="122" cy="108" rx="8" ry="5.5" fill="#9FD4EE" opacity="0.7"/>
+  <circle cx="88" cy="100" r="4.4" fill="#2a1e16"/>
+  <circle cx="116" cy="100" r="4.4" fill="#2a1e16"/>
+  <circle cx="89.5" cy="98.5" r="1.5" fill="#ffffff"/>
+  <circle cx="117.5" cy="98.5" r="1.5" fill="#ffffff"/>
+  <path d="M94,108 Q102,115 110,108" fill="none" stroke="#2a1e16" stroke-width="2.6" stroke-linecap="round"/>
+</svg>

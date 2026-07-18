@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ぴよぴよランド 画風サンプル</title>
+<style>
+  :root{
+    --cream:#FFF6E5; --surface:#FFFFFF; --brown:#5B3A1E; --orange:#FF9F45; --green:#5FBF7A;
+    --muted:#8a6a4a;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--cream); color:var(--brown);
+    font-family:"Hiragino Maru Gothic ProN","Hiragino Maru Gothic Pro","Hiragino Kaku Gothic ProN",sans-serif;
+    padding:22px 28px 26px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1150px;margin:0 auto}
+  h1{font-size:25px;font-weight:800;margin:0 0 3px;letter-spacing:.5px}
+  h1 .em{color:var(--orange)}
+  .sub{color:var(--muted);font-size:13.5px;margin:0 0 16px}
+
+  .card{
+    background:var(--surface); border-radius:26px; padding:15px 22px 17px;
+    margin-bottom:15px; box-shadow:0 8px 20px rgba(91,58,30,.10);
+  }
+  .card-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}
+  .badge{
+    flex:none;width:32px;height:32px;border-radius:50%;
+    background:var(--orange);color:#fff;font-weight:800;font-size:17px;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 4px 10px rgba(255,159,69,.42);
+  }
+  .sname{font-size:20px;font-weight:800;color:var(--brown);line-height:1.1}
+  .sdesc{font-size:12.5px;color:var(--muted);margin-top:2px}
+
+  .row{display:flex;gap:12px}
+  .cell{
+    flex:1 1 0; background:var(--cream); border-radius:18px;
+    padding:8px 4px 6px; display:flex;flex-direction:column;align-items:center;gap:1px;
+    border:1px solid rgba(91,58,30,.06);
+  }
+  .motif{width:118px;height:118px;overflow:visible;display:block}
+  .mlabel{font-size:13px;font-weight:700;color:var(--brown)}
+
+  .foot{color:var(--muted);font-size:11.5px;text-align:center;margin-top:6px}
+
+  /* ===== style 1 : まる・ぱすてる ===== */
+  .pastel{
+    --line:#c49a6c; --eye:#4b3b52; --cheek:#ffb0c0;
+    --ck-body:#ffe08a; --ck-belly:#fff3c8; --ck-beak:#ffb968; --ck-wing:#ffcf6b; --ck-foot:#ffb968;
+    --bn-body:#ffe38a; --bn-tip:#cba274;
+    --dg-body:#f6ddb4; --dg-ear:#e6bd88; --dg-muzzle:#fff5e6; --dg-nose:#6d4b30;
+    --hs-wall:#fff0d8; --hs-roof:#ffb08a; --hs-roof2:#e79b78; --hs-door:#d6a06e; --hs-win:#c3e6f4; --hs-winglow:#ffe9a8;
+  }
+  .pastel .ink{stroke:none}
+  .pastel .art{filter:url(#f-soft)}
+
+  /* ===== style 2 : くれよん ===== */
+  .crayon{
+    --line:#7a5230; --eye:#4a3524; --cheek:#e2a29a;
+    --ck-body:#e9c258; --ck-belly:#f2d888; --ck-beak:#d5894c; --ck-wing:#dcb24a; --ck-foot:#d5894c;
+    --bn-body:#e4c256; --bn-tip:#9a7a4e;
+    --dg-body:#d8b783; --dg-ear:#ab8253; --dg-muzzle:#eaddbf; --dg-nose:#5a3f28;
+    --hs-wall:#e9d7ad; --hs-roof:#c97e5b; --hs-roof2:#9e5f3d; --hs-door:#96683f; --hs-win:#a7c3bf; --hs-winglow:#ecca7e;
+  }
+  .crayon .ink{stroke:var(--line);stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round}
+  .crayon .art{filter:url(#f-crayon)}
+
+  /* ===== style 3 : シールポップ ===== */
+  .sticker{
+    --line:#3d2a1c; --eye:#2a1e16; --cheek:#ff7ba0;
+    --ck-body:#ffcd33; --ck-belly:#ffe089; --ck-beak:#ff8a2e; --ck-wing:#ffb400; --ck-foot:#ff8a2e;
+    --bn-body:#ffd23d; --bn-tip:#7a5230;
+    --dg-body:#f4c877; --dg-ear:#b5773c; --dg-muzzle:#fff0d6; --dg-nose:#2a1c12;
+    --hs-wall:#ffd9a0; --hs-roof:#ff6f52; --hs-roof2:#d1502f; --hs-door:#a56a38; --hs-win:#55c2e0; --hs-winglow:#ffe27a;
+  }
+  .sticker .ink{stroke:var(--line);stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+  .sticker .art{filter:url(#f-sticker)}
+</style>
+</head>
+<body>
+<!-- shared SVG filters -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="f-soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#c9884a" flood-opacity="0.28"/>
+    </filter>
+
+    <filter id="f-crayon" x="-35%" y="-35%" width="170%" height="170%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018 0.02" numOctaves="2" seed="7" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="4.6"
+                         xChannelSelector="R" yChannelSelector="G" result="wob"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="4" result="grain"/>
+      <feColorMatrix in="grain" type="matrix"
+        values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.10 0" result="grainA"/>
+      <feComposite in="grainA" in2="wob" operator="in" result="grainClipped"/>
+      <feMerge>
+        <feMergeNode in="wob"/>
+        <feMergeNode in="grainClipped"/>
+      </feMerge>
+    </filter>
+
+    <filter id="f-sticker" x="-45%" y="-45%" width="190%" height="190%">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="6.5" result="dil"/>
+      <feFlood flood-color="#ffffff" result="wht"/>
+      <feComposite in="wht" in2="dil" operator="in" result="border"/>
+      <feGaussianBlur in="dil" stdDeviation="3" result="shb"/>
+      <feOffset in="shb" dx="0" dy="5" result="sho"/>
+      <feFlood flood-color="#6b3f1e" flood-opacity="0.32" result="shc"/>
+      <feComposite in="shc" in2="sho" operator="in" result="shadow"/>
+      <feMerge>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="border"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <h1>ぴよ<span class="em">ぴよ</span>ランド ｜ えすざい 画風サンプル</h1>
+  <p class="sub">絵文字（🐥🍌🐶🏠）→ オリジナルSVGへの差し替え比較。3案 × 同じ4モチーフ。背景はアプリと同じクリーム色。</p>
+
+    <section class="card pastel">
+      <div class="card-head">
+        <span class="badge">1</span>
+        <div class="head-text">
+          <div class="sname">まる・ぱすてる</div>
+          <div class="sdesc">輪郭線なし・丸みの極致・パステル配色。Toca Boca風のフラットで軽やかな見た目。</div>
+        </div>
+      </div>
+      <div class="row">
+      <div class="cell">
+        <svg class="motif" viewBox="0 0 200 200" role="img" aria-label="ぴよ">
+          <g class="art">
+  <!-- tuft -->
+  <path class="ink" fill="var(--ck-body)" d="M84,58 Q82,42 94,48 Q100,38 106,48 Q118,42 116,58 Z"/>
+  <!-- feet (behind body) -->
+  <path class="limb" fill="none" stroke="var(--ck-foot)" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"
+        d="M85,150 L85,171 M85,171 L76,180 M85,171 L85,182 M85,171 L94,180"/>
+  <path class="limb" fill="none" stroke="var(--ck-foot)" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"
+        d="M115,150 L115,171 M115,171 L106,180 M115,171 L115,182 M115,171 L124,180"/>
+  <!-- body -->
+  <ellipse class="ink" fill="var(--ck-body)" cx="100" cy="108" rx="58" ry="60"/>
+  <!-- belly -->
+  <ellipse fill="var(--ck-belly)" cx="100" cy="124" rx="37" ry="35"/>
+  <!-- soft body highlight -->
+  <ellipse fill="#ffffff" opacity="0.28" cx="74" cy="78" rx="20" ry="14"/>
+  <!-- wings -->
+  <path class="ink" fill="var(--ck-wing)" d="M66,100 Q49,106 51,127 Q60,134 69,122 Q71,110 66,100 Z"/>
+  <path class="ink" fill="var(--ck-wing)" d="M134,100 Q151,106 149,127 Q140,134 131,122 Q129,110 134,100 Z"/>
+  <!-- cheeks -->
+  <ellipse fill="var(--cheek)" opacity="0.85" cx="66" cy="114" rx="11" ry="8"/>
+  <ellipse fill="var(--cheek)" opacity="0.85" cx="134" cy="114" rx="11" ry="8"/>
+  <!-- beak -->
+  <path class="ink" fill="var(--ck-beak)" d="M88,114 Q100,110 112,114 Q108,124 100,126 Q92,124 88,114 Z"/>
+  <!-- eyes -->
+  <circle fill="var(--eye)" cx="82" cy="98" r="11"/>
+  <circle fill="var(--eye)" cx="118" cy="98" r="11"/>
+  <circle fill="#ffffff" cx="86" cy="94" r="4"/>
+  <circle fill="#ffffff" cx="122" cy="94" r="4"/>
+  <circle fill="#ffffff" opacity="0.85" cx="78" cy="101" r="2"/>
+  <circle fill="#ffffff" opacity="0.85" cx="114" cy="101" r="2"/>
+      </g>
+        </svg>
+        <div class="mlabel">ぴよ</div>
+      </div>
+      <div class="cell">
+        <svg class="motif" viewBox="0 0 200 200" role="img" aria-label="ばなな">
+          <g class="art">
+  <!-- body -->
+  <path class="ink" fill="var(--bn-body)" d="M46,86 C60,160 140,160 154,86 C132,120 68,120 46,86 Z"/>
+  <!-- tips -->
+  <path class="ink" fill="var(--bn-tip)" d="M46,86 Q39,77 44,72 Q50,75 52,84 Z"/>
+  <path class="ink" fill="var(--bn-tip)" d="M154,86 Q161,80 157,73 Q150,77 148,85 Z"/>
+  <!-- highlight -->
+  <path fill="#ffffff" opacity="0.30" d="M63,100 Q71,118 75,140 Q66,140 60,120 Q58,108 63,100 Z"/>
+  <!-- cheeks -->
+  <ellipse fill="var(--cheek)" opacity="0.85" cx="74" cy="130" rx="8" ry="6"/>
+  <ellipse fill="var(--cheek)" opacity="0.85" cx="126" cy="130" rx="8" ry="6"/>
+  <!-- eyes -->
+  <circle fill="var(--eye)" cx="87" cy="121" r="8"/>
+  <circle fill="var(--eye)" cx="113" cy="121" r="8"/>
+  <circle fill="#ffffff" cx="90" cy="118" r="3"/>
+  <circle fill="#ffffff" cx="116" cy="118" r="3"/>
+  <!-- smile -->
+  <path class="face" fill="none" stroke="var(--eye)" stroke-width="3" stroke-linecap="round" d="M92,133 Q100,141 108,133"/>
+      </g>
+        </svg>
+        <div class="mlabel">ばなな</div>
+      </div>
+      <div class="cell">
+        <svg class="motif" viewBox="0 0 200 200" role="img" aria-label="いぬ">
+          <g class="art">
+  <!-- tail (behind body) -->
+  <path class="ink" fill="var(--dg-ear)" d="M134,150 Q156,142 157,162 Q152,156 140,161 Z"/>
+  <!-- body -->
+  <ellipse class="ink" fill="var(--dg-body)" cx="100" cy="150" rx="42" ry="30"/>
+  <!-- ears -->
+  <path class="ink" fill="var(--dg-ear)" d="M66,58 Q40,66 42,104 Q53,116 68,103 Q61,80 72,64 Z"/>
+  <path class="ink" fill="var(--dg-ear)" d="M134,58 Q160,66 158,104 Q147,116 132,103 Q139,80 128,64 Z"/>
+  <!-- head -->
+  <circle class="ink" fill="var(--dg-body)" cx="100" cy="84" r="46"/>
+  <!-- head highlight -->
+  <ellipse fill="#ffffff" opacity="0.20" cx="80" cy="62" rx="16" ry="11"/>
+  <!-- muzzle -->
+  <ellipse fill="var(--dg-muzzle)" cx="100" cy="101" rx="27" ry="21"/>
+  <!-- eye patch (right) -->
+  <ellipse fill="var(--dg-ear)" opacity="0.5" cx="116" cy="80" rx="16" ry="15"/>
+  <!-- cheeks -->
+  <ellipse fill="var(--cheek)" opacity="0.8" cx="74" cy="96" rx="8" ry="6"/>
+  <ellipse fill="var(--cheek)" opacity="0.8" cx="126" cy="96" rx="8" ry="6"/>
+  <!-- eyes -->
+  <circle fill="var(--eye)" cx="84" cy="82" r="8.5"/>
+  <circle fill="var(--eye)" cx="116" cy="82" r="8.5"/>
+  <circle fill="#ffffff" cx="87" cy="79" r="3"/>
+  <circle fill="#ffffff" cx="119" cy="79" r="3"/>
+  <!-- nose -->
+  <path fill="var(--dg-nose)" d="M91,88 Q100,83 109,88 Q111,97 100,100 Q89,97 91,88 Z"/>
+  <!-- mouth -->
+  <path class="face" fill="none" stroke="var(--dg-nose)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+        d="M100,100 L100,106 M100,106 Q90,114 82,107 M100,106 Q110,114 118,107"/>
+  <!-- tongue -->
+  <path fill="var(--cheek)" d="M94,108 Q100,119 106,108 Q100,113 94,108 Z"/>
+  <!-- front paws -->
+  <ellipse class="ink" fill="var(--dg-muzzle)" cx="83" cy="176" rx="13" ry="11"/>
+  <ellipse class="ink" fill="var(--dg-muzzle)" cx="117" cy="176" rx="13" ry="11"/>
+  <path class="face" fill="none" stroke="var(--dg-nose)" stroke-width="1.6" stroke-linecap="round" opacity="0.5"
+        d="M83,171 L83,181 M79,172 L79,180 M87,172 L87,180"/>
+  <path class="face" fill="none" stroke="var(--dg-nose)" stroke-width="1.6" stroke-linecap="round" opacity="0.5"
+        d="M117,171 L117,181 M113,172 L113,180 M121,172 L121,180"/>
+      </g>
+        </svg>
+        <div class="mlabel">いぬ</div>
+      </div>
+      <div class="cell">
+        <svg class="motif" viewBox="0 0 200 200" role="img" aria-label="いえ">
+          <g class="art">
+  <!-- wall -->
+  <rect class="ink" fill="var(--hs-wall)" x="56" y="94" width="88" height="80" rx="12"/>
+  <!-- roof -->
+  <path class="ink" fill="var(--hs-roof)" d="M43,103 L98,52 Q100,50 102,52 L157,103 Q159,107 153,107 L47,107 Q41,107 43,103 Z"/>
+  <!-- roof highlight -->
+  <path fill="#ffffff" opacity="0.18" d="M60,100 L99,62 L104,66 L70,100 Z"/>
+  <!-- chimney -->
+  <rect class="ink" fill="var(--hs-roof2)" x="121" y="60" width="14" height="24" rx="3"/>
+  <!-- smoke (ink: outlined puffs in crayon/sticker, soft in pastel) -->
+  <circle class="ink" fill="#ffffff" opacity="0.9" cx="128" cy="52" r="5"/>
+  <circle class="ink" fill="#ffffff" opacity="0.9" cx="134" cy="42" r="6"/>
+  <circle class="ink" fill="#ffffff" opacity="0.9" cx="129" cy="31" r="7"/>
+  <!-- door -->
+  <path class="ink" fill="var(--hs-door)" d="M86,174 L86,138 Q86,123 100,123 Q114,123 114,138 L114,174 Z"/>
+  <circle fill="var(--hs-winglow)" cx="108" cy="150" r="2.6"/>
+  <!-- windows -->
+  <circle class="ink" fill="var(--hs-win)" cx="72" cy="124" r="11"/>
+  <circle class="ink" fill="var(--hs-win)" cx="128" cy="124" r="11"/>
+  <path class="face" fill="none" stroke="var(--line)" stroke-width="2" d="M72,113 L72,135 M61,124 L83,124"/>
+  <path class="face" fill="none" stroke="var(--line)" stroke-width="2" d="M128,113 L128,135 M117,124 L139,124"/>
+  <circle fill="#ffffff" opacity="0.55" cx="68" cy="120" r="3"/>
+  <circle fill="#ffffff" opacity="0.55" cx="124" cy="120" r="3"/>
+      </g>
+        </svg>
+        <div class="mlabel">いえ</div>
+      </div>
+      </div>
+    </section>
+
+    <section class="card crayon">
+      <div class="card-head">
+        <span class="badge">2</span>
+        <div class="head-text">
+          <div class="sname">くれよん</div>
+          <div class="sdesc">手描き風のゆれた輪郭とmutedな塗り。ざらっとした絵本のような温かい質感。</div>
+        </div>
+      </div>
+      <div class="row">
+      <div class="cell">
+        <svg class="motif" viewBox="0 0 200 200" role="img" aria-label="ぴよ">
+          <g class="art">
+  <!-- tuft -->
+  <path class="ink" fill="var(--ck-body)" d="M84,58 Q82,42 94,48 Q100,38 106,48 Q118,42 116,58 Z"/>
+  <!-- feet (behind body) -->
+  <path class="limb" fill="none" stroke="var(--ck-foot)" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"
+        d="M85,150 L85,171 M85,171 L76,180 M85,171 L85,182 M85,171 L94,180"/>
+  <path class="limb" fill="none" stroke="var(--ck-foot)" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"
+        d="M115,150 L115,171 M115,171 L106,180 M115,171 L115,182 M115,171 L124,180"/>
+  <!-- body -->
+  <ellipse class="ink" fill="var(--ck-body)" cx="100" cy="108" rx="58" ry="60"/>
+  <!-- belly -->
+  <ellipse fill="var(--ck-belly)" cx="100" cy="124" rx="37" ry="35"/>
+  <!-- soft body highlight -->
+  <ellipse fill="#ffffff" opacity="0.28" cx="74" cy="78" rx="20" ry="14"/>
+  <!-- wings -->
+  <path class="ink" fill="var(--ck-wing)" d="M66,100 Q49,106 51,127 Q60,134 69,122 Q71,110 66,100 Z"/>
+  <path class="ink" fill="var(--ck-wing)" d="M134,100 Q151,106 149,127 Q140,134 131,122 Q129,110 134,100 Z"/>
+  <!-- cheeks -->
+  <ellipse fill="var(--cheek)" opacity="0.85" cx="66" cy="114" rx="11" ry="8"/>
+  <ellipse fill="var(--cheek)" opacity="0.85" cx="134" cy="114" rx="11" ry="8"/>
+  <!-- beak -->
+  <path class="ink" fill="var(--ck-beak)" d="M88,114 Q100,110 112,114 Q108,124 100,126 Q92,124 88,114 Z"/>
+  <!-- eyes -->
+  <circle fill="var(--eye)" cx="82" cy="98" r="11"/>
+  <circle fill="var(--eye)" cx="118" cy="98" r="11"/>
+  <circle fill="#ffffff" cx="86" cy="94" r="4"/>
+  <circle fill="#ffffff" cx="122" cy="94" r="4"/>
+  <circle fill="#ffffff" opacity="0.85" cx="78" cy="101" r="2"/>
+  <circle fill="#ffffff" opacity="0.85" cx="114" cy="101" r="2"/>
+      </g>
+        </svg>
+        <div class="mlabel">ぴよ</div>
+      </div>
+      <div class="cell">
+        <svg class="motif" viewBox="0 0 200 200" role="img" aria-label="ばなな">
+          <g class="art">
+  <!-- body -->
+  <path class="ink" fill="var(--bn-body)" d="M46,86 C60,160 140,160 154,86 C132,120 68,120 46,86 Z"/>
+  <!-- tips -->
+  <path class="ink" fill="var(--bn-tip)" d="M46,86 Q39,77 44,72 Q50,75 52,84 Z"/>
+  <path class="ink" fill="var(--bn-tip)" d="M154,86 Q161,80 157,73 Q150,77 148,85 Z"/>
+  <!-- highlight -->
+  <path fill="#ffffff" opacity="0.30" d="M63,100 Q71,118 75,140 Q66,140 60,120 Q58,108 63,100 Z"/>
+  <!-- cheeks -->
+  <ellipse fill="var(--cheek)" opacity="0.85" cx="74" cy="130" rx="8" ry="6"/>
+  <ellipse fill="var(--cheek)" opacity="0.85" cx="126" cy="130" rx="8" ry="6"/>
+  <!-- eyes -->
+  <circle fill="var(--eye)" cx="87" cy="121" r="8"/>
+  <circle fill="var(--eye)" cx="113" cy="121" r="8"/>
+  <circle fill="#ffffff" cx="90" cy="118" r="3"/>
+  <circle fill="#ffffff" cx="116" cy="118" r="3"/>
+  <!-- smile -->
+  <path class="face" fill="none" stroke="var(--eye)" stroke-width="3" stroke-linecap="round" d="M92,133 Q100,141 108,133"/>
+      </g>
+        </svg>
+        <div class="mlabel">ばなな</div>
+      </div>
+      <div class="cell">
+        <svg class="motif" viewBox="0 0 200 200" role="img" aria-label="いぬ">
+          <g class="art">
+  <!-- tail (behind body) -->
+  <path class="ink" fill="var(--dg-ear)" d="M134,150 Q156,142 157,162 Q152,156 140,161 Z"/>
+  <!-- body -->
+  <ellipse class="ink" fill="var(--dg-body)" cx="100" cy="150" rx="42" ry="30"/>
+  <!-- ears -->
+  <path class="ink" fill="var(--dg-ear)" d="M66,58 Q40,66 42,104 Q53,116 68,103 Q61,80 72,64 Z"/>
+  <path class="ink" fill="var(--dg-ear)" d="M134,58 Q160,66 158,104 Q147,116 132,103 Q139,80 128,64 Z"/>
+  <!-- head -->
+  <circle class="ink" fill="var(--dg-body)" cx="100" cy="84" r="46"/>
+  <!-- head highlight -->
+  <ellipse fill="#ffffff" opacity="0.20" cx="80" cy="62" rx="16" ry="11"/>
+  <!-- muzzle -->
+  <ellipse fill="var(--dg-muzzle)" cx="100" cy="101" rx="27" ry="21"/>
+  <!-- eye patch (right) -->
+  <ellipse fill="var(--dg-ear)" opacity="0.5" cx="116" cy="80" rx="16" ry="15"/>
+  <!-- cheeks -->
+  <ellipse fill="var(--cheek)" opacity="0.8" cx="74" cy="96" rx="8" ry="6"/>
+  <ellipse fill="var(--cheek)" opacity="0.8" cx="126" cy="96" rx="8" ry="6"/>
+  <!-- eyes -->
+  <circle fill="var(--eye)" cx="84" cy="82" r="8.5"/>
+  <circle fill="var(--eye)" cx="116" cy="82" r="8.5"/>
+  <circle fill="#ffffff" cx="87" cy="79" r="3"/>
+  <circle fill="#ffffff" cx="119" cy="79" r="3"/>
+  <!-- nose -->
+  <path fill="var(--dg-nose)" d="M91,88 Q100,83 109,88 Q111,97 100,100 Q89,97 91,88 Z"/>
+  <!-- mouth -->
+  <path class="face" fill="none" stroke="var(--dg-nose)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+        d="M100,100 L100,106 M100,106 Q90,114 82,107 M100,106 Q110,114 118,107"/>
+  <!-- tongue -->
+  <path fill="var(--cheek)" d="M94,108 Q100,119 106,108 Q100,113 94,108 Z"/>
+  <!-- front paws -->
+  <ellipse class="ink" fill="var(--dg-muzzle)" cx="83" cy="176" rx="13" ry="11"/>
+  <ellipse class="ink" fill="var(--dg-muzzle)" cx="117" cy="176" rx="13" ry="11"/>
+  <path class="face" fill="none" stroke="var(--dg-nose)" stroke-width="1.6" stroke-linecap="round" opacity="0.5"
+        d="M83,171 L83,181 M79,172 L79,180 M87,172 L87,180"/>
+  <path class="face" fill="none" stroke="var(--dg-nose)" stroke-width="1.6" stroke-linecap="round" opacity="0.5"
+        d="M117,171 L117,181 M113,172 L113,180 M121,172 L121,180"/>
+      </g>
+        </svg>
+        <div class="mlabel">いぬ</div>
+      </div>
+      <div class="cell">
+        <svg class="motif" viewBox="0 0 200 200" role="img" aria-label="いえ">
+          <g class="art">
+  <!-- wall -->
+  <rect class="ink" fill="var(--hs-wall)" x="56" y="94" width="88" height="80" rx="12"/>
+  <!-- roof -->
+  <path class="ink" fill="var(--hs-roof)" d="M43,103 L98,52 Q100,50 102,52 L157,103 Q159,107 153,107 L47,107 Q41,107 43,103 Z"/>
+  <!-- roof highlight -->
+  <path fill="#ffffff" opacity="0.18" d="M60,100 L99,62 L104,66 L70,100 Z"/>
+  <!-- chimney -->
+  <rect class="ink" fill="var(--hs-roof2)" x="121" y="60" width="14" height="24" rx="3"/>
+  <!-- smoke (ink: outlined puffs in crayon/sticker, soft in pastel) -->
+  <circle class="ink" fill="#ffffff" opacity="0.9" cx="128" cy="52" r="5"/>
+  <circle class="ink" fill="#ffffff" opacity="0.9" cx="134" cy="42" r="6"/>
+  <circle class="ink" fill="#ffffff" opacity="0.9" cx="129" cy="31" r="7"/>
+  <!-- door -->
+  <path class="ink" fill="var(--hs-door)" d="M86,174 L86,138 Q86,123 100,123 Q114,123 114,138 L114,174 Z"/>
+  <circle fill="var(--hs-winglow)" cx="108" cy="150" r="2.6"/>
+  <!-- windows -->
+  <circle class="ink" fill="var(--hs-win)" cx="72" cy="124" r="11"/>
+  <circle class="ink" fill="var(--hs-win)" cx="128" cy="124" r="11"/>
+  <path class="face" fill="none" stroke="var(--line)" stroke-width="2" d="M72,113 L72,135 M61,124 L83,124"/>
+  <path class="face" fill="none" stroke="var(--line)" stroke-width="2" d="M128,113 L128,135 M117,124 L139,124"/>
+  <circle fill="#ffffff" opacity="0.55" cx="68" cy="120" r="3"/>
+  <circle fill="#ffffff" opacity="0.55" cx="124" cy="120" r="3"/>
+      </g>
+        </svg>
+        <div class="mlabel">いえ</div>
+      </div>
+      </div>
+    </section>
+
+    <section class="card sticker">
+      <div class="card-head">
+        <span class="badge">3</span>
+        <div class="head-text">
+          <div class="sname">シールポップ</div>
+          <div class="sdesc">太い白フチ＋濃い輪郭・はっきりした色。ステッカー／LINEスタンプ風でよく目立つ。</div>
+        </div>
+      </div>
+      <div class="row">
+      <div class="cell">
+        <svg class="motif" viewBox="0 0 200 200" role="img" aria-label="ぴよ">
+          <g class="art">
+  <!-- tuft -->
+  <path class="ink" fill="var(--ck-body)" d="M84,58 Q82,42 94,48 Q100,38 106,48 Q118,42 116,58 Z"/>
+  <!-- feet (behind body) -->
+  <path class="limb" fill="none" stroke="var(--ck-foot)" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"
+        d="M85,150 L85,171 M85,171 L76,180 M85,171 L85,182 M85,171 L94,180"/>
+  <path class="limb" fill="none" stroke="var(--ck-foot)" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"
+        d="M115,150 L115,171 M115,171 L106,180 M115,171 L115,182 M115,171 L124,180"/>
+  <!-- body -->
+  <ellipse class="ink" fill="var(--ck-body)" cx="100" cy="108" rx="58" ry="60"/>
+  <!-- belly -->
+  <ellipse fill="var(--ck-belly)" cx="100" cy="124" rx="37" ry="35"/>
+  <!-- soft body highlight -->
+  <ellipse fill="#ffffff" opacity="0.28" cx="74" cy="78" rx="20" ry="14"/>
+  <!-- wings -->
+  <path class="ink" fill="var(--ck-wing)" d="M66,100 Q49,106 51,127 Q60,134 69,122 Q71,110 66,100 Z"/>
+  <path class="ink" fill="var(--ck-wing)" d="M134,100 Q151,106 149,127 Q140,134 131,122 Q129,110 134,100 Z"/>
+  <!-- cheeks -->
+  <ellipse fill="var(--cheek)" opacity="0.85" cx="66" cy="114" rx="11" ry="8"/>
+  <ellipse fill="var(--cheek)" opacity="0.85" cx="134" cy="114" rx="11" ry="8"/>
+  <!-- beak -->
+  <path class="ink" fill="var(--ck-beak)" d="M88,114 Q100,110 112,114 Q108,124 100,126 Q92,124 88,114 Z"/>
+  <!-- eyes -->
+  <circle fill="var(--eye)" cx="82" cy="98" r="11"/>
+  <circle fill="var(--eye)" cx="118" cy="98" r="11"/>
+  <circle fill="#ffffff" cx="86" cy="94" r="4"/>
+  <circle fill="#ffffff" cx="122" cy="94" r="4"/>
+  <circle fill="#ffffff" opacity="0.85" cx="78" cy="101" r="2"/>
+  <circle fill="#ffffff" opacity="0.85" cx="114" cy="101" r="2"/>
+      </g>
+        </svg>
+        <div class="mlabel">ぴよ</div>
+      </div>
+      <div class="cell">
+        <svg class="motif" viewBox="0 0 200 200" role="img" aria-label="ばなな">
+          <g class="art">
+  <!-- body -->
+  <path class="ink" fill="var(--bn-body)" d="M46,86 C60,160 140,160 154,86 C132,120 68,120 46,86 Z"/>
+  <!-- tips -->
+  <path class="ink" fill="var(--bn-tip)" d="M46,86 Q39,77 44,72 Q50,75 52,84 Z"/>
+  <path class="ink" fill="var(--bn-tip)" d="M154,86 Q161,80 157,73 Q150,77 148,85 Z"/>
+  <!-- highlight -->
+  <path fill="#ffffff" opacity="0.30" d="M63,100 Q71,118 75,140 Q66,140 60,120 Q58,108 63,100 Z"/>
+  <!-- cheeks -->
+  <ellipse fill="var(--cheek)" opacity="0.85" cx="74" cy="130" rx="8" ry="6"/>
+  <ellipse fill="var(--cheek)" opacity="0.85" cx="126" cy="130" rx="8" ry="6"/>
+  <!-- eyes -->
+  <circle fill="var(--eye)" cx="87" cy="121" r="8"/>
+  <circle fill="var(--eye)" cx="113" cy="121" r="8"/>
+  <circle fill="#ffffff" cx="90" cy="118" r="3"/>
+  <circle fill="#ffffff" cx="116" cy="118" r="3"/>
+  <!-- smile -->
+  <path class="face" fill="none" stroke="var(--eye)" stroke-width="3" stroke-linecap="round" d="M92,133 Q100,141 108,133"/>
+      </g>
+        </svg>
+        <div class="mlabel">ばなな</div>
+      </div>
+      <div class="cell">
+        <svg class="motif" viewBox="0 0 200 200" role="img" aria-label="いぬ">
+          <g class="art">
+  <!-- tail (behind body) -->
+  <path class="ink" fill="var(--dg-ear)" d="M134,150 Q156,142 157,162 Q152,156 140,161 Z"/>
+  <!-- body -->
+  <ellipse class="ink" fill="var(--dg-body)" cx="100" cy="150" rx="42" ry="30"/>
+  <!-- ears -->
+  <path class="ink" fill="var(--dg-ear)" d="M66,58 Q40,66 42,104 Q53,116 68,103 Q61,80 72,64 Z"/>
+  <path class="ink" fill="var(--dg-ear)" d="M134,58 Q160,66 158,104 Q147,116 132,103 Q139,80 128,64 Z"/>
+  <!-- head -->
+  <circle class="ink" fill="var(--dg-body)" cx="100" cy="84" r="46"/>
+  <!-- head highlight -->
+  <ellipse fill="#ffffff" opacity="0.20" cx="80" cy="62" rx="16" ry="11"/>
+  <!-- muzzle -->
+  <ellipse fill="var(--dg-muzzle)" cx="100" cy="101" rx="27" ry="21"/>
+  <!-- eye patch (right) -->
+  <ellipse fill="var(--dg-ear)" opacity="0.5" cx="116" cy="80" rx="16" ry="15"/>
+  <!-- cheeks -->
+  <ellipse fill="var(--cheek)" opacity="0.8" cx="74" cy="96" rx="8" ry="6"/>
+  <ellipse fill="var(--cheek)" opacity="0.8" cx="126" cy="96" rx="8" ry="6"/>
+  <!-- eyes -->
+  <circle fill="var(--eye)" cx="84" cy="82" r="8.5"/>
+  <circle fill="var(--eye)" cx="116" cy="82" r="8.5"/>
+  <circle fill="#ffffff" cx="87" cy="79" r="3"/>
+  <circle fill="#ffffff" cx="119" cy="79" r="3"/>
+  <!-- nose -->
+  <path fill="var(--dg-nose)" d="M91,88 Q100,83 109,88 Q111,97 100,100 Q89,97 91,88 Z"/>
+  <!-- mouth -->
+  <path class="face" fill="none" stroke="var(--dg-nose)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+        d="M100,100 L100,106 M100,106 Q90,114 82,107 M100,106 Q110,114 118,107"/>
+  <!-- tongue -->
+  <path fill="var(--cheek)" d="M94,108 Q100,119 106,108 Q100,113 94,108 Z"/>
+  <!-- front paws -->
+  <ellipse class="ink" fill="var(--dg-muzzle)" cx="83" cy="176" rx="13" ry="11"/>
+  <ellipse class="ink" fill="var(--dg-muzzle)" cx="117" cy="176" rx="13" ry="11"/>
+  <path class="face" fill="none" stroke="var(--dg-nose)" stroke-width="1.6" stroke-linecap="round" opacity="0.5"
+        d="M83,171 L83,181 M79,172 L79,180 M87,172 L87,180"/>
+  <path class="face" fill="none" stroke="var(--dg-nose)" stroke-width="1.6" stroke-linecap="round" opacity="0.5"
+        d="M117,171 L117,181 M113,172 L113,180 M121,172 L121,180"/>
+      </g>
+        </svg>
+        <div class="mlabel">いぬ</div>
+      </div>
+      <div class="cell">
+        <svg class="motif" viewBox="0 0 200 200" role="img" aria-label="いえ">
+          <g class="art">
+  <!-- wall -->
+  <rect class="ink" fill="var(--hs-wall)" x="56" y="94" width="88" height="80" rx="12"/>
+  <!-- roof -->
+  <path class="ink" fill="var(--hs-roof)" d="M43,103 L98,52 Q100,50 102,52 L157,103 Q159,107 153,107 L47,107 Q41,107 43,103 Z"/>
+  <!-- roof highlight -->
+  <path fill="#ffffff" opacity="0.18" d="M60,100 L99,62 L104,66 L70,100 Z"/>
+  <!-- chimney -->
+  <rect class="ink" fill="var(--hs-roof2)" x="121" y="60" width="14" height="24" rx="3"/>
+  <!-- smoke (ink: outlined puffs in crayon/sticker, soft in pastel) -->
+  <circle class="ink" fill="#ffffff" opacity="0.9" cx="128" cy="52" r="5"/>
+  <circle class="ink" fill="#ffffff" opacity="0.9" cx="134" cy="42" r="6"/>
+  <circle class="ink" fill="#ffffff" opacity="0.9" cx="129" cy="31" r="7"/>
+  <!-- door -->
+  <path class="ink" fill="var(--hs-door)" d="M86,174 L86,138 Q86,123 100,123 Q114,123 114,138 L114,174 Z"/>
+  <circle fill="var(--hs-winglow)" cx="108" cy="150" r="2.6"/>
+  <!-- windows -->
+  <circle class="ink" fill="var(--hs-win)" cx="72" cy="124" r="11"/>
+  <circle class="ink" fill="var(--hs-win)" cx="128" cy="124" r="11"/>
+  <path class="face" fill="none" stroke="var(--line)" stroke-width="2" d="M72,113 L72,135 M61,124 L83,124"/>
+  <path class="face" fill="none" stroke="var(--line)" stroke-width="2" d="M128,113 L128,135 M117,124 L139,124"/>
+  <circle fill="#ffffff" opacity="0.55" cx="68" cy="120" r="3"/>
+  <circle fill="#ffffff" opacity="0.55" cx="124" cy="120" r="3"/>
+      </g>
+        </svg>
+        <div class="mlabel">いえ</div>
+      </div>
+      </div>
+    </section>
+  <p class="foot">同一ジオメトリを3通りの描画処理で表現（配色・輪郭・フチのみ差し替え）。実装時は全モチーフ viewBox 200×200 で共通スケール。</p>
+</div>
+</body>
+</html>

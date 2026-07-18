@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="とうもろこし">
+  <defs>
+    <clipPath id="cob"><path d="M100,44 C128,44 136,64 136,90 L136,146 C136,166 120,174 100,174 C80,174 64,166 64,146 L64,90 C64,64 72,44 100,44 Z"/></clipPath>
+  </defs>
+  <!-- white die-cut underlay -->
+  <g fill="#ffffff" stroke="#ffffff" stroke-width="15" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M64,116 C44,128 38,152 46,176 C62,168 72,150 74,126 Z"/>
+    <path d="M136,116 C156,128 162,152 154,176 C138,168 128,150 126,126 Z"/>
+    <path d="M100,44 C128,44 136,64 136,90 L136,146 C136,166 120,174 100,174 C80,174 64,166 64,146 L64,90 C64,64 72,44 100,44 Z"/>
+  </g>
+  <!-- husk leaves (wrap base) -->
+  <g stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round">
+    <path fill="#4f9c3f" d="M64,116 C44,128 38,152 46,176 C62,168 72,150 74,126 Z"/>
+    <path fill="#4f9c3f" d="M136,116 C156,128 162,152 154,176 C138,168 128,150 126,126 Z"/>
+  </g>
+  <path fill="#3d7a30" opacity="0.45" d="M136,116 C150,126 156,150 150,172 C150,150 142,132 126,126 Z"/>
+  <path fill="#3d7a30" opacity="0.45" d="M64,116 C50,126 44,150 50,172 C50,150 58,132 74,126 Z"/>
+  <!-- cob body -->
+  <path fill="#f2b52c" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round"
+        d="M100,44 C128,44 136,64 136,90 L136,146 C136,166 120,174 100,174 C80,174 64,166 64,146 L64,90 C64,64 72,44 100,44 Z"/>
+  <!-- kernels: brick grid of rounded rects -->
+  <g clip-path="url(#cob)">
+    <g fill="#ffd63f">
+      <rect x="61" y="48" width="14" height="14" rx="5"/><rect x="77" y="48" width="14" height="14" rx="5"/><rect x="93" y="48" width="14" height="14" rx="5"/><rect x="109" y="48" width="14" height="14" rx="5"/><rect x="125" y="48" width="14" height="14" rx="5"/>
+      <rect x="53" y="64" width="14" height="14" rx="5"/><rect x="69" y="64" width="14" height="14" rx="5"/><rect x="85" y="64" width="14" height="14" rx="5"/><rect x="101" y="64" width="14" height="14" rx="5"/><rect x="117" y="64" width="14" height="14" rx="5"/><rect x="133" y="64" width="14" height="14" rx="5"/>
+      <rect x="61" y="80" width="14" height="14" rx="5"/><rect x="77" y="80" width="14" height="14" rx="5"/><rect x="93" y="80" width="14" height="14" rx="5"/><rect x="109" y="80" width="14" height="14" rx="5"/><rect x="125" y="80" width="14" height="14" rx="5"/>
+      <rect x="53" y="96" width="14" height="14" rx="5"/><rect x="69" y="96" width="14" height="14" rx="5"/><rect x="85" y="96" width="14" height="14" rx="5"/><rect x="101" y="96" width="14" height="14" rx="5"/><rect x="117" y="96" width="14" height="14" rx="5"/><rect x="133" y="96" width="14" height="14" rx="5"/>
+      <rect x="61" y="112" width="14" height="14" rx="5"/><rect x="77" y="112" width="14" height="14" rx="5"/><rect x="93" y="112" width="14" height="14" rx="5"/><rect x="109" y="112" width="14" height="14" rx="5"/><rect x="125" y="112" width="14" height="14" rx="5"/>
+      <rect x="53" y="128" width="14" height="14" rx="5"/><rect x="69" y="128" width="14" height="14" rx="5"/><rect x="85" y="128" width="14" height="14" rx="5"/><rect x="101" y="128" width="14" height="14" rx="5"/><rect x="117" y="128" width="14" height="14" rx="5"/><rect x="133" y="128" width="14" height="14" rx="5"/>
+      <rect x="61" y="144" width="14" height="14" rx="5"/><rect x="77" y="144" width="14" height="14" rx="5"/><rect x="93" y="144" width="14" height="14" rx="5"/><rect x="109" y="144" width="14" height="14" rx="5"/><rect x="125" y="144" width="14" height="14" rx="5"/>
+      <rect x="69" y="160" width="14" height="14" rx="5"/><rect x="85" y="160" width="14" height="14" rx="5"/><rect x="101" y="160" width="14" height="14" rx="5"/><rect x="117" y="160" width="14" height="14" rx="5"/>
+    </g>
+    <!-- edge shading kernels -->
+    <g fill="#e7a726" opacity="0.55">
+      <rect x="53" y="64" width="14" height="14" rx="5"/><rect x="53" y="96" width="14" height="14" rx="5"/><rect x="53" y="128" width="14" height="14" rx="5"/>
+      <rect x="133" y="64" width="14" height="14" rx="5"/><rect x="133" y="96" width="14" height="14" rx="5"/><rect x="133" y="128" width="14" height="14" rx="5"/>
+      <rect x="125" y="48" width="14" height="14" rx="5"/><rect x="117" y="160" width="14" height="14" rx="5"/>
+    </g>
+  </g>
+  <!-- glossy highlight -->
+  <ellipse fill="#ffffff" opacity="0.28" cx="82" cy="72" rx="8" ry="15" transform="rotate(-8 82 72)"/>
+  <!-- face -->
+  <g>
+    <ellipse fill="#ff7ba0" opacity="0.8" cx="78" cy="112" rx="7.5" ry="5"/>
+    <ellipse fill="#ff7ba0" opacity="0.8" cx="122" cy="112" rx="7.5" ry="5"/>
+    <circle fill="#2a1e16" cx="88" cy="100" r="6.5"/>
+    <circle fill="#2a1e16" cx="112" cy="100" r="6.5"/>
+    <circle fill="#ffffff" cx="90" cy="97.5" r="2.4"/>
+    <circle fill="#ffffff" cx="114" cy="97.5" r="2.4"/>
+    <path fill="none" stroke="#8a5a1e" stroke-width="3" stroke-linecap="round" d="M92,112 Q100,118 108,112"/>
+  </g>
+</svg>

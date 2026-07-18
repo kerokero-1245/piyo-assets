@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="ふんすい">
+  <!-- white die-cut underlay -->
+  <g fill="#ffffff" stroke="#ffffff" stroke-width="15" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M30,134 Q30,178 100,178 Q170,178 170,134 Q170,118 100,118 Q30,118 30,134 Z"/>
+    <rect x="88" y="98" width="24" height="42" rx="6"/>
+    <path d="M64,92 Q64,110 100,110 Q136,110 136,92 Q136,82 100,82 Q64,82 64,92 Z"/>
+    <path d="M92,88 Q86,62 100,50 Q114,62 108,88 Z"/>
+    <circle cx="78" cy="70" r="7"/>
+    <circle cx="122" cy="70" r="7"/>
+    <circle cx="100" cy="44" r="7"/>
+  </g>
+  <!-- top spray -->
+  <path d="M100,50 Q86,64 92,90 L108,90 Q114,64 100,50 Z" fill="#A6E4F7" stroke="#3d2a1c" stroke-width="3" stroke-linejoin="round"/>
+  <circle cx="78" cy="70" r="7" fill="#A6E4F7" stroke="#3d2a1c" stroke-width="2.6"/>
+  <circle cx="122" cy="70" r="7" fill="#A6E4F7" stroke="#3d2a1c" stroke-width="2.6"/>
+  <circle cx="100" cy="44" r="7.5" fill="#C5EEFB" stroke="#3d2a1c" stroke-width="2.6"/>
+  <!-- upper bowl -->
+  <path d="M64,92 Q64,108 100,108 Q136,108 136,92 Q136,82 100,82 Q64,82 64,92 Z" fill="#C9B79A" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round"/>
+  <ellipse cx="100" cy="87" rx="34" ry="6.5" fill="#7FD3EF"/>
+  <!-- column -->
+  <rect x="88" y="100" width="24" height="40" rx="6" fill="#B29A78" stroke="#3d2a1c" stroke-width="3.2"/>
+  <!-- cascades -->
+  <path d="M70,100 Q62,120 72,138" fill="none" stroke="#7FD3EF" stroke-width="6" stroke-linecap="round"/>
+  <path d="M130,100 Q138,120 128,138" fill="none" stroke="#7FD3EF" stroke-width="6" stroke-linecap="round"/>
+  <!-- pool back rim + water -->
+  <ellipse cx="100" cy="132" rx="70" ry="15" fill="#C9B79A" stroke="#3d2a1c" stroke-width="3.2"/>
+  <ellipse cx="100" cy="132" rx="60" ry="10.5" fill="#7FD3EF"/>
+  <!-- pool front wall -->
+  <path d="M30,132 Q30,178 100,178 Q170,178 170,132 Q140,150 100,150 Q60,150 30,132 Z" fill="#C9B79A" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round"/>
+  <!-- stone joints -->
+  <path d="M62,158 L62,172 M100,162 L100,177 M138,158 L138,172" fill="none" stroke="#3d2a1c" stroke-width="2.2" opacity="0.4"/>
+  <!-- water gloss -->
+  <path d="M78,129 Q100,125 122,129" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" opacity="0.6"/>
+  <ellipse cx="100" cy="86" rx="15" ry="2.6" fill="#ffffff" opacity="0.5"/>
+</svg>

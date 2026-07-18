@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="ぴよ よろこび">
+  <!-- white die-cut underlay -->
+  <g fill="#ffffff" stroke="#ffffff" stroke-width="15" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M84,66 Q82,50 94,56 Q100,46 106,56 Q118,50 116,66 Z"/>
+    <path fill="none" d="M84,156 L84,172 M84,172 L76,178 M84,172 L84,180 M84,172 L92,178"/>
+    <path fill="none" d="M116,156 L116,172 M116,172 L108,178 M116,172 L116,180 M116,172 L124,178"/>
+    <ellipse cx="100" cy="114" rx="52" ry="52"/>
+    <path d="M56,108 Q30,86 34,54 Q52,60 66,98 Z"/>
+    <path d="M144,108 Q170,86 166,54 Q148,60 134,98 Z"/>
+    <path d="M54,62 L57,55 L60,62 L67,65 L60,68 L57,75 L54,68 L47,65 Z"/>
+    <path d="M148,60 L151,52 L154,60 L162,63 L154,66 L151,74 L148,66 L140,63 Z"/>
+    <path d="M102,40 L105,33 L108,40 L115,43 L108,46 L105,53 L102,46 L95,43 Z"/>
+  </g>
+  <!-- sparkles -->
+  <g fill="#FFE04A" stroke="#3d2a1c" stroke-width="2.4" stroke-linejoin="round">
+    <path d="M54,62 L57,55 L60,62 L67,65 L60,68 L57,75 L54,68 L47,65 Z"/>
+    <path d="M148,60 L151,52 L154,60 L162,63 L154,66 L151,74 L148,66 L140,63 Z"/>
+    <path d="M102,40 L105,33 L108,40 L115,43 L108,46 L105,53 L102,46 L95,43 Z"/>
+  </g>
+  <!-- feet -->
+  <path fill="none" stroke="#F0891C" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"
+        d="M84,156 L84,172 M84,172 L76,178 M84,172 L84,180 M84,172 L92,178"/>
+  <path fill="none" stroke="#F0891C" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"
+        d="M116,156 L116,172 M116,172 L108,178 M116,172 L116,180 M116,172 L124,178"/>
+  <!-- tuft -->
+  <path d="M84,66 Q82,50 94,56 Q100,46 106,56 Q118,50 116,66 Z" fill="#FFCB2E" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round"/>
+  <!-- raised wings (banzai) -->
+  <path d="M56,108 Q30,86 34,54 Q52,60 66,98 Z" fill="#F5B400" stroke="#3d2a1c" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M144,108 Q170,86 166,54 Q148,60 134,98 Z" fill="#F5B400" stroke="#3d2a1c" stroke-width="3" stroke-linejoin="round"/>
+  <!-- body -->
+  <ellipse cx="100" cy="114" rx="52" ry="52" fill="#FFCB2E" stroke="#3d2a1c" stroke-width="3.2"/>
+  <!-- belly -->
+  <ellipse cx="100" cy="128" rx="33" ry="30" fill="#FFE089"/>
+  <!-- body highlight -->
+  <ellipse cx="76" cy="90" rx="16" ry="10" fill="#ffffff" opacity="0.24"/>
+  <!-- cheeks -->
+  <ellipse cx="66" cy="120" rx="11" ry="7" fill="#FF9E4D" opacity="0.62"/>
+  <ellipse cx="134" cy="120" rx="11" ry="7" fill="#FF9E4D" opacity="0.62"/>
+  <!-- happy sparkle eyes -->
+  <path d="M70,110 Q80,94 90,110" fill="none" stroke="#2a1e16" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M110,110 Q120,94 130,110" fill="none" stroke="#2a1e16" stroke-width="4.5" stroke-linecap="round"/>
+  <!-- open joyful beak/mouth -->
+  <path d="M88,116 Q100,134 112,116 Q100,122 88,116 Z" fill="#C24A22" stroke="#3d2a1c" stroke-width="2.6" stroke-linejoin="round"/>
+  <path d="M96,124 Q100,130 104,124 Q100,127 96,124 Z" fill="#FF8FA3"/>
+  <path d="M88,116 L112,116" fill="none" stroke="#F0891C" stroke-width="3.4" stroke-linecap="round"/>
+</svg>

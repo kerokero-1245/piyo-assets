@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="ろけっと">
+  <!-- white die-cut underlay -->
+  <g fill="#ffffff" stroke="#ffffff" stroke-width="15" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M84,160 L116,160 Q114,182 100,196 Q86,182 84,160 Z"/>
+    <path d="M80,124 L58,160 Q56,164 62,163 L82,150 Z"/>
+    <path d="M120,124 L142,160 Q144,164 138,163 L118,150 Z"/>
+    <path d="M100,26 Q120,44 120,88 L120,150 Q120,162 108,162 L92,162 Q80,162 80,150 L80,88 Q80,44 100,26 Z"/>
+  </g>
+  <!-- flame -->
+  <path d="M84,160 L116,160 Q114,182 100,196 Q86,182 84,160 Z" fill="#ff8a2e" stroke="#3d2a1c" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M92,160 L108,160 Q107,178 100,190 Q93,178 92,160 Z" fill="#ffd23d"/>
+  <!-- fins -->
+  <path d="M80,124 L58,160 Q56,164 62,163 L82,150 Z" fill="#f0463a" stroke="#3d2a1c" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M120,124 L142,160 Q144,164 138,163 L118,150 Z" fill="#f0463a" stroke="#3d2a1c" stroke-width="3" stroke-linejoin="round"/>
+  <!-- body -->
+  <path d="M100,26 Q120,44 120,88 L120,150 Q120,162 108,162 L92,162 Q80,162 80,150 L80,88 Q80,44 100,26 Z" fill="#ffffff" stroke="#3d2a1c" stroke-width="3.2"/>
+  <!-- nose cone -->
+  <path d="M100,26 Q120,44 120,80 L80,80 Q80,44 100,26 Z" fill="#f0463a" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round"/>
+  <!-- lower band -->
+  <rect x="80" y="134" width="40" height="14" fill="#f0463a"/>
+  <path d="M80,134 L120,134 M80,148 L120,148" fill="none" stroke="#3d2a1c" stroke-width="2.6"/>
+  <!-- window -->
+  <circle cx="100" cy="105" r="17" fill="#ffffff" stroke="#3d2a1c" stroke-width="3"/>
+  <circle cx="100" cy="105" r="12" fill="#55c2e0" stroke="#3d2a1c" stroke-width="2.4"/>
+  <path d="M94,100 Q98,96 103,98" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" opacity="0.85"/>
+  <!-- gloss -->
+  <path d="M88,90 Q86,110 90,128" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" opacity="0.55"/>
+</svg>

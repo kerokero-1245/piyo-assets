@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="はなび">
+  <!-- white die-cut underlay -->
+  <g fill="#ffffff" stroke="#ffffff" stroke-width="13" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="100.0" y1="78.0" x2="100.0" y2="36.0"/>
+    <line x1="111.0" y1="80.9" x2="132.0" y2="44.6"/>
+    <line x1="119.1" y1="89.0" x2="155.4" y2="68.0"/>
+    <line x1="122.0" y1="100.0" x2="164.0" y2="100.0"/>
+    <line x1="119.1" y1="111.0" x2="155.4" y2="132.0"/>
+    <line x1="111.0" y1="119.1" x2="132.0" y2="155.4"/>
+    <line x1="100.0" y1="122.0" x2="100.0" y2="164.0"/>
+    <line x1="89.0" y1="119.1" x2="68.0" y2="155.4"/>
+    <line x1="80.9" y1="111.0" x2="44.6" y2="132.0"/>
+    <line x1="78.0" y1="100.0" x2="36.0" y2="100.0"/>
+    <line x1="80.9" y1="89.0" x2="44.6" y2="68.0"/>
+    <line x1="89.0" y1="80.9" x2="68.0" y2="44.6"/>
+    <circle cx="100.0" cy="30.0" r="8"/>
+    <circle cx="135.0" cy="39.4" r="8"/>
+    <circle cx="160.6" cy="65.0" r="8"/>
+    <circle cx="170.0" cy="100.0" r="8"/>
+    <circle cx="160.6" cy="135.0" r="8"/>
+    <circle cx="135.0" cy="160.6" r="8"/>
+    <circle cx="100.0" cy="170.0" r="8"/>
+    <circle cx="65.0" cy="160.6" r="8"/>
+    <circle cx="39.4" cy="135.0" r="8"/>
+    <circle cx="30.0" cy="100.0" r="8"/>
+    <circle cx="39.4" cy="65.0" r="8"/>
+    <circle cx="65.0" cy="39.4" r="8"/>
+    <circle cx="100" cy="100" r="16"/>
+  </g>
+  <!-- rays -->
+  <g stroke-linecap="round">
+    <line x1="100.0" y1="78.0" x2="100.0" y2="36.0" stroke="#F5433B" stroke-width="5.5"/>
+    <line x1="111.0" y1="80.9" x2="132.0" y2="44.6" stroke="#FFC42E" stroke-width="5.5"/>
+    <line x1="119.1" y1="89.0" x2="155.4" y2="68.0" stroke="#3FA0F0" stroke-width="5.5"/>
+    <line x1="122.0" y1="100.0" x2="164.0" y2="100.0" stroke="#F5433B" stroke-width="5.5"/>
+    <line x1="119.1" y1="111.0" x2="155.4" y2="132.0" stroke="#FFC42E" stroke-width="5.5"/>
+    <line x1="111.0" y1="119.1" x2="132.0" y2="155.4" stroke="#3FA0F0" stroke-width="5.5"/>
+    <line x1="100.0" y1="122.0" x2="100.0" y2="164.0" stroke="#F5433B" stroke-width="5.5"/>
+    <line x1="89.0" y1="119.1" x2="68.0" y2="155.4" stroke="#FFC42E" stroke-width="5.5"/>
+    <line x1="80.9" y1="111.0" x2="44.6" y2="132.0" stroke="#3FA0F0" stroke-width="5.5"/>
+    <line x1="78.0" y1="100.0" x2="36.0" y2="100.0" stroke="#F5433B" stroke-width="5.5"/>
+    <line x1="80.9" y1="89.0" x2="44.6" y2="68.0" stroke="#FFC42E" stroke-width="5.5"/>
+    <line x1="89.0" y1="80.9" x2="68.0" y2="44.6" stroke="#3FA0F0" stroke-width="5.5"/>
+  </g>
+  <!-- sparkle dots -->
+  <circle cx="110.9" cy="59.4" r="3" fill="#FFC42E"/>
+  <circle cx="129.7" cy="70.3" r="3" fill="#3FA0F0"/>
+  <circle cx="140.6" cy="89.1" r="3" fill="#F5433B"/>
+  <circle cx="140.6" cy="110.9" r="3" fill="#FFC42E"/>
+  <circle cx="129.7" cy="129.7" r="3" fill="#3FA0F0"/>
+  <circle cx="110.9" cy="140.6" r="3" fill="#F5433B"/>
+  <circle cx="89.1" cy="140.6" r="3" fill="#FFC42E"/>
+  <circle cx="70.3" cy="129.7" r="3" fill="#3FA0F0"/>
+  <circle cx="59.4" cy="110.9" r="3" fill="#F5433B"/>
+  <circle cx="59.4" cy="89.1" r="3" fill="#FFC42E"/>
+  <circle cx="70.3" cy="70.3" r="3" fill="#3FA0F0"/>
+  <circle cx="89.1" cy="59.4" r="3" fill="#F5433B"/>
+  <!-- tips -->
+  <circle cx="100.0" cy="30.0" r="5.2" fill="#F5433B" stroke="#3d2a1c" stroke-width="2"/>
+  <circle cx="135.0" cy="39.4" r="5.2" fill="#FFC42E" stroke="#3d2a1c" stroke-width="2"/>
+  <circle cx="160.6" cy="65.0" r="5.2" fill="#3FA0F0" stroke="#3d2a1c" stroke-width="2"/>
+  <circle cx="170.0" cy="100.0" r="5.2" fill="#F5433B" stroke="#3d2a1c" stroke-width="2"/>
+  <circle cx="160.6" cy="135.0" r="5.2" fill="#FFC42E" stroke="#3d2a1c" stroke-width="2"/>
+  <circle cx="135.0" cy="160.6" r="5.2" fill="#3FA0F0" stroke="#3d2a1c" stroke-width="2"/>
+  <circle cx="100.0" cy="170.0" r="5.2" fill="#F5433B" stroke="#3d2a1c" stroke-width="2"/>
+  <circle cx="65.0" cy="160.6" r="5.2" fill="#FFC42E" stroke="#3d2a1c" stroke-width="2"/>
+  <circle cx="39.4" cy="135.0" r="5.2" fill="#3FA0F0" stroke="#3d2a1c" stroke-width="2"/>
+  <circle cx="30.0" cy="100.0" r="5.2" fill="#F5433B" stroke="#3d2a1c" stroke-width="2"/>
+  <circle cx="39.4" cy="65.0" r="5.2" fill="#FFC42E" stroke="#3d2a1c" stroke-width="2"/>
+  <circle cx="65.0" cy="39.4" r="5.2" fill="#3FA0F0" stroke="#3d2a1c" stroke-width="2"/>
+  <!-- center -->
+  <circle cx="100" cy="100" r="11" fill="#FFE27A" stroke="#3d2a1c" stroke-width="3"/>
+  <circle cx="100" cy="100" r="5.5" fill="#FFC42E"/>
+  <circle cx="96.5" cy="96.5" r="2.4" fill="#ffffff" opacity="0.9"/>
+</svg>

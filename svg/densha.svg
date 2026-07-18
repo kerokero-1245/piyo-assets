@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="でんしゃ">
+  <!-- white die-cut underlay -->
+  <g fill="#ffffff" stroke="#ffffff" stroke-width="15" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M46,82 Q46,50 78,50 L122,50 Q154,50 154,82 L154,160 Q154,166 148,166 L52,166 Q46,166 46,160 Z"/>
+    <rect x="70" y="164" width="60" height="12" rx="3"/>
+  </g>
+  <!-- undercarriage -->
+  <rect x="70" y="164" width="60" height="12" rx="3" fill="#5b5560" stroke="#3d2a1c" stroke-width="2.6"/>
+  <!-- body -->
+  <path d="M46,82 Q46,50 78,50 L122,50 Q154,50 154,82 L154,160 Q154,166 148,166 L52,166 Q46,166 46,160 Z" fill="#4bbf6a" stroke="#3d2a1c" stroke-width="3.2"/>
+  <!-- windshield windows -->
+  <rect x="57" y="64" width="37" height="30" rx="8" fill="#55c2e0" stroke="#3d2a1c" stroke-width="2.6"/>
+  <rect x="106" y="64" width="37" height="30" rx="8" fill="#55c2e0" stroke="#3d2a1c" stroke-width="2.6"/>
+  <!-- orange face band -->
+  <rect x="46" y="104" width="108" height="20" fill="#ff8a2e"/>
+  <path d="M46,104 L154,104 M46,124 L154,124" fill="none" stroke="#3d2a1c" stroke-width="2.6"/>
+  <!-- headlights -->
+  <circle cx="70" cy="142" r="8" fill="#ffe27a" stroke="#3d2a1c" stroke-width="2.4"/>
+  <circle cx="130" cy="142" r="8" fill="#ffe27a" stroke="#3d2a1c" stroke-width="2.4"/>
+  <!-- gloss -->
+  <path d="M62,60 Q66,53 76,53" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+</svg>

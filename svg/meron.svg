@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="めろん">
+  <!-- white die-cut underlay -->
+  <g fill="#ffffff" stroke="#ffffff" stroke-width="15" stroke-linejoin="round" stroke-linecap="round">
+    <rect x="95" y="48" width="10" height="16" rx="3"/>
+    <path d="M105,54 Q124,40 138,50 Q126,66 105,60 Q101,57 105,54 Z"/>
+    <circle cx="100" cy="112" r="58"/>
+  </g>
+  <!-- color -->
+  <rect x="95" y="48" width="10" height="16" rx="3" fill="#7A5230" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M105,54 Q124,40 138,50 Q126,66 105,60 Q101,57 105,54 Z" fill="#5FBF7A" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="100" cy="112" r="58" fill="#B7D46B" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+  <clipPath id="melonc"><circle cx="100" cy="112" r="55"/></clipPath>
+  <g clip-path="url(#melonc)" stroke="#F2F7D8" stroke-width="3" stroke-linecap="round" opacity="0.95">
+  <line x1="-74.0" y1="54" x2="42.0" y2="170"/>
+  <line x1="-59.0" y1="54" x2="57.0" y2="170"/>
+  <line x1="-44.0" y1="54" x2="72.0" y2="170"/>
+  <line x1="-29.0" y1="54" x2="87.0" y2="170"/>
+  <line x1="-14.0" y1="54" x2="102.0" y2="170"/>
+  <line x1="1.0" y1="54" x2="117.0" y2="170"/>
+  <line x1="16.0" y1="54" x2="132.0" y2="170"/>
+  <line x1="31.0" y1="54" x2="147.0" y2="170"/>
+  <line x1="46.0" y1="54" x2="162.0" y2="170"/>
+  <line x1="61.0" y1="54" x2="177.0" y2="170"/>
+  <line x1="76.0" y1="54" x2="192.0" y2="170"/>
+  <line x1="91.0" y1="54" x2="207.0" y2="170"/>
+  <line x1="106.0" y1="54" x2="222.0" y2="170"/>
+  <line x1="121.0" y1="54" x2="237.0" y2="170"/>
+  <line x1="136.0" y1="54" x2="252.0" y2="170"/>
+  <line x1="151.0" y1="54" x2="267.0" y2="170"/>
+  <line x1="42.0" y1="54" x2="-74.0" y2="170"/>
+  <line x1="57.0" y1="54" x2="-59.0" y2="170"/>
+  <line x1="72.0" y1="54" x2="-44.0" y2="170"/>
+  <line x1="87.0" y1="54" x2="-29.0" y2="170"/>
+  <line x1="102.0" y1="54" x2="-14.0" y2="170"/>
+  <line x1="117.0" y1="54" x2="1.0" y2="170"/>
+  <line x1="132.0" y1="54" x2="16.0" y2="170"/>
+  <line x1="147.0" y1="54" x2="31.0" y2="170"/>
+  <line x1="162.0" y1="54" x2="46.0" y2="170"/>
+  <line x1="177.0" y1="54" x2="61.0" y2="170"/>
+  <line x1="192.0" y1="54" x2="76.0" y2="170"/>
+  <line x1="207.0" y1="54" x2="91.0" y2="170"/>
+  <line x1="222.0" y1="54" x2="106.0" y2="170"/>
+  <line x1="237.0" y1="54" x2="121.0" y2="170"/>
+  <line x1="252.0" y1="54" x2="136.0" y2="170"/>
+  <line x1="267.0" y1="54" x2="151.0" y2="170"/>
+</g>
+  <path d="M100,58 Q100,112 100,166" fill="none" stroke="#8FB84E" stroke-width="2" opacity="0.5" clip-path="url(#melonc)"/>
+  <ellipse cx="74" cy="88" rx="16" ry="12" fill="#fff" opacity="0.22" transform="rotate(-18 74 88)"/>
+  <ellipse cx="76" cy="132" rx="9" ry="6" fill="#ff7ba0" opacity="0.8"/>
+  <ellipse cx="124" cy="132" rx="9" ry="6" fill="#ff7ba0" opacity="0.8"/>
+  <circle cx="88" cy="118" r="8" fill="#2a1e16"/>
+  <circle cx="112" cy="118" r="8" fill="#2a1e16"/>
+  <circle cx="91" cy="115" r="3" fill="#fff"/>
+  <circle cx="115" cy="115" r="3" fill="#fff"/>
+  <path d="M92,132 Q100,139 108,132" fill="none" stroke="#3d2a1c" stroke-width="3" stroke-linecap="round"/>
+</svg>

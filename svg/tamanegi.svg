@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="たまねぎ">
+  <!-- white die-cut underlay -->
+  <g fill="#ffffff" stroke="#ffffff" stroke-width="15" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M100,60 Q96,38 100,22 Q104,38 100,60 Z"/>
+    <path d="M92,62 Q82,44 84,28 Q94,42 98,60 Z"/>
+    <path d="M108,62 Q118,44 116,28 Q106,42 102,60 Z"/>
+    <path d="M100,62 C128,62 150,86 150,116 C150,148 126,170 100,170 C74,170 50,148 50,116 C50,86 72,62 100,62 Z"/>
+  </g>
+  <!-- root whiskers -->
+  <g fill="none" stroke="#c9b485" stroke-width="2.4" stroke-linecap="round">
+    <path d="M100,166 L100,182"/>
+    <path d="M92,166 L86,180"/>
+    <path d="M108,166 L114,180"/>
+    <path d="M96,167 L91,181"/>
+    <path d="M104,167 L109,181"/>
+  </g>
+  <!-- sprouts -->
+  <g stroke="#3d2a1c" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <path fill="#57ac47" d="M92,62 Q82,44 84,28 Q94,42 98,60 Z"/>
+    <path fill="#57ac47" d="M108,62 Q118,44 116,28 Q106,42 102,60 Z"/>
+    <path fill="#6cc258" d="M100,60 Q96,38 100,22 Q104,38 100,60 Z"/>
+  </g>
+  <!-- bulb -->
+  <path fill="#f4ba52" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round"
+        d="M100,62 C128,62 150,86 150,116 C150,148 126,170 100,170 C74,170 50,148 50,116 C50,86 72,62 100,62 Z"/>
+  <!-- layer lines -->
+  <g fill="none" stroke="#d99a2e" stroke-width="2.8" stroke-linecap="round" opacity="0.8">
+    <path d="M100,66 C103,100 103,140 100,166"/>
+    <path d="M78,72 C71,104 72,140 84,162"/>
+    <path d="M122,72 C129,104 128,140 116,162"/>
+  </g>
+  <!-- highlight -->
+  <ellipse fill="#ffffff" opacity="0.30" cx="80" cy="90" rx="10" ry="16" transform="rotate(-16 80 90)"/>
+  <!-- face -->
+  <g>
+    <ellipse fill="#ff7ba0" opacity="0.75" cx="80" cy="124" rx="8" ry="5.5"/>
+    <ellipse fill="#ff7ba0" opacity="0.75" cx="120" cy="124" rx="8" ry="5.5"/>
+    <circle fill="#2a1e16" cx="89" cy="112" r="7"/>
+    <circle fill="#2a1e16" cx="111" cy="112" r="7"/>
+    <circle fill="#ffffff" cx="91.5" cy="109.5" r="2.6"/>
+    <circle fill="#ffffff" cx="113.5" cy="109.5" r="2.6"/>
+    <path fill="none" stroke="#a8701e" stroke-width="3" stroke-linecap="round" d="M93,124 Q100,130 107,124"/>
+  </g>
+</svg>

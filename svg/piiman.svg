@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="ぴーまん">
+  <!-- white die-cut underlay -->
+  <g fill="#ffffff" stroke="#ffffff" stroke-width="15" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M100,66 Q96,44 108,38 Q116,44 112,54 Q108,62 100,66 Z"/>
+    <path d="M100,62 C72,62 54,84 54,114 C54,144 68,162 84,162 Q90,150 98,160 Q100,150 102,160 Q110,150 116,162 C132,162 146,144 146,114 C146,84 128,62 100,62 Z"/>
+  </g>
+  <!-- stem -->
+  <path fill="#4f9c3f" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round"
+        d="M100,66 Q95,44 108,36 Q117,42 113,54 Q108,63 100,66 Z"/>
+  <!-- body -->
+  <path fill="#57bf4a" stroke="#3d2a1c" stroke-width="3.2" stroke-linejoin="round"
+        d="M100,62 C72,62 54,84 54,114 C54,144 68,162 84,162 Q90,150 98,160 Q100,150 102,160 Q110,150 116,162 C132,162 146,144 146,114 C146,84 128,62 100,62 Z"/>
+  <!-- right lobe shading -->
+  <path fill="#3d8a34" opacity="0.5" d="M124,66 C136,78 146,96 146,116 C146,144 132,162 116,162 Q126,158 132,142 Q140,120 136,98 Q132,80 124,66 Z"/>
+  <!-- glossy highlight -->
+  <path fill="#ffffff" opacity="0.34" d="M78,74 C66,84 60,102 62,124 C68,110 72,92 84,80 Q82,76 78,74 Z"/>
+  <!-- face -->
+  <g>
+    <ellipse fill="#ff7ba0" opacity="0.75" cx="78" cy="122" rx="8" ry="5.5"/>
+    <ellipse fill="#ff7ba0" opacity="0.75" cx="122" cy="122" rx="8" ry="5.5"/>
+    <circle fill="#2a1e16" cx="88" cy="110" r="7"/>
+    <circle fill="#2a1e16" cx="112" cy="110" r="7"/>
+    <circle fill="#ffffff" cx="90.5" cy="107.5" r="2.6"/>
+    <circle fill="#ffffff" cx="114.5" cy="107.5" r="2.6"/>
+    <path fill="none" stroke="#3d2a1c" stroke-width="3" stroke-linecap="round" d="M92,122 Q100,128 108,122"/>
+  </g>
+</svg>
