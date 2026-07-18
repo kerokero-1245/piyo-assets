@@ -1,0 +1,111 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8">
+<title>敵対的画風審査 — シールポップ調和チェック</title>
+<style>
+  :root{--cream:#FFF7E6;--sky:#AEE4FF;--ink:#5a4634}
+  *{box-sizing:border-box}
+  body{font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;background:var(--cream);margin:0;padding:24px;color:var(--ink)}
+  h1{font-size:22px;margin:0 0 4px}
+  .sub{font-size:13px;color:#8a7a66;margin:0 0 20px;line-height:1.6}
+  .crit{display:inline-block;background:#fff;border:2px solid #f0d9a8;border-radius:8px;padding:4px 10px;margin:2px 4px 2px 0;font-size:12px;font-weight:700}
+  h2{font-size:16px;margin:26px 0 10px;border-left:6px solid #FF9E3D;padding-left:10px}
+  /* mixing shelf */
+  .shelf{background:linear-gradient(#CDEBFF,#EAF7EA);border-radius:16px;padding:16px;display:flex;flex-wrap:wrap;gap:4px;align-items:flex-end;box-shadow:inset 0 0 0 3px #fff}
+  .shelf img{width:72px;height:72px;object-fit:contain}
+  .shelf .intruder{outline:3px dashed #E5484D;outline-offset:2px;border-radius:8px;position:relative}
+  .tag{position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:700;color:#E5484D;white-space:nowrap}
+  /* pair grid */
+  .grid{display:flex;flex-wrap:wrap;gap:14px}
+  .card{background:#fff;border-radius:14px;padding:12px;box-shadow:0 2px 8px #0001;width:300px}
+  .cap{font-size:13px;font-weight:800;text-align:center;margin-bottom:8px}
+  .cap small{font-weight:400;color:#999}
+  .cols{display:flex;gap:8px}
+  .col{flex:1;text-align:center}
+  .col h3{font-size:11px;margin:0 0 6px;letter-spacing:.05em}
+  .col.k h3{color:#E5484D}
+  .col.c h3{color:#2E9E5B}
+  .sizes{display:flex;flex-direction:column;gap:6px;align-items:center}
+  .cell{background:#f3f3f3;border-radius:8px;display:flex;align-items:center;justify-content:center;position:relative}
+  .cell.sky{background:var(--sky)}
+  .cell img{object-fit:contain}
+  .s200{width:132px;height:132px}.s200 img{width:120px;height:120px}
+  .s96{width:104px;height:104px}.s96 img{width:96px;height:96px}
+  .s48{width:60px;height:60px}.s48 img{width:48px;height:48px}
+  .szlab{position:absolute;right:4px;bottom:2px;font-size:8px;color:#bbb;font-weight:700}
+  .verdict{font-size:11px;margin-top:8px;padding:6px 8px;border-radius:8px;background:#FCECEC;color:#B4292D;line-height:1.5}
+</style></head><body>
+<h1>敵対的画風審査 — シールポップ画風調和チェック</h1>
+<p class="sub">
+基準＝見本 style-samples.html「シールポップ」。4要件で採否を判定。<br>
+<span class="crit">① 太い白フチ</span><span class="crit">② 濃いこげ茶アウトライン</span><span class="crit">③ ビビッド彩度</span><span class="crit">④ 大きな瞳＋頬の顔</span>
+＋ <span class="crit">48px判読性</span> ／ <span class="crit">混在時に浮かないか</span><br>
+本審査は Kenney の<b>最強候補</b>（＝顔つき animal_ パック・最も高彩度の食材）を狙って並べる。左＝自作SVG（正典）／右＝Kenney（調和加工なし＝候補ゼロのため素材そのまま）。
+</p>
+
+<h2>A. 混在シェルフ（街の飾り棚に Kenney を1個ずつ紛れ込ませる）</h2>
+<p class="sub">自作の白フチ群の中に Kenney（赤破線）を置くと、どれだけ「浮く」か。3枚とも一目で異物と分かるのが不合格の証拠。</p>
+<div class="shelf" id="shelfA"></div>
+<div style="height:12px"></div>
+<div class="shelf" id="shelfB"></div>
+<div style="height:12px"></div>
+<div class="shelf" id="shelfC"></div>
+
+<h2>B. 1対1 精査（48 / 96 / 200px）— Kenney最強候補</h2>
+<div class="grid" id="grid"></div>
+
+<script>
+const S="file:///Users/uinozomu/Desktop/piyo-assets/svg/";
+const K="file:///Users/uinozomu/Desktop/piyo-assets/reference/kenney-samples/";
+
+// mixing shelves: custom neighbors + one kenney intruder
+const custom=["piyo","hiyoko","usagi","inu","neko","kuma","hana","niji","cake","funsui","mokuba","koinobori"];
+function shelf(elId, intruderFile, intruderLabel, insertAt){
+  const el=document.getElementById(elId);
+  const row=[...custom];
+  row.forEach((id,i)=>{
+    if(i===insertAt){
+      const w=document.createElement('div');w.className='intruder';
+      w.innerHTML=`<span class="tag">Kenney: ${intruderLabel}</span><img src="${K}${intruderFile}">`;
+      el.appendChild(w);
+    }
+    const img=document.createElement('img');img.src=`${S}${id}.svg`;el.appendChild(img);
+  });
+}
+shelf('shelfA','animal_frog.png','かえる',4);
+shelf('shelfB','animal_pig.png','ぶた',6);
+shelf('shelfC','food_strawberry.png','いちご',3);
+
+// 1:1 pairs — Kenney's strongest candidates
+const pairs=[
+ ["かえる kaeru","animal","kaeru.svg","animal_frog.png","最高彩度の緑だが白フチ無・平面ドット目・頬無・下半分グレー腹で就寝感ゼロ"],
+ ["ぶた buta","animal","buta.svg","animal_pig.png","くすみ藤色・細い紫線・白フチ無・瞳ハイライト無。顔はあるが「シール感」が出ない"],
+ ["ぱんだ panda","animal","panda.svg","animal_panda.png","グレー基調・無彩度・白フチ無。顔つきでも彩度③と白フチ①で外れる"],
+ ["いぬ inu","animal","inu.svg","animal_dog.png","完全グレーで彩度ゼロ・白フチ無。ビビッド群から最も浮く"],
+ ["うさぎ usagi","animal","usagi.svg","animal_rabbit.png","グレー耳・くすみ・白フチ無・頬無。頭部のみで全身シールと骨格不一致"],
+ ["くま kuma","animal","kuma.svg","animal_bear.png","くすみ茶・白フチ無・平面目。自作の白フチくまが存在感で圧勝"],
+ ["いちご ichigo","food","ichigo.svg","food_strawberry.png","無表情・白フチ無・小粒平面。語彙用途にも装飾用途にも弱い"],
+ ["とまと tomato","food","tomato.svg","food_tomato.png","無表情・白フチ無・くすみ赤。自作の顔つき野菜と画風非一致"],
+ ["たいよう taiyou","bg","taiyou.svg","bg_sun.png","顔なしの白い円。世界観「太陽も笑う」に反する"],
+ ["ほし hoshi","emote","hoshi.svg","emote_star.png","小さな平面オレンジ星・白フチ無・存在感不足"],
+];
+const g=document.getElementById('grid');
+for(const [cap,cat,s,k,why] of pairs){
+  const skyC = (cat==='bg')?' sky':'';
+  const c=document.createElement('div');c.className='card';
+  c.innerHTML=`<div class="cap">${cap}</div>
+   <div class="cols">
+    <div class="col c"><h3>自作 (custom)</h3><div class="sizes">
+      <div class="cell s200${skyC}"><img src="${S}${s}"><span class="szlab">200</span></div>
+      <div class="cell s96${skyC}"><img src="${S}${s}"><span class="szlab">96</span></div>
+      <div class="cell s48${skyC}"><img src="${S}${s}"><span class="szlab">48</span></div>
+    </div></div>
+    <div class="col k"><h3>Kenney</h3><div class="sizes">
+      <div class="cell s200${skyC}"><img src="${K}${k}"><span class="szlab">200</span></div>
+      <div class="cell s96${skyC}"><img src="${K}${k}"><span class="szlab">96</span></div>
+      <div class="cell s48${skyC}"><img src="${K}${k}"><span class="szlab">48</span></div>
+    </div></div>
+   </div>
+   <div class="verdict">✗ ${why}</div>`;
+  g.appendChild(c);
+}
+</script>
+</body></html>
