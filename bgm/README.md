@@ -65,11 +65,13 @@ AudioContext 非対応環境では全 API が**無害な no-op**（クラッシ�
 
 | API | 説明 |
 |----|----|
-| `startBgm(songId)` | 曲を再生開始（ユーザー操作起点）。二重startは無視。 |
+| `startBgm(songId)` | 曲を再生開始（ユーザー操作起点）。**同一曲での再呼び出しは冪等（無視）**、**別曲なら内部で停止→再初期化→切替**（走行中カーソルを乱さない・クリック無し）。 |
 | `stopBgm(fadeSec?)` | フェードアウト停止（既定0.4秒）。 |
 | `setBgmEnabled(bool)` | ON/OFF。false で停止、true で予定曲を鳴らし直す。 |
 | `isBgmEnabled()` | 現在の ON/OFF。 |
 | `duckBgm()` / `unduckBgm()` | 声再生中のダッキング（35%へ・`setTargetAtTime` でなめらか）。多重呼び出し対応。 |
+| `getBgmState()` | 状態スナップショット `{ supported, enabled, running, songId, ducked, ownsCtx }`（検証・デバッグ用）。 |
+| `dispose()` | 後片付け（`engine.js` のみ）。スケジューラ停止＋`visibilitychange` リスナ解除。 |
 
 ### Expo アプリ（engine.ts）
 

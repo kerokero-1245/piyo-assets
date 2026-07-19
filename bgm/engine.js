@@ -249,20 +249,34 @@
     // ── 公開API ──────────────────────────────────────────────────────
 
     // 曲を再生開始（必ずユーザー操作起点で呼ぶ前提）。
+    // - 同じ曲が既に再生中なら冪等（カーソル・ゲインを一切いじらず即リターン）。
+    // - 別の曲で呼ばれたら内部的に stop → カーソル／ゲイン再初期化 → 新曲を start（安全な切替）。
     function startBgm(id) {
       if (!supported) return;
       if (!songs) return;
       var data = songs[id];
       if (!data) return;
+
+      // 同一曲がすでに回っているなら冪等リターン（song/baseVolume を差し替えて
+      // 走行中カーソルと不整合を起こす事故を防ぐ）。
+      if (running && songId === id && ctx && master) return;
+
+      // 別曲へ切替中か（running なのに曲IDが違う）。
+      var switching = running && songId !== id;
+
       songId = id;
       song = prepSong(data);
       baseVolume = masterVolume * song.mix;
 
       if (!enabled) return; // OFF のときは予約だけ覚えて鳴らさない
-      if (running && ctx && master) {
-        // 既に同じ曲が回っているなら二重startしない。
-        return;
+
+      // 別曲へ切替: 走っているスケジューラを止めてから、下でカーソル・ゲインを作り直す。
+      // 予約済みの旧曲ノートは各自の減衰で自然に消える（ハードカットしないのでクリック無し）。
+      if (switching) {
+        stopTimer();
+        running = false;
       }
+
       if (!ensureCtx()) return;
       if (!ensureGraph()) return;
       try {
@@ -350,10 +364,43 @@
         }
       } catch (e) {}
     }
-    if (supported && g.document && typeof g.document.addEventListener === 'function') {
-      try {
-        g.document.addEventListener('visibilitychange', onVisibility);
-      } catch (e) {}
+
+    // visibilitychange リスナの登録（多重登録しない）。dispose で解除できるよう束縛状態を持つ。
+    var visibilityBound = false;
+    function bindVisibility() {
+      if (visibilityBound) return;
+      if (supported && g.document && typeof g.document.addEventListener === 'function') {
+        try {
+          g.document.addEventListener('visibilitychange', onVisibility);
+          visibilityBound = true;
+        } catch (e) {}
+      }
+    }
+    bindVisibility();
+
+    // 現在の再生状態スナップショット（検証・デバッグ用）。engine.ts の getBgmState と同形。
+    function getBgmState() {
+      return {
+        supported: supported,
+        enabled: enabled,
+        running: running,
+        songId: songId,
+        ducked: duckCount > 0,
+        ownsCtx: ownsCtx,
+      };
+    }
+
+    // 後片付け: スケジューラを止め、visibilitychange リスナを解除する。
+    // （自前生成の ctx は閉じない。声・効果音と共有しうるため呼び出し側の管理に委ねる。）
+    function dispose() {
+      stopTimer();
+      running = false;
+      if (visibilityBound && g.document && typeof g.document.removeEventListener === 'function') {
+        try {
+          g.document.removeEventListener('visibilitychange', onVisibility);
+        } catch (e) {}
+        visibilityBound = false;
+      }
     }
 
     return {
@@ -363,10 +410,10 @@
       isBgmEnabled: isBgmEnabled,
       duckBgm: duckBgm,
       unduckBgm: unduckBgm,
-      // 検証・デバッグ用（アプリからは通常使わない）。
-      _getState: function () {
-        return { supported: supported, enabled: enabled, running: running, songId: songId, ownsCtx: ownsCtx };
-      },
+      getBgmState: getBgmState,
+      dispose: dispose,
+      // 後方互換の別名（検証・デバッグ用）。
+      _getState: getBgmState,
       _getCtx: function () {
         return ctx;
       },

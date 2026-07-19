@@ -257,17 +257,36 @@ function stopTimer(): void {
 
 // ── 公開API ──────────────────────────────────────────────────────────
 
-/** 曲を再生開始（必ずユーザー操作起点で呼ぶ前提）。二重startは無視。 */
+/**
+ * 曲を再生開始（必ずユーザー操作起点で呼ぶ前提）。
+ * - 同じ曲が既に再生中なら冪等（カーソル・ゲインを一切いじらず即リターン）。
+ * - 別の曲で呼ばれたら内部的に stop → カーソル／ゲイン再初期化 → 新曲を start（安全な切替）。
+ */
 export function startBgm(id: SongId): void {
   if (!supported()) return;
   const data = SONGS[id];
   if (!data) return;
+
+  // 同一曲がすでに回っているなら冪等リターン（song/baseVolume を差し替えて
+  // 走行中カーソルと不整合を起こす事故を防ぐ）。
+  if (running && songId === id && ctx && master) return;
+
+  // 別曲へ切替中か（running なのに曲IDが違う）。
+  const switching = running && songId !== id;
+
   songId = id;
   song = prepSong(data);
   baseVolume = masterVolume * song.mix;
 
   if (!enabled) return; // OFF のときは予約だけ覚えて鳴らさない
-  if (running && ctx && master) return; // 既に回っているなら二重startしない
+
+  // 別曲へ切替: 走っているスケジューラを止めてから、下でカーソル・ゲインを作り直す。
+  // 予約済みの旧曲ノートは各自の減衰で自然に消える（ハードカットしないのでクリック無し）。
+  if (switching) {
+    stopTimer();
+    running = false;
+  }
+
   if (!ensureCtx()) return;
   if (!ensureGraph()) return;
   try {
@@ -316,6 +335,28 @@ export function setBgmEnabled(on: boolean): void {
 
 export function isBgmEnabled(): boolean {
   return enabled;
+}
+
+/** 公開の状態スナップショット（検証・デバッグ用）。engine.js の getBgmState と同形。 */
+export interface BgmState {
+  supported: boolean; // Web Audio 利用可能か
+  enabled: boolean; // ON/OFF（おとなモード）
+  running: boolean; // ループ再生中か
+  songId: SongId | null; // 再生中／再生予定の曲ID
+  ducked: boolean; // 声ダッキング中か（duckCount>0）
+  ownsCtx: boolean; // 自前生成の ctx か（注入でない）
+}
+
+/** 現在の再生状態を返す（検証・デバッグ用）。 */
+export function getBgmState(): BgmState {
+  return {
+    supported: supported(),
+    enabled,
+    running,
+    songId,
+    ducked: duckCount > 0,
+    ownsCtx,
+  };
 }
 
 /** 声クリップ再生中のダッキング（なめらかに沈める）。多重呼び出しに耐える。 */
