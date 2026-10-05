@@ -50,9 +50,24 @@
 ## 各アプリへの取り込み
 
 各アプリの `assets/voice/` は基名（ファイル名）でクリップを解決する（`src/audio/` の `PHRASE_VOICE` 等）。
-本ライブラリの id はそのまま各アプリの基名に対応させて配布する想定
-（例: `p_seikai` はことば／さんすう共通、`p_tsuita`/`p_zenbu` はめいろ）。
-取り込み時は既存クリップと同一ハッシュのため差分は出ない。
+**ファイル名は id のままとは限らない**。いまの対応（中身は本ライブラリのクリップと同一ハッシュ）:
+
+| id | 街 | おつかいめいろ | ぴよぴよさんすう | ぴよぴよことば |
+|---|---|---|---|---|
+| `t_land` | `piyopiyo-land.m4a` | — | — | — |
+| `t_meiro` | — | `p_title.m4a` | — | — |
+| `t_sansu` | — | — | `t_sansu.m4a` | — |
+| `t_kotoba` | — | — | — | `p_title.m4a` |
+| `p_seikai` | — | — | `p_seikai.m4a` | `p_seikai.m4a` |
+| `p_tsuita` | — | `p_tsuita.m4a` | — | — |
+| `p_zenbu` | — | `p_zenbu.m4a` | `p_zenbu.m4a` | — |
+| `p_kitayo` | — | — | `p_kitayo.m4a` | — |
+| `p_kaettayo` | — | — | `p_kaettayo.m4a` | — |
+| `e_oshii` | — | — | `e_oshii.m4a` | `p_oshii.m4a` |
+| `e_arere` | — | — | `e_arere.m4a` | `p_arere.m4a` |
+
+`p_yattane`・`p_sugoi`・`e_mouikkai` は、いまはどのアプリも取り込んでいない。
+ことばの語の読み（`<語id>.m4a`・`ask_<語id>.m4a`）は ことば repo 独自のクリップで、本ライブラリには含まない。
 
 ## クレジット
 

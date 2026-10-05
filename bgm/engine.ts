@@ -13,8 +13,8 @@
 // 前もって予約する。止めて鳴らし直さないのでループ境界に切れ目が出ない。
 //
 // 既存実装との整合（同じ AudioContext を共有する）:
-//   sounds.ts / clips.ts は各自 AudioContext を持つ。次フェーズで sounds.ts に ctx の getter を
-//   足し、configureBgm({ getCtx }) で注入すれば、声・効果音・BGM が同一 ctx を共有できる。
+//   3アプリとも sounds.ts に共有 ctx の getter を持ち、src/audio/bgm.ts が configureBgm({ getCtx })
+//   で注入している（声・効果音・BGM が同一 ctx を共有）。
 //   注入が無ければ本モジュールが自前で 1つ生成する（それでも動く）。
 //
 // 使い方:

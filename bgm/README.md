@@ -72,6 +72,9 @@ AudioContext 非対応環境では全 API が**無害な no-op**（クラッシ�
 | `duckBgm()` / `unduckBgm()` | 声再生中のダッキング（35%へ・`setTargetAtTime` でなめらか）。多重呼び出し対応。 |
 | `getBgmState()` | 状態スナップショット `{ supported, enabled, running, songId, ducked, ownsCtx }`（検証・デバッグ用）。 |
 | `dispose()` | 後片付け（`engine.js` のみ）。スケジューラ停止＋`visibilitychange` リスナ解除。 |
+| `configureBgm({ getCtx?, masterVolume? })` | （`engine.ts` のみ）外部の AudioContext の getter とマスター音量を設定する。アプリ初期化時に1回・任意。注入しなければ自前で ctx を作る。 |
+| `createEngine(config?)` | （`engine.js` のみ・`window.PiyoBgm.createEngine`）上の API を持つエンジンを1つ作って返す。`config` は `songs`（省略時 `window.PIYO_SONGS`）・`getCtx` または `ctx`（共有 AudioContext）・`masterVolume`。 |
+| `renderSong(songId, opts?)` | （`engine.js` のみ・`window.PiyoBgm.renderSong`）`OfflineAudioContext` で曲を `opts.loops` 周（既定1）レンダリングし `Promise<AudioBuffer \| null>` を返す。`opts` は `songs`・`loops`・`tail`・`sampleRate`・`masterVolume`。試聴・検証用（非対応環境では `null`）。 |
 
 ### Expo アプリ（engine.ts）
 
@@ -102,19 +105,22 @@ duckBgm(); /* ...声... */ unduckBgm();
 </script>
 ```
 
-## 配線予定（次フェーズ・このフォルダでは未実施）
+## 配線（4サイトとも実施済み）
 
-**このフォルダは共有基盤のみ。4アプリ repo への配線は別ワークフローが行う。** 予定:
+このフォルダは共有基盤。各サイトはここのエンジンと曲を自分の repo にコピーして同梱し、次のように配線している。
 
-- **初期状態 ON・控えめ音量**。最初のユーザー操作（タイトルの「あそぶ」タップ等）で `startBgm(songId)`。
-  - land → `startBgm('land')` / meiro → `'meiro'` / sansu → `'sansu'` / kotoba → `'kotoba'`。
-- **おとなモードに ON/OFF トグル**を追加し `setBgmEnabled()` に配線。トグルの保存キー（案）:
-  `land.bgm` / `meiro.bgm` / `sansu.bgm` / `kotoba.bgm`（**初期値 ON**、`localStorage`）。
-- **声ダッキング連携**: 声（`voice.ts` / タイトル読み上げ）の再生直前に `duckBgm()`、
-  終了・停止時に `unduckBgm()`。多重再生に備えネスト対応済み。
-- **AudioContext 共有**: 既存 `sounds.ts` / `clips.ts` に ctx の getter を足し、`configureBgm({ getCtx })`
-  （engine.ts）／`createEngine({ getCtx })`（engine.js）で注入すると、声・効果音・BGM が同一 ctx を共有する。
-  注入しなくてもエンジンは自前 ctx で動作する。
+| サイト | エンジン | 曲 | ON/OFF の保存キー（既定 ON） | 切り替え |
+|----|----|----|----|----|
+| 街（kerokero-1245.github.io） | `assets/bgm/engine.js` の `createEngine({ getCtx })` | `land` | `land.bgm`（`'1'`/`'0'`） | トップバーの 🔊/🔇 チップ |
+| おつかいめいろ | `src/audio/bgm/engine.ts`（`src/audio/bgm.ts` から利用） | `meiro` | `meiro.bgm`（`'1'`/`'0'`） | おとなモードのトグル |
+| ぴよぴよさんすう | 同上 | `sansu` | `sansu.bgm`（`'on'`/`'off'`） | おとなモードのトグル |
+| ぴよぴよことば | 同上 | `kotoba` | `kotoba.bgm`（`'on'`/`'off'`） | おとなモードのトグル |
+
+- **初期状態 ON・控えめ音量**。最初のユーザー操作で `startBgm(songId)`（街はタイトル読み上げと同じ初回タップ）。
+- **声ダッキング連携**: 声・タイトル読み上げの再生中は `duckBgm()`、終了で `unduckBgm()`。
+- **AudioContext 共有**: Expo の3アプリは `configureBgm({ getCtx })`、街は `createEngine({ getCtx })` で
+  声・効果音と同じ ctx を注入している。注入しなくてもエンジンは自前 ctx で動作する。
+- キーの値の形式と所有の正典は ぴよぴよランドの `docs/WORLD.md` §7（キー台帳）。
 
 ## 検証
 

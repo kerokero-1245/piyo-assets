@@ -7,7 +7,8 @@
 ```
 piyo-assets/
 ├── svg/            78個の <id>.svg（本体）
-├── voice/          共有音声クリップ 12個（VOICEVOX:ずんだもん）＋ voice/INDEX.md
+├── voice/          共有音声クリップ 14個（VOICEVOX:ずんだもん）＋ voice/INDEX.md
+├── bgm/            オルゴール風BGMの共有エンジン（engine.ts / engine.js）と4曲（songs.ts / songs.js）・試聴 preview/ ＋ bgm/README.md
 ├── INDEX.md        id / ラベル / 使用アプリ / 用途の一覧表
 ├── README.md       このファイル
 └── reference/      画風の見本（style-samples.html）・contact sheet・審査スクショ
@@ -64,7 +65,7 @@ LINEスタンプ／ステッカー風。**太い白フチで型抜き（die-cut�
 
 ## 音声（voice/）
 
-4アプリ＋街で共通に使う日本語よみあげクリップの正典を [`voice/`](./voice/) にまとめている（12個・約188KB）。
+4アプリ＋街で共通に使う日本語よみあげクリップの正典を [`voice/`](./voice/) にまとめている（14個・約215KB）。
 すべて **VOICEVOX / ずんだもん（あまあま・style id 1）** で事前生成した同梱アセット（AAC 64kbps モノラル `.m4a`）。
 統一idは `t_*`（タイトル）・`p_*`（ほめ／定型句）・`e_*`（誤答フォロー＝やわらか、否定語なし）。
 id・セリフ・生成設定・クレジットの一覧は [`voice/INDEX.md`](./voice/INDEX.md)。クレジットは **VOICEVOX:ずんだもん**。
