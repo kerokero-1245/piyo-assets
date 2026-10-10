@@ -22,7 +22,7 @@
  *   bgm.duckBgm();  ...  bgm.unduckBgm();
  */
 (function (global) {
-  'use strict';
+  "use strict";
 
   // ── 音色パラメータ（オルゴール風）────────────────────────────────────
   var MASTER_VOLUME = 0.1; // 控えめ既定音量（マスターゲイン）
@@ -74,12 +74,16 @@
   // out（GainNode/AudioNode）に接続する。t は絶対時刻（ctx.currentTime 基準）。
   function voice(ctx, out, t, midi, durBeats, vel, secPerBeat) {
     var freq = midiToFreq(midi);
-    var decay = clamp(durBeats * secPerBeat * DECAY_SCALE, DECAY_MIN, DECAY_MAX);
+    var decay = clamp(
+      durBeats * secPerBeat * DECAY_SCALE,
+      DECAY_MIN,
+      DECAY_MAX,
+    );
     var peak = Math.max(0.0002, vel);
 
     // 基音
     var osc1 = ctx.createOscillator();
-    osc1.type = 'triangle';
+    osc1.type = "triangle";
     osc1.frequency.value = freq;
     var g1 = ctx.createGain();
     g1.gain.setValueAtTime(0.0001, t);
@@ -92,12 +96,15 @@
 
     // 高次倍音（1オクターブ上・小ゲイン・速い減衰）
     var osc2 = ctx.createOscillator();
-    osc2.type = 'sine';
+    osc2.type = "sine";
     osc2.frequency.value = freq * OVERTONE_RATIO;
     var g2 = ctx.createGain();
     var pdecay = clamp(decay * PARTIAL_DECAY_RATIO, 0.3, DECAY_MAX);
     g2.gain.setValueAtTime(0.0001, t);
-    g2.gain.exponentialRampToValueAtTime(peak * OVERTONE_GAIN, t + PARTIAL_ATTACK);
+    g2.gain.exponentialRampToValueAtTime(
+      peak * OVERTONE_GAIN,
+      t + PARTIAL_ATTACK,
+    );
     g2.gain.exponentialRampToValueAtTime(0.0001, t + pdecay);
     osc2.connect(g2);
     g2.connect(out);
@@ -119,7 +126,7 @@
       secPerBeat: secPerBeat,
       loopBeats: loopBeats,
       loopDur: loopBeats * secPerBeat,
-      mix: typeof song.mix === 'number' ? song.mix : 1,
+      mix: typeof song.mix === "number" ? song.mix : 1,
       notes: song.notes || [],
     };
   }
@@ -137,9 +144,18 @@
     //   config.getCtx: () => AudioContext | null   … 既存 ctx を返す関数
     //   config.ctx:    AudioContext                … 既存 ctx を直接注入
     var injectedGetCtx =
-      typeof config.getCtx === 'function' ? config.getCtx : config.ctx ? function () { return config.ctx; } : null;
+      typeof config.getCtx === "function"
+        ? config.getCtx
+        : config.ctx
+          ? function () {
+              return config.ctx;
+            }
+          : null;
 
-    var masterVolume = typeof config.masterVolume === 'number' ? config.masterVolume : MASTER_VOLUME;
+    var masterVolume =
+      typeof config.masterVolume === "number"
+        ? config.masterVolume
+        : MASTER_VOLUME;
 
     var ctx = null; // 使用中の AudioContext
     var ownsCtx = false; // 自分で生成した ctx か（visibility 制御の判断に使う）
@@ -191,7 +207,7 @@
         master = ctx.createGain();
         master.gain.value = baseVolume;
         lowpass = ctx.createBiquadFilter();
-        lowpass.type = 'lowpass';
+        lowpass.type = "lowpass";
         lowpass.frequency.value = LOWPASS_HZ;
         lowpass.Q.value = LOWPASS_Q;
         master.connect(lowpass);
@@ -280,7 +296,7 @@
       if (!ensureCtx()) return;
       if (!ensureGraph()) return;
       try {
-        if (ctx.state === 'suspended') ctx.resume();
+        if (ctx.state === "suspended") ctx.resume();
       } catch (e) {}
 
       // 基準音量へ（ダッキング状態は維持）。
@@ -301,7 +317,7 @@
       stopTimer();
       running = false;
       if (!ctx || !master) return;
-      var f = typeof fadeSec === 'number' && fadeSec >= 0 ? fadeSec : 0.4;
+      var f = typeof fadeSec === "number" && fadeSec >= 0 ? fadeSec : 0.4;
       try {
         var now = ctx.currentTime;
         master.gain.cancelScheduledValues(now);
@@ -335,7 +351,11 @@
       duckCount += 1;
       if (!ctx || !master) return;
       try {
-        master.gain.setTargetAtTime(baseVolume * DUCK_RATIO, ctx.currentTime, DUCK_TAU);
+        master.gain.setTargetAtTime(
+          baseVolume * DUCK_RATIO,
+          ctx.currentTime,
+          DUCK_TAU,
+        );
       } catch (e) {}
     }
 
@@ -355,10 +375,10 @@
         if (!ctx) return;
         if (g.document && g.document.hidden) {
           stopTimer();
-          if (ownsCtx && ctx.state === 'running') ctx.suspend();
+          if (ownsCtx && ctx.state === "running") ctx.suspend();
         } else {
           if (running && enabled) {
-            if (ctx.state === 'suspended') ctx.resume();
+            if (ctx.state === "suspended") ctx.resume();
             startTimer();
           }
         }
@@ -369,9 +389,13 @@
     var visibilityBound = false;
     function bindVisibility() {
       if (visibilityBound) return;
-      if (supported && g.document && typeof g.document.addEventListener === 'function') {
+      if (
+        supported &&
+        g.document &&
+        typeof g.document.addEventListener === "function"
+      ) {
         try {
-          g.document.addEventListener('visibilitychange', onVisibility);
+          g.document.addEventListener("visibilitychange", onVisibility);
           visibilityBound = true;
         } catch (e) {}
       }
@@ -395,9 +419,13 @@
     function dispose() {
       stopTimer();
       running = false;
-      if (visibilityBound && g.document && typeof g.document.removeEventListener === 'function') {
+      if (
+        visibilityBound &&
+        g.document &&
+        typeof g.document.removeEventListener === "function"
+      ) {
         try {
-          g.document.removeEventListener('visibilitychange', onVisibility);
+          g.document.removeEventListener("visibilitychange", onVisibility);
         } catch (e) {}
         visibilityBound = false;
       }
@@ -433,9 +461,10 @@
     if (!songs || !songs[songId]) return Promise.resolve(null);
     var song = prepSong(songs[songId]);
     var loops = opts.loops || 1;
-    var tail = typeof opts.tail === 'number' ? opts.tail : DECAY_MAX + 0.5; // 末尾の余韻ぶん
+    var tail = typeof opts.tail === "number" ? opts.tail : DECAY_MAX + 0.5; // 末尾の余韻ぶん
     var sampleRate = opts.sampleRate || 44100;
-    var masterVolume = typeof opts.masterVolume === 'number' ? opts.masterVolume : MASTER_VOLUME;
+    var masterVolume =
+      typeof opts.masterVolume === "number" ? opts.masterVolume : MASTER_VOLUME;
     var baseVolume = masterVolume * song.mix;
 
     var totalDur = loops * song.loopDur + tail;
@@ -445,7 +474,7 @@
     var master = ctx.createGain();
     master.gain.value = baseVolume;
     var lowpass = ctx.createBiquadFilter();
-    lowpass.type = 'lowpass';
+    lowpass.type = "lowpass";
     lowpass.frequency.value = LOWPASS_HZ;
     lowpass.Q.value = LOWPASS_Q;
     master.connect(lowpass);
@@ -479,8 +508,14 @@
     MASTER_VOLUME: MASTER_VOLUME,
   };
 
-  if (typeof module !== 'undefined' && module.exports) {
+  if (typeof module !== "undefined" && module.exports) {
     module.exports = api;
   }
   global.PiyoBgm = api;
-})(typeof self !== 'undefined' ? self : typeof globalThis !== 'undefined' ? globalThis : this);
+})(
+  typeof self !== "undefined"
+    ? self
+    : typeof globalThis !== "undefined"
+      ? globalThis
+      : this,
+);

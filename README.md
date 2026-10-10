@@ -47,19 +47,19 @@ LINEスタンプ／ステッカー風。**太い白フチで型抜き（die-cut�
 または `<img>` / CSS 背景として:
 
 ```html
-<img src="svg/piyo.svg" alt="ぴよ" width="96" height="96">
+<img src="svg/piyo.svg" alt="ぴよ" width="96" height="96" />
 ```
 
 いずれも `viewBox` があるため任意サイズに拡縮できる。48px 相当のUIアイコンから 200px 超のヒーロー表示まで同一ファイルで賄う。
 
 ## 対応アプリ
 
-| 略 | アプリ | 役割 |
-|---|---|---|
-| 街 | [ぴよぴよランド](https://kerokero-1245.github.io/) | 街（ランチャー）。段階発展の飾り・ぴよ・施設・背景 |
-| 迷 | [おつかいめいろ](https://kerokero-1245.github.io/otsukai-meiro/) | ゴールプール・アバター・障害物 |
-| 数 | [ぴよぴよさんすう](https://kerokero-1245.github.io/piyopiyo-sansu/) | かず当ての題材キャラ |
-| 言 | [ぴよぴよことば](https://kerokero-1245.github.io/piyopiyo-kotoba/) | 語彙40語の絵札 |
+| 略  | アプリ                                                              | 役割                                               |
+| --- | ------------------------------------------------------------------- | -------------------------------------------------- |
+| 街  | [ぴよぴよランド](https://kerokero-1245.github.io/)                  | 街（ランチャー）。段階発展の飾り・ぴよ・施設・背景 |
+| 迷  | [おつかいめいろ](https://kerokero-1245.github.io/otsukai-meiro/)    | ゴールプール・アバター・障害物                     |
+| 数  | [ぴよぴよさんすう](https://kerokero-1245.github.io/piyopiyo-sansu/) | かず当ての題材キャラ                               |
+| 言  | [ぴよぴよことば](https://kerokero-1245.github.io/piyopiyo-kotoba/)  | 語彙40語の絵札                                     |
 
 各アプリでの1件ごとの用途は [INDEX.md](./INDEX.md)。
 

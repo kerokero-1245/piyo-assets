@@ -28,7 +28,7 @@ export interface BgmSong {
   notes: BgmNote[];
 }
 
-export type SongId = 'land' | 'meiro' | 'sansu' | 'kotoba';
+export type SongId = "land" | "meiro" | "sansu" | "kotoba";
 
 export const SONGS: Record<SongId, BgmSong> = {
   land: {

@@ -17,13 +17,13 @@
 
 ## ファイル
 
-| ファイル | 内容 |
-|---|---|
-| `mapping.md` | 判定一覧（65 モチーフ × custom 理由、Kenney 候補ごとの不採用理由） |
-| `compare.png` | custom（左）vs Kenney（右）13 組の視覚審査 |
-| `machi.png` | 街の自作モチーフ群のコヒーレンス確認 |
-| `comparison.html` | 視覚審査に使った比較ページ（ソース） |
-| `comparison-1.png` / `comparison-full.png` | 比較ページのスクショ（部分／全体） |
+| ファイル                                   | 内容                                                               |
+| ------------------------------------------ | ------------------------------------------------------------------ |
+| `mapping.md`                               | 判定一覧（65 モチーフ × custom 理由、Kenney 候補ごとの不採用理由） |
+| `compare.png`                              | custom（左）vs Kenney（右）13 組の視覚審査                         |
+| `machi.png`                                | 街の自作モチーフ群のコヒーレンス確認                               |
+| `comparison.html`                          | 視覚審査に使った比較ページ（ソース）                               |
+| `comparison-1.png` / `comparison-full.png` | 比較ページのスクショ（部分／全体）                                 |
 
 ## 補足
 
