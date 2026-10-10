@@ -1,0 +1,8 @@
+# 生成物・依存・ロックファイルは整形しない
+node_modules
+package-lock.json
+*.min.*
+# 外部の見本素材（.gitignore 済み）
+reference/kenney-samples/
+# svg/ の素材を埋め込んで作ったコンタクトシート（生成物。svg/ の原本と同じ中身を保つ）
+reference/contact-sheet.html
