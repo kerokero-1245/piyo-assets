@@ -12,14 +12,17 @@ export default defineConfig([
   { files: ["**/*.{js,mjs,ts}"], extends: [js.configs.recommended] },
   { files: ["**/*.ts"], extends: [tseslint.configs.recommended] },
 
-  // bgm/*.js は街の静的 HTML が <script> で読む（ブラウザで動く）。
+  // bgm/*.js と keys/keys.js は街の静的 HTML が <script> で読む（ブラウザで動く）。
   // ランドが <script> で読む classic script なので、module として検査しない（export が通らないようにする）。
   {
-    files: ["bgm/**/*.js"],
+    files: ["bgm/**/*.js", "keys/**/*.js"],
     languageOptions: { sourceType: "script", globals: globals.browser },
   },
-  // 設定ファイルは Node で動く。
-  { files: ["eslint.config.mjs"], languageOptions: { globals: globals.node } },
+  // 設定ファイルとテストは Node で動く。
+  {
+    files: ["eslint.config.mjs", "tests/**/*.mjs"],
+    languageOptions: { globals: globals.node },
+  },
 
   // bgm/ の engine.ts・songs.ts・engine.js・songs.js は、街とアプリ 3 本が共有するエンジンと曲データ（正本）。
   // 中身を変えない方針なので、指摘は eslint-disable の行を足さず、ここで該当ファイルだけ設定を調整して扱う。

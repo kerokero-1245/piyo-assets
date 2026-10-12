@@ -11,6 +11,7 @@ piyo-assets/
 ├── svg/            78個の <id>.svg（本体）
 ├── voice/          共有音声クリップ 14個（VOICEVOX:ずんだもん）＋ voice/INDEX.md
 ├── bgm/            オルゴール風BGMの共有エンジン（engine.ts / engine.js）と4曲（songs.ts / songs.js）・試聴 preview/ ＋ bgm/README.md
+├── keys/           保存キーの定数（keys/index.ts = 知育アプリ用 / keys/keys.js = 街の静的HTML用）
 ├── INDEX.md        id / ラベル / 使用アプリ / 用途の一覧表
 ├── README.md       このファイル
 ├── DESIGN.md       作り方の規則との違い・この repo 固有の約束
