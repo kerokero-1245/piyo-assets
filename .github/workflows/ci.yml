@@ -1,0 +1,38 @@
+# main への push と pull request ごとに依存を入れ直し、整形（Prettier）と lint（eslint）を通す。
+name: CI（整形・lint）
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    name: 整形・lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: チェックアウト
+        uses: actions/checkout@v7
+
+      - name: Node を .nvmrc の版で用意
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: 依存関係をインストール
+        run: npm ci
+
+      - name: 整形の検査（prettier --check）
+        run: npm run format:check
+
+      - name: lint（eslint）
+        run: npm run lint
