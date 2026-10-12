@@ -1,4 +1,4 @@
-// piyo-assets の lint 設定（eslint 9 の flat config）。素の設定で、JS・TS に @eslint/js の recommended、
+// piyo-assets の lint 設定（eslint 10 の flat config）。素の設定で、JS・TS に @eslint/js の recommended、
 // TS にはさらに typescript-eslint の recommended を重ねる（型情報は使わないので tsconfig は要らない）。
 import js from "@eslint/js";
 import { defineConfig, globalIgnores } from "eslint/config";
