@@ -121,7 +121,7 @@ duckBgm();
 
 | サイト                        | エンジン                                                 | 曲       | ON/OFF の保存キー（既定 ON）   | 切り替え                  |
 | ----------------------------- | -------------------------------------------------------- | -------- | ------------------------------ | ------------------------- |
-| 街（kerokero-1245.github.io） | `assets/bgm/engine.js` の `createEngine({ getCtx })`     | `land`   | `land.bgm`（`'1'`/`'0'`）      | トップバーの 🔊/🔇 チップ |
+| 街（kerokero-1245.github.io） | `assets/bgm/engine.js` の `createEngine({ getCtx })`     | `land`   | `land.bgm`（`'on'`/`'off'`）   | トップバーの 🔊/🔇 チップ |
 | おつかいめいろ                | `src/audio/bgm/engine.ts`（`src/audio/bgm.ts` から利用） | `meiro`  | `meiro.bgm`（`'1'`/`'0'`）     | おとなモードのトグル      |
 | ぴよぴよさんすう              | 同上                                                     | `sansu`  | `sansu.bgm`（`'on'`/`'off'`）  | おとなモードのトグル      |
 | ぴよぴよことば                | 同上                                                     | `kotoba` | `kotoba.bgm`（`'on'`/`'off'`） | おとなモードのトグル      |
@@ -130,7 +130,7 @@ duckBgm();
 - **声ダッキング連携**: 声・タイトル読み上げの再生中は `duckBgm()`、終了で `unduckBgm()`。
 - **AudioContext 共有**: Expo の3アプリは `configureBgm({ getCtx })`、街は `createEngine({ getCtx })` で
   声・効果音と同じ ctx を注入している。注入しなくてもエンジンは自前 ctx で動作する。
-- キーの値の形式と所有の正典は ぴよぴよランドの `docs/WORLD.md` §7（キー台帳）。
+- キーの値の形式と所有の正典は ぴよぴよランドの `docs/WORLD.md` §7（キー台帳）。街の `land.bgm` は、旧値の `'1'`/`'0'` を読んだときに `'on'`/`'off'` へ書き直す。
 
 ## 検証
 

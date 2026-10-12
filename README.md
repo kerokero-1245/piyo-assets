@@ -13,6 +13,7 @@ piyo-assets/
 ├── bgm/            オルゴール風BGMの共有エンジン（engine.ts / engine.js）と4曲（songs.ts / songs.js）・試聴 preview/ ＋ bgm/README.md
 ├── INDEX.md        id / ラベル / 使用アプリ / 用途の一覧表
 ├── README.md       このファイル
+├── DESIGN.md       作り方の規則との違い・この repo 固有の約束
 └── reference/      画風の見本（style-samples.html）・contact sheet・審査スクショ
     └── kenney-comparison/  Kenney素材の採否審査記録（結論: 全モチーフ自作・採用0）
 ```
