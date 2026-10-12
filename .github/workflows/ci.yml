@@ -1,5 +1,5 @@
-# main への push と pull request ごとに依存を入れ直し、整形（Prettier）と lint（eslint）を通す。
-name: CI（整形・lint）
+# main への push と pull request ごとに依存を入れ直し、整形（Prettier）・lint（eslint）・型の検査（tsc）を通す。
+name: CI（整形・lint・型）
 
 on:
   push:
@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   ci:
-    name: 整形・lint
+    name: 整形・lint・型
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -36,3 +36,6 @@ jobs:
 
       - name: lint（eslint）
         run: npm run lint
+
+      - name: 型の検査（tsc --noEmit）
+        run: npm run typecheck

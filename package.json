@@ -1,10 +1,25 @@
 {
-  "name": "piyo-assets",
+  "name": "@kerokero-1245/piyo-assets",
+  "version": "0.1.0",
   "private": true,
+  "exports": {
+    "./bgm/engine": "./bgm/engine.ts",
+    "./bgm/songs": "./bgm/songs.ts",
+    "./bgm/engine.js": "./bgm/engine.js",
+    "./bgm/songs.js": "./bgm/songs.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "bgm/engine.ts",
+    "bgm/songs.ts",
+    "bgm/engine.js",
+    "bgm/songs.js"
+  ],
   "scripts": {
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
