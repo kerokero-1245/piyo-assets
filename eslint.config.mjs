@@ -13,7 +13,11 @@ export default defineConfig([
   { files: ["**/*.ts"], extends: [tseslint.configs.recommended] },
 
   // bgm/*.js は街の静的 HTML が <script> で読む（ブラウザで動く）。
-  { files: ["bgm/**/*.js"], languageOptions: { globals: globals.browser } },
+  // ランドが <script> で読む classic script なので、module として検査しない（export が通らないようにする）。
+  {
+    files: ["bgm/**/*.js"],
+    languageOptions: { sourceType: "script", globals: globals.browser },
+  },
   // 設定ファイルは Node で動く。
   { files: ["eslint.config.mjs"], languageOptions: { globals: globals.node } },
 
