@@ -11,9 +11,9 @@
 
 ### 固有の約束（このリポジトリだけの不変条件）
 
-- **`bgm/` の 4 ファイルは正本**: `engine.ts`・`songs.ts`（Expo のアプリ用）と `engine.js`・`songs.js`（街の静的 HTML 用）。街と 3 アプリ（おつかいめいろ・ぴよぴよさんすう・ぴよぴよことば）が使う。3 アプリは、写しを持つ形からこのパッケージを依存にする形へ移行中。API と配線は [bgm/README.md](bgm/README.md)
+- **`bgm/` の 4 ファイルは正本**: `engine.ts`・`songs.ts`（Expo のアプリ用）と `engine.js`・`songs.js`（街の静的 HTML 用）。街と 3 アプリ（おつかいめいろ・ぴよぴよさんすう・ぴよぴよことば）が使う。3 アプリは、写しを持つ形から移行済み（3 本とも `github:kerokero-1245/piyo-assets#v0.2.0` の git 依存で `bgm/` を読む）。API と配線は [bgm/README.md](bgm/README.md)
 - **lint の指摘で 4 ファイルを書き換えない**: 指摘は `eslint-disable` の行を足さず、[eslint.config.mjs](eslint.config.mjs) で該当ファイルだけ設定を調整して扱う
-- **`keys/` の 2 ファイルは保存キーの正本**: `keys/index.ts`（知育 3 本が import）と `keys/keys.js`（街の静的 HTML が `<script>` で読む。`window.PIYO_KEYS`）。街の燃料のキー `TOTAL_STARS`（`meiro.totalStars`・`sansu.totalStars`・`kotoba.totalStars`）の値の正本はここで、台帳の文書は [ぴよぴよランドの docs/WORLD.md §7](https://github.com/kerokero-1245/kerokero-1245.github.io/blob/main/docs/WORLD.md)。2 ファイルは同じ値を 2 回書いているので、一致は `tests/keys.test.mjs` が見る
+- **`keys/` の保存キーの正本は `keys/index.ts`**（知育 3 本が import）。`keys/keys.js`（街の静的 HTML が `<script>` で読む。`window.PIYO_KEYS`）はその写し。街の燃料のキー `TOTAL_STARS`（`meiro.totalStars`・`sansu.totalStars`・`kotoba.totalStars`）の値の正本はここで、台帳の文書は [ぴよぴよランドの docs/WORLD.md §7](https://github.com/kerokero-1245/kerokero-1245.github.io/blob/main/docs/WORLD.md)。2 ファイルは同じ値を 2 回書いているので、一致は `tests/keys.test.mjs` が見る
 - **`files` に指定するのは `bgm/` の 4 ファイルと `keys/` の 2 ファイル**: `README.md` と `package.json` は npm が必ず含めるので、配布物は計 8 ファイルになる。`svg/`・`voice/`・`reference/` は入れない。使う側に公開するパスは `exports` に書いたものだけで、消す・名前を変えるときは版を上げる
 - **`private: true` のまま、`type` は付けない**: registry には公開せず、git の依存で入れる。`type` を付けないのは、`bgm/*.js`・`keys/keys.js` が `<script>` で読む classic script で、Node に ES モジュールと見なさせないため
 - **版の付け方**: git のタグ `vX.Y.Z` で付け、`package.json` の `version` はタグと同じ番号にする。1.0 になるまでは、何かを足した・変えたら minor、文書だけなら patch を上げる。**タグは付け直さない**（使う側の `package-lock.json` に解決したコミットのハッシュが入るので、付け直すと食い違う）。直すときは次の版にする。使う側は `github:kerokero-1245/piyo-assets#vX.Y.Z` でタグを指して入れる
