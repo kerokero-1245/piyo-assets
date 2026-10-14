@@ -12,6 +12,8 @@ piyo-assets/
 ├── voice/          共有音声クリップ 14個（VOICEVOX:ずんだもん）＋ voice/INDEX.md
 ├── bgm/            オルゴール風BGMの共有エンジン（engine.ts / engine.js）と4曲（songs.ts / songs.js）・試聴 preview/ ＋ bgm/README.md
 ├── keys/           保存キーの定数（keys/index.ts = 知育アプリ用 / keys/keys.js = 街の静的HTML用）
+├── ui/             知育アプリで同じ役割の部品（Confetti・TownLink・BigButton・ProgressStar・useLongPress）と tokens
+├── tests/          node --test のテスト（keys の一致・ui/ の純関数と入口）
 ├── INDEX.md        id / ラベル / 使用アプリ / 用途の一覧表
 ├── README.md       このファイル
 ├── DESIGN.md       作り方の規則との違い・この repo 固有の約束
@@ -66,6 +68,62 @@ LINEスタンプ／ステッカー風。**太い白フチで型抜き（die-cut�
 | 言  | [ぴよぴよことば](https://kerokero-1245.github.io/piyopiyo-kotoba/)  | 語彙40語の絵札                                     |
 
 各アプリでの1件ごとの用途は [INDEX.md](./INDEX.md)。
+
+## 部品（ui/）
+
+知育 3 本（おつかいめいろ・ぴよぴよさんすう・ぴよぴよことば）で同じ役割の部品を 1 つずつ置いている。全部 TypeScript のソースのまま配り、使う側の Metro が変換する。
+
+| 部品                        | 中身                                                                                                                        | アプリごとの差の受け方                                                                                                                                             |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `Confetti`                  | 祝福の紙吹雪（枠の実測幅に収め、降り終えた小片は取り除く）                                                                  | `count?`（既定 18）                                                                                                                                                |
+| `TownLink`                  | 「まちへ もどる」— 街（`/`）へ帰るリンク。web だけで出す。絵は `svg/ki.svg`                                                 | 枠と押下の色は tokens の `townBorder`・`townPressed`。`TOWN_URL`・`SHOW_TOWN`・`TOWN_LINK_HEIGHT` も出す                                                           |
+| `BigButton`                 | 絵文字＋ひらがなの大きなボタン                                                                                              | `size?: "small" \| "big" \| "huge"`（既定 `"big"`。`small` はおとなモード用で高さ 64・文字 `font.body`・1 行）。白いボタンの押下色は tokens の `cardButtonPressed` |
+| `ProgressStar`              | 進捗ドット 1 つぶん。クリアで⭐に変わってポップする                                                                         | `variant: "emoji" \| "sticker"`（必須。`sticker` は `svg/hoshi.svg` の画像 24×24、`emoji` は文字の ⭐）                                                            |
+| `useLongPress(onFire, ms?)` | 長押しで 1 回だけ発火（既定 3 秒。親ゲートの ⚙️）。`{ onPressIn, onPressOut }` を返し、アンマウントで残りのタイマーを止める | `ms`                                                                                                                                                               |
+
+### tokens の渡し方
+
+部品は各アプリの theme を import できないので、部品が使う値だけを型 `PiyoUiTokens` にまとめ、アプリの根で 1 回だけ渡す。既定値は無い。`PiyoUiProvider` の外で部品を使う・値を 1 つでも渡し忘れると、型エラーと実行時のエラーで止まる（別のアプリの色で黙って出ないようにするため）。
+
+```tsx
+import {
+  PiyoUiProvider,
+  type PiyoUiTokens,
+} from "@kerokero-1245/piyo-assets/ui";
+import { colors, font, radius, space } from "./src/theme";
+
+// モジュールの定数にして、描画のたびに作り直さない（作り直すと紙吹雪の配置が変わる）
+const UI_TOKENS: PiyoUiTokens = {
+  colors: {
+    surface: colors.surface,
+    text: colors.text,
+    white: colors.white,
+    townBorder: colors.itemBorder,
+    townPressed: colors.itemPressed,
+    buttonPressed: colors.buttonPressed,
+    cardButtonPressed: "#F0EADD",
+    progressNow: colors.progressNow,
+    progressOff: colors.progressOff,
+    confetti: colors.confetti,
+  },
+  font,
+  space,
+  radius,
+};
+
+export default function App() {
+  return <PiyoUiProvider tokens={UI_TOKENS}>{/* … */}</PiyoUiProvider>;
+}
+```
+
+必須のキーの一覧は `PIYO_UI_TOKEN_KEYS`（`ui/tokens.ts`）。
+
+### exports と files
+
+- 入口は `@kerokero-1245/piyo-assets/ui`（`./ui` → `ui/index.ts`）。素材の svg は `@kerokero-1245/piyo-assets/svg/<id>.svg`（`./svg/*`）で require できる
+- `files` に `ui` と `svg`（78 個すべて）を入れている。`TownLink`・`ProgressStar` は `require("../svg/ki.svg")`・`require("../svg/hoshi.svg")` で正本を相対で読むので、svg/ が無いと部品が組めない。2 つだけを選ばず全部を入れたのは、アプリが他の絵もここから読めるようにするため（tarball は 96 ファイル・約 65 kB）
+- **2 重配布に注意**: Metro はパッケージの素材を `assets/node_modules/@kerokero-1245/piyo-assets/svg/…` に、アプリの素材を `assets/assets/svg/…` に書き出す。中身が同じでもパスが違えば 2 回書き出されるので、部品に移した絵を使う側でも require しているときは、その require もパッケージの svg に揃える（アプリ側の写しは使う箇所が無くなってから消す）
+- `react`・`react-native` は `peerDependencies`（`*`）。使う側のものを使い、パッケージは持ち込まない
 
 ## 音声（voice/）
 

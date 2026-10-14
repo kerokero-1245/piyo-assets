@@ -9,8 +9,9 @@ export default defineConfig([
   // ビルドの出力先は無いので、無視するのは node_modules だけ。
   globalIgnores(["node_modules/"]),
 
-  { files: ["**/*.{js,mjs,ts}"], extends: [js.configs.recommended] },
-  { files: ["**/*.ts"], extends: [tseslint.configs.recommended] },
+  // ui/ の部品は .tsx（JSX）。.ts と同じ設定で見る（JSX は typescript-eslint のパーサが .tsx で読む）。
+  { files: ["**/*.{js,mjs,ts,tsx}"], extends: [js.configs.recommended] },
+  { files: ["**/*.{ts,tsx}"], extends: [tseslint.configs.recommended] },
 
   // bgm/*.js と keys/keys.js は街の静的 HTML が <script> で読む（ブラウザで動く）。
   // ランドが <script> で読む classic script なので、module として検査しない（export が通らないようにする）。
