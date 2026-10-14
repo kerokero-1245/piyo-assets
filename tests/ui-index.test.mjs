@@ -1,8 +1,12 @@
 // ui/ の入口（ui/index.ts）と、パッケージとして配る形（package.json の exports・files）を確かめる。
 // 防ぎたい事故:
 //   - 入口から部品や定数が抜ける・増える（使う側の import が型エラーか undefined になる）
-//   - import の綴りがファイル名と大文字小文字だけ違う（macOS では動くが、tsc は TS1149 で止まり、
-//     Linux の CI と Metro では見つからない。ProgressStar.tsx と progressStar.ts が並んで実際に起きた）
+//   - ui/ に大文字小文字だけ違うファイル名の組がある（ProgressStar.tsx と progressStar.ts が並んで実際に起きた）。
+//     大文字小文字を区別しない macOS では "./ProgressStar" が progressStar.ts に当たり、tsc が TS1149・TS1261 で止まる。
+//     区別する Linux の CI では tsc が通ってしまい気付けないので、③ のテストで止める
+//   - 入口に `export { … } from` 以外の export 文が紛れ込む（`export *` で中の関数が黙って公開 API に入る）
+//   - 部品の既定値と街への行き先が変わる（Confetti の count 18・TOWN_URL "/"・TOWN_LINK_HEIGHT 44。.tsx にあり、
+//     見た目の撮影では気付きにくい）
 //   - 部品が require する svg/ の絵が、パッケージに入っていない（files に svg が無い・綴りが違う）
 // index.ts は .tsx を読み込むので Node では import できない。ソースからコメントを除いて export の文を読む。
 //
@@ -13,7 +17,9 @@
 //   ④ .ts の値の export は、その module から実際に読める（.tsx と、拡張子なしの相対 import を持つ .ts は
 //      Node で読めないので除く。除いたものは名前の一覧 ① と tsc が見る）
 //   ⑤ ui/*.tsx の require("../svg/…") はすべて svg/ に同じ綴りで実在し、package.json の files に svg と ui がある
-//   ⑥ exports の "./ui" は ui/index.ts、"./svg/*" は ./svg/*
+//   ⑥ exports の "./ui" は ui/index.ts で、svg/ は exports に出さない（部品が相対で読むだけ。公開 API にしない）
+//   ⑦ ui/index.ts の export は `export { … } from "…"` の形だけ（`export *`・`export const` などは失敗）
+//   ⑧ .tsx の既定値: Confetti の count 18、TOWN_URL "/"、TOWN_LINK_HEIGHT 44（ソースの文を読む）
 import assert from "node:assert/strict";
 import { readdirSync, readFileSync } from "node:fs";
 import test from "node:test";
@@ -144,8 +150,46 @@ test("⑤ 部品が require する svg はパッケージに入る（svg/ に実
   assert.ok(pkg.files.includes("ui"), "files に ui が無い");
 });
 
-test("⑥ exports の ./ui と ./svg/*", () => {
+test("⑥ exports の ./ui は ui/index.ts、svg/ は exports に無い", () => {
   const pkg = JSON.parse(read("package.json"));
   assert.equal(pkg.exports["./ui"], "./ui/index.ts");
-  assert.equal(pkg.exports["./svg/*"], "./svg/*");
+  const svgKeys = Object.entries(pkg.exports).filter(
+    ([key, target]) =>
+      key.startsWith("./svg") || String(target).includes("svg"),
+  );
+  assert.deepEqual(svgKeys, [], "exports に svg がある");
+});
+
+test("⑦ ui/index.ts の export は export { … } from の形だけ", () => {
+  const src = stripComments(read("ui/index.ts"));
+  assert.ok(/export\s*\{/.test(src), "index.ts に export { … } from が無い");
+  const rest = src.replace(/export\s*\{[^}]*\}\s*from\s*"[^"]+"\s*;?/g, "");
+  assert.doesNotMatch(
+    rest,
+    /\bexport\b/,
+    "export { … } from 以外の export 文がある",
+  );
+});
+
+test('⑧ .tsx の既定値: Confetti の count 18・TOWN_URL "/"・TOWN_LINK_HEIGHT 44', () => {
+  const pick = (file, re) => {
+    const hits = [...stripComments(read(file)).matchAll(re)];
+    assert.equal(hits.length, 1, `${file} に ${re} が ${hits.length} 個`);
+    return hits[0][1];
+  };
+  assert.equal(
+    pick(
+      "ui/Confetti.tsx",
+      /export default function Confetti\(\{\s*count = ([^,}\s]+)\s*\}/g,
+    ),
+    "18",
+  );
+  assert.equal(
+    pick("ui/TownLink.tsx", /export const TOWN_URL = "([^"]*)"/g),
+    "/",
+  );
+  assert.equal(
+    pick("ui/TownLink.tsx", /export const TOWN_LINK_HEIGHT = ([^;\s]+);/g),
+    "44",
+  );
 });

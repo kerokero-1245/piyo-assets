@@ -1,5 +1,7 @@
 // 4〜5 歳でも押しやすい大きなボタン。絵文字＋ひらがな（装飾程度）を大きく取る。
 // 大きさ（size）と色の決め方は ui/bigButtonStyle.ts。
+// 大きさは tokens（文字・余白・角丸）で決まるので、StyleSheet に登録せず、その値の style をそのまま渡す
+// （描画のたびに StyleSheet.create を呼ばない）。tokens に依らない並びだけ下の StyleSheet に置く。
 
 import React, { useMemo } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
@@ -31,10 +33,7 @@ export default function BigButton({
   size = BIG_BUTTON_DEFAULT_SIZE,
 }: Props) {
   const tokens = usePiyoUiTokens();
-  const s = useMemo(() => {
-    const { numberOfLines, ...sheet } = bigButtonStyles(size, tokens);
-    return { ...StyleSheet.create(sheet), numberOfLines };
-  }, [size, tokens]);
+  const s = useMemo(() => bigButtonStyles(size, tokens), [size, tokens]);
   const c = bigButtonColors({ color, pressedColor, textColor }, tokens);
   return (
     <Pressable

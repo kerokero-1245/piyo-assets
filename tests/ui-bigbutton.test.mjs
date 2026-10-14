@@ -8,6 +8,7 @@
 //   ③ 影は 3 値で同じ
 //   ④ 色: 色なし = 白いカード（surface）・押下 cardButtonPressed・文字 text /
 //         色あり = その色・押下 buttonPressed・文字 white / props の上書きが勝つ
+//   ⑤ 型の外の size（JS から・as any で来た値）は、元の 3 本と同じく big の見た目に倒す
 // tokens はすべて別々の値にして、どの値を拾ったかで取り違えが分かるようにする（実物の theme の値は使わない）。
 import assert from "node:assert/strict";
 import test from "node:test";
@@ -119,4 +120,11 @@ test("④ BigButton の色: 色なしは白いカード、色ありはその色�
     ),
     { background: "#123456", pressedBackground: "#abcdef", text: "#000000" },
   );
+});
+
+test("⑤ BigButton の型の外の size は big に倒す（元の 3 本と同じ）", () => {
+  const big = bigButtonStyles("big", T);
+  for (const bad of ["medium", "", "Big", undefined, null]) {
+    assert.deepEqual(bigButtonStyles(bad, T), big, String(bad));
+  }
 });

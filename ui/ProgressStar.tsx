@@ -2,8 +2,10 @@
 // 'star' に切り替わった瞬間だけ「ぽんっ」と小さくポップする（ごほうび獲得の演出）。
 // 数字スコアではなく、集めた⭐が並んでいくのを見せる。マイナス表示は一切なし。
 // ⭐の出し方（variant: 素材の画像 / 絵文字）は ui/progressStarMark.ts。
+// ドットの色は tokens の colors.progressNow・progressOff（ProgressStar の群）。描くときに readProgressTokens が
+// 検査し、渡していなければ分かりやすい例外で止める（ProgressStar を使わないアプリは渡さなくてよい）。
 
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Animated, StyleSheet, View } from "react-native";
 import {
   EMOJI_MARK_STYLE,
@@ -12,7 +14,7 @@ import {
   type ProgressStarVariant,
   type StarState,
 } from "./progressStarMark";
-import { usePiyoUiTokens } from "./tokens";
+import { readProgressTokens, usePiyoUiTokens } from "./tokens";
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports -- Metro が画像を素材として書き出すのは require だけ
 const HOSHI = require("../svg/hoshi.svg");
@@ -24,16 +26,8 @@ export default function ProgressStar({
   state: StarState;
   variant: ProgressStarVariant;
 }) {
-  const { colors } = usePiyoUiTokens();
+  const { progressNow, progressOff } = readProgressTokens(usePiyoUiTokens());
   const mark = progressStarMark(variant);
-  const dotColors = useMemo(
-    () =>
-      StyleSheet.create({
-        now: { backgroundColor: colors.progressNow },
-        off: { backgroundColor: colors.progressOff },
-      }),
-    [colors.progressNow, colors.progressOff],
-  );
   // pop: 0=これから出る / 1=定位置。'star' に変わった瞬間に 0→1 でポップさせる。
   const pop = useRef(new Animated.Value(state === "star" ? 1 : 0)).current;
   const prev = useRef<StarState>(state);
@@ -69,7 +63,9 @@ export default function ProgressStar({
         <View
           style={[
             styles.dot,
-            state === "now" ? [styles.dotNow, dotColors.now] : dotColors.off,
+            state === "now"
+              ? [styles.dotNow, { backgroundColor: progressNow }]
+              : { backgroundColor: progressOff },
           ]}
         />
       ) : mark.kind === "image" ? (
@@ -95,8 +91,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  sticker: STICKER_MARK_STYLE,
-  emoji: EMOJI_MARK_STYLE,
+  // 書き出した定数そのものを渡すと、開発時の StyleSheet.create が凍結する（使う側の定数まで凍る）ので写しを渡す。
+  sticker: { ...STICKER_MARK_STYLE },
+  emoji: { ...EMOJI_MARK_STYLE },
   dot: {
     width: 16,
     height: 16,

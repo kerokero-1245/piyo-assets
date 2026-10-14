@@ -10,7 +10,6 @@
     "./keys": "./keys/index.ts",
     "./keys/keys.js": "./keys/keys.js",
     "./ui": "./ui/index.ts",
-    "./svg/*": "./svg/*",
     "./package.json": "./package.json"
   },
   "files": [
@@ -38,10 +37,12 @@
     "@eslint/js": "10.0.1",
     "@types/react": "19.2.17",
     "eslint": "10.12.0",
+    "eslint-plugin-react-hooks": "7.1.1",
     "globals": "17.13.0",
     "prettier": "3.9.9",
     "react": "19.2.3",
     "react-native": "0.86.0",
+    "react-test-renderer": "19.2.3",
     "typescript": "~6.0.3",
     "typescript-eslint": "8.71.1"
   }

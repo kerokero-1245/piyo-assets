@@ -4,6 +4,7 @@
 // huge  = タイトルの「あそぶ」など、いちばん目立たせるボタン
 // small = おとなモード用。親ゲートの奥は普通のアプリの UI でよいので、長いラベル
 //         （「しゃしんを ふやす」など）が折り返さない大きさにする（それでも高さ 64 以上を確保）。
+// 型の外の size（JS から・as any で来た値）は、元の 3 本と同じく big の見た目に倒す。
 
 export type BigButtonSize = "small" | "big" | "huge";
 
@@ -65,6 +66,7 @@ export function bigButtonStyles(size: BigButtonSize, t: StyleTokens) {
         numberOfLines: 1,
       };
     case "big":
+    default:
       return { button: base, emoji, label, numberOfLines: undefined };
   }
 }
