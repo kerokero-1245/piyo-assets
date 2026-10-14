@@ -1,6 +1,6 @@
 {
   "name": "@kerokero-1245/piyo-assets",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "exports": {
     "./bgm/engine": "./bgm/engine.ts",
@@ -32,6 +32,14 @@
   "peerDependencies": {
     "react": "*",
     "react-native": "*"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-native": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

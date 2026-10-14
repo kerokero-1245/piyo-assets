@@ -8,6 +8,8 @@
 //   - 部品の既定値と街への行き先が変わる（Confetti の count 18・TOWN_URL "/"・TOWN_LINK_HEIGHT 44。.tsx にあり、
 //     見た目の撮影では気付きにくい）
 //   - 部品が require する svg/ の絵が、パッケージに入っていない（files に svg が無い・綴りが違う）
+//   - peerDependencies の react・react-native が optional でない（npm 7+ は peer を自動で入れるので、
+//     静的サイトのランドが devDependencies で取り込んだら lock が 82→293 項目に膨らんだ）
 // index.ts は .tsx を読み込むので Node では import できない。ソースからコメントを除いて export の文を読む。
 //
 // 見るもの:
@@ -20,6 +22,7 @@
 //   ⑥ exports の "./ui" は ui/index.ts で、svg/ は exports に出さない（部品が相対で読むだけ。公開 API にしない）
 //   ⑦ ui/index.ts の export は `export { … } from "…"` の形だけ（`export *`・`export const` などは失敗）
 //   ⑧ .tsx の既定値: Confetti の count 18、TOWN_URL "/"、TOWN_LINK_HEIGHT 44（ソースの文を読む）
+//   ⑨ peerDependencies の全キーが peerDependenciesMeta で optional: true（キーは peerDependencies から列挙。0 件なら失敗）
 import assert from "node:assert/strict";
 import { readdirSync, readFileSync } from "node:fs";
 import test from "node:test";
@@ -191,5 +194,18 @@ test('⑧ .tsx の既定値: Confetti の count 18・TOWN_URL "/"・TOWN_LINK_HE
   assert.equal(
     pick("ui/TownLink.tsx", /export const TOWN_LINK_HEIGHT = ([^;\s]+);/g),
     "44",
+  );
+});
+
+test("⑨ peerDependencies の react・react-native は peerDependenciesMeta で optional（静的サイトが取り込むときに npm が入れない）", () => {
+  const pkg = JSON.parse(read("package.json"));
+  const peers = Object.keys(pkg.peerDependencies ?? {});
+  assert.ok(peers.length > 0, "peerDependencies が 0 件");
+  const meta = pkg.peerDependenciesMeta ?? {};
+  const notOptional = peers.filter((key) => meta[key]?.optional !== true);
+  assert.deepEqual(
+    notOptional,
+    [],
+    "peerDependenciesMeta で optional: true になっていない peer がある",
   );
 });
