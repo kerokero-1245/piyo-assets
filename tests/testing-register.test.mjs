@@ -71,6 +71,7 @@ put("src/pick.ts", 'export const from: string = "file";\n');
 put("src/pick/index.ts", 'export const from: string = "directory";\n');
 put("src/lib/index.ts", 'export const from: string = "directory index";\n');
 put("src/data.json", '{ "answer": 42 }\n');
+put("src/proto.json", '{ "__proto__": { "x": 1 }, "a": 2 }\n');
 put("src/json.ts", 'import data from "./data.json";\nexport { data };\n');
 put("assets/piyo.svg", "<svg/>\n");
 put(
@@ -306,6 +307,15 @@ test("④ JSON の import を属性なしで読む。属性つきの import は 
       { ok: true, value: [{ answer: 42 }, ["json"]] },
       { ok: true, value: { answer: 42 } },
     ],
+  );
+});
+
+test("④' JSON の __proto__ キーは自身のプロパティとして読む（プロトタイプに設定しない。Node の JSON.parse と同じ）", () => {
+  assert.deepEqual(
+    run(
+      'const m = await import(src("proto.json")); return [Object.hasOwn(m.default, "__proto__"), Object.getPrototypeOf(m.default) === Object.prototype, m.default.a];',
+    ),
+    { ok: true, value: [true, true, 2] },
   );
 });
 

@@ -295,10 +295,11 @@ export function register(options = {}) {
         !required &&
         context.importAttributes?.type !== "json"
       ) {
-        const value = JSON.parse(readFileSync(file, "utf8"));
+        const source = readFileSync(file, "utf8");
+        JSON.parse(source); // 不正な JSON はここで落とす（変換後は Node が同じ JSON.parse で読む）
         return {
           format: "module",
-          source: `export default ${JSON.stringify(value)};`,
+          source: `export default JSON.parse(${JSON.stringify(source)});`,
           shortCircuit: true,
         };
       }
