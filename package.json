@@ -17,6 +17,9 @@
     "./ui/TownLink": "./ui/TownLink.tsx",
     "./ui/tokens": "./ui/tokens.ts",
     "./ui/useLongPress": "./ui/useLongPress.ts",
+    "./testing/register": "./testing/register.mjs",
+    "./testing/stubs/react-native": "./testing/stubs/react-native.mjs",
+    "./testing/stubs/expo": "./testing/stubs/expo.mjs",
     "./package.json": "./package.json"
   },
   "files": [
@@ -27,7 +30,8 @@
     "keys/index.ts",
     "keys/keys.js",
     "ui",
-    "svg"
+    "svg",
+    "testing"
   ],
   "scripts": {
     "format": "prettier --write .",
