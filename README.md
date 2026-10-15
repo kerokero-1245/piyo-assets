@@ -192,7 +192,7 @@ import { STICKER_MARK } from "@kerokero-1245/piyo-assets/ui/ProgressStarSticker"
 <ProgressStar state="star" mark={EMOJI_MARK} />;
 ```
 
-- `files` に `ui` と `svg`（78 個すべて）を入れている。`TownLink`・`STICKER_MARK`（`ui/ProgressStarSticker.ts`）は `require("../svg/ki.svg")`・`require("../svg/hoshi.svg")` で正本を相対で読むので、svg/ が無いと部品が組めない。2 つだけを選ばず 78 個すべてを入れている（v0.4.0 の tarball は 102 ファイル・約 77 kB）
+- `files` に `ui` と `svg`（78 個すべて）を入れている。`TownLink`・`STICKER_MARK`（`ui/ProgressStarSticker.ts`）は `require("../svg/ki.svg")`・`require("../svg/hoshi.svg")` で正本を相対で読むので、svg/ が無いと部品が組めない。2 つだけを選ばず 78 個すべてを入れている（v0.4.0 の tarball は 103 ファイル・約 80 kB）
 - **2 重配布に注意**: Metro はパッケージの素材を `assets/node_modules/@kerokero-1245/piyo-assets/` の下（`svg/…`）に、アプリの素材を `assets/<アプリの中のパス>`（さんすう・ことばは `assets/assets/svg/…`、めいろは `assets/assets/piyo/…`）に書き出す。中身が同じでもパスが違えば 2 回書き出されるので、部品に移した絵（`ki.svg`・`hoshi.svg`）のアプリ側の写しは、アプリで使う箇所が無くなってから消す
 - **Pages は Jekyll を通さない**: パッケージの素材の書き出し先のパスに `node_modules` が入るので、GitHub Pages では Jekyll を通さない配信（`dist/.nojekyll`）が前提。知育 3 本の deploy.yml は `touch dist/.nojekyll` で書き出している
 - `react`・`react-native` は `peerDependencies`（`*`）。使う側のものを使い、パッケージは持ち込まない。`peerDependenciesMeta` で optional にしているので、react を使わない静的サイトが取り込んでも npm は react・react-native を入れない
