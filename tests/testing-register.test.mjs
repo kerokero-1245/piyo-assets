@@ -280,16 +280,30 @@ test("③ 拡張子なしの相対 import の補完: 同名のファイルとデ
   );
 });
 
-test("④ JSON の import を属性なしで読む。属性つきの import と CJS の require（createRequire）も読める", () => {
+// 属性つきの JSON の import は、ひな形が変換せず Node の読み方（format "json"）のまま通す。
+// 値だけでは変換したかどうかが見分けられないので、ひな形の後に登録したフックで、ひな形が返した format を見る
+const ATTRIBUTE_JSON = `const { registerHooks } = await import("node:module");
+const formats = [];
+registerHooks({
+  load(url, context, next) {
+    const result = next(url, context);
+    if (url.includes("data.json?attribute")) formats.push(result.format);
+    return result;
+  },
+});
+const m = await import(src("data.json?attribute"), { with: { type: "json" } });
+return [m.default, formats];`;
+
+test("④ JSON の import を属性なしで読む。属性つきの import は Node の読み方のまま、CJS の require（createRequire）も読める", () => {
   assert.deepEqual(
     runEach([
       'return (await import(src("json"))).data;',
-      'return (await import(src("data.json"), { with: { type: "json" } })).default;',
+      ATTRIBUTE_JSON,
       'const { createRequire } = await import("node:module"); return createRequire(src("json.ts"))("./data.json");',
     ]),
     [
       { ok: true, value: { answer: 42 } },
-      { ok: true, value: { answer: 42 } },
+      { ok: true, value: [{ answer: 42 }, ["json"]] },
       { ok: true, value: { answer: 42 } },
     ],
   );
