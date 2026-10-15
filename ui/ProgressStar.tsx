@@ -1,7 +1,9 @@
 // 進捗ドット 1 つぶん。ふつうは丸ドットだが、その問題をクリアすると⭐に変わる。
 // 'star' に切り替わった瞬間だけ「ぽんっ」と小さくポップする（ごほうび獲得の演出）。
 // 数字スコアではなく、集めた⭐が並んでいくのを見せる。マイナス表示は一切なし。
-// ⭐の出し方（variant: 素材の画像 / 絵文字）は ui/progressStarMark.ts。
+// ⭐の出し方は mark（必須）で受ける: 文字の EMOJI_MARK（この入口から出す）か、
+// 画像の STICKER_MARK（入口 ./ui/ProgressStarSticker）。ここでは絵を require しない
+// （文字で出すアプリの書き出しに hoshi.svg を入れないため。mark の検査と大きさは ui/progressStarMark.ts）。
 // ドットの色は tokens の colors.progressNow・progressOff（ProgressStar の群）。描くときに readProgressTokens が
 // 検査し、渡していなければ分かりやすい例外で止める（ProgressStar を使わないアプリは渡さなくてよい）。
 
@@ -9,25 +11,28 @@ import React, { useEffect, useRef } from "react";
 import { Animated, StyleSheet, View } from "react-native";
 import {
   EMOJI_MARK_STYLE,
-  progressStarMark,
+  progressStarMarkView,
   STICKER_MARK_STYLE,
-  type ProgressStarVariant,
+  type ProgressStarMark,
   type StarState,
 } from "./progressStarMark";
 import { readProgressTokens, usePiyoUiTokens } from "./tokens";
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports -- Metro が画像を素材として書き出すのは require だけ
-const HOSHI = require("../svg/hoshi.svg");
+export {
+  EMOJI_MARK,
+  type ProgressStarMark,
+  type StarState,
+} from "./progressStarMark";
 
-export default function ProgressStar({
+export function ProgressStar({
   state,
-  variant,
+  mark,
 }: {
   state: StarState;
-  variant: ProgressStarVariant;
+  mark: ProgressStarMark;
 }) {
   const { progressNow, progressOff } = readProgressTokens(usePiyoUiTokens());
-  const mark = progressStarMark(variant);
+  const view = progressStarMarkView(mark);
   // pop: 0=これから出る / 1=定位置。'star' に変わった瞬間に 0→1 でポップさせる。
   const pop = useRef(new Animated.Value(state === "star" ? 1 : 0)).current;
   const prev = useRef<StarState>(state);
@@ -68,15 +73,15 @@ export default function ProgressStar({
               : { backgroundColor: progressOff },
           ]}
         />
-      ) : mark.kind === "image" ? (
+      ) : view.kind === "image" ? (
         <Animated.Image
-          source={HOSHI}
+          source={view.source}
           resizeMode="contain"
           style={[styles.sticker, popStyle]}
         />
       ) : (
         <Animated.Text style={[styles.emoji, popStyle]}>
-          {mark.glyph}
+          {view.glyph}
         </Animated.Text>
       )}
     </View>

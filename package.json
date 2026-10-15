@@ -10,6 +10,13 @@
     "./keys": "./keys/index.ts",
     "./keys/keys.js": "./keys/keys.js",
     "./ui": "./ui/index.ts",
+    "./ui/BigButton": "./ui/BigButton.tsx",
+    "./ui/Confetti": "./ui/Confetti.tsx",
+    "./ui/ProgressStar": "./ui/ProgressStar.tsx",
+    "./ui/ProgressStarSticker": "./ui/ProgressStarSticker.ts",
+    "./ui/TownLink": "./ui/TownLink.tsx",
+    "./ui/tokens": "./ui/tokens.ts",
+    "./ui/useLongPress": "./ui/useLongPress.ts",
     "./package.json": "./package.json"
   },
   "files": [

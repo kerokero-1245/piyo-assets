@@ -8,6 +8,8 @@
 import { useEffect, useRef } from "react";
 import { createLongPress, type LongPressHandlers } from "./longPress";
 
+export { LONG_PRESS_MS } from "./longPress";
+
 export function useLongPress(
   onFire: () => void,
   ms?: number,

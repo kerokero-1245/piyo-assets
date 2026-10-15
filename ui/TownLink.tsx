@@ -62,7 +62,7 @@ const WEB_LINK_PROPS = {
   },
 } as unknown as PressableProps;
 
-export default function TownLink({ onPress }: Props) {
+export function TownLink({ onPress }: Props) {
   const tokens = usePiyoUiTokens();
   const themed = useMemo(() => themedStyles(tokens), [tokens]);
   if (!SHOW_TOWN) return null;

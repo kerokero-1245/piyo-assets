@@ -82,7 +82,7 @@ function Piece({ spec, fallH }: { spec: PieceSpec; fallH: number }) {
   );
 }
 
-export default function Confetti({ count = 18 }: { count?: number }) {
+export function Confetti({ count = 18 }: { count?: number }) {
   const { colors } = usePiyoUiTokens();
   const palette = colors.confetti;
   const [box, setBox] = useState({ w: 0, h: 0 });

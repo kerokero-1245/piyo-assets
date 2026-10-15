@@ -13,6 +13,8 @@ import {
 } from "./bigButtonStyle";
 import { usePiyoUiTokens } from "./tokens";
 
+export { BIG_BUTTON_DEFAULT_SIZE, type BigButtonSize } from "./bigButtonStyle";
+
 interface Props {
   onPress: () => void;
   emoji?: string;
@@ -23,7 +25,7 @@ interface Props {
   size?: BigButtonSize;
 }
 
-export default function BigButton({
+export function BigButton({
   onPress,
   emoji,
   label,
