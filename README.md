@@ -133,6 +133,29 @@ tokens のキーと、3 本の theme のどの値を渡すかの対応:
 
 必須のキーの一覧は、全体の群が `PIYO_UI_TOKEN_KEYS`（入口から出している）、ProgressStar の群が `PIYO_UI_PROGRESS_TOKEN_KEYS`（`ui/tokenChecks.ts`。部品の内部用で、入口からは出さない）。
 
+### ProgressStar の移行（v0.3.x → v0.4.0。非互換）
+
+v0.4.0 は**パスだけ互換**（`@kerokero-1245/piyo-assets/ui` の barrel は残る）で、`ProgressStar` の props は非互換。文字列の `variant` を廃止し、⭐の出し方の `mark` を必須にした。`variant` を渡したままだと `tsc` が TS2322 で止まるので、版上げと同じコミットで書き換える。
+
+| 今の書き方（v0.3.x） | v0.4.0 の書き方       | import 元                                           | 使うアプリ       |
+| -------------------- | --------------------- | --------------------------------------------------- | ---------------- |
+| `variant="emoji"`    | `mark={EMOJI_MARK}`   | `@kerokero-1245/piyo-assets/ui/ProgressStar`        | ぴよぴよことば   |
+| `variant="sticker"`  | `mark={STICKER_MARK}` | `@kerokero-1245/piyo-assets/ui/ProgressStarSticker` | ぴよぴよさんすう |
+
+```tsx
+// ぴよぴよことば（文字の ⭐）
+import {
+  EMOJI_MARK,
+  ProgressStar,
+} from "@kerokero-1245/piyo-assets/ui/ProgressStar";
+<ProgressStar state={state} mark={EMOJI_MARK} />;
+
+// ぴよぴよさんすう（svg/hoshi.svg の画像の⭐）
+import { ProgressStar } from "@kerokero-1245/piyo-assets/ui/ProgressStar";
+import { STICKER_MARK } from "@kerokero-1245/piyo-assets/ui/ProgressStarSticker";
+<ProgressStar state={state} mark={STICKER_MARK} />;
+```
+
 ### 元の 3 本の部品との挙動の差
 
 値（色・寸法・時間・既定）は元の部品と同じ。次の点だけが違う。
@@ -145,7 +168,7 @@ tokens のキーと、3 本の theme のどの値を渡すかの対応:
 
 ### exports と files
 
-- **アプリは部品ごとの入口から import する**。まとめての入口 `@kerokero-1245/piyo-assets/ui`（`./ui` → `ui/index.ts`）は互換のために残しているが、ここから 1 つの部品を import すると、Metro は使わない部品の絵（`ki.svg`・`hoshi.svg`）まで書き出す
+- **アプリは部品ごとの入口から import する**。まとめての入口 `@kerokero-1245/piyo-assets/ui`（`./ui` → `ui/index.ts`）は **パスだけ互換**（barrel は残る）のために残しているが、ここから 1 つの部品を import すると、Metro は使わない部品の絵（`ki.svg`・`hoshi.svg`）まで書き出す。v0.4.0 の API は非互換で、`ProgressStar` は `variant` を廃止して `mark` が必須（下の「ProgressStar の移行」）
 - `svg/` は `exports` に無い（アプリはパッケージの絵を import しない）
 
 | 入口（`@kerokero-1245/piyo-assets/…`） | 出すもの                                                                     | 読む絵      |
@@ -207,7 +230,7 @@ register({
 - `asset`: 画像・音声の `require("…")` の値（`{ specifier, file, root }` を受ける）。既定は素材ファイルの絶対パスの文字列で、ファイルが無ければ `MODULE_NOT_FOUND` で止まる（綴り違いの素材をテストで見つけられる）。`asset` を渡したときは実在を見ない。おつかいめいろは `"/" + root からの相対パス`、ぴよぴよさんすうは `{ uri: "asset:<require の文字列>" }` を渡す
 - 素材ではない `require` は「素材ではないので差し替えられません」で止まる。素材を ESM の `import` で読むと、`require` に書き換える案内つきで止まる。構文エラーのファイルは `SyntaxError`（`src/x.ts(3,14): error TS1109: …` の形）で止まる
 - JSON は `import` なら属性なしで読める。CJS の `require`（`createRequire`）は Node の読み方のまま
-- Node は symlink を実体のパスに直して読むので、ひな形の場所が node_modules の外（`npm link` など）だと、共有パッケージの判定と `typescript` の探し方が変わる。git 依存の install（実体のディレクトリ）で使う
+- `npm link` では使わない。Node は symlink を実体のパスに直して読むので、ひな形と部品が piyo-assets 自身の場所から読まれ、`react` を piyo-assets の node_modules から読んで、アプリの `react` と合わせて react が 2 つになる（フックが「Invalid hook call」で落ちる）。あわせて共有パッケージの判定も node_modules の外になる。git 依存の install（実体のディレクトリ）で使う
 
 ### 元の 3 本の register.mjs との差
 
