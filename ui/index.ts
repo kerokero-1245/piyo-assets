@@ -1,5 +1,5 @@
 // piyo-assets/ui — 知育アプリで同じ役割の部品。使う側はアプリの根で 1 回だけ
-// <PiyoUiProvider tokens={...}> に自分の theme の値を渡す（tokens の中身は ui/tokens.ts）。
+// <PiyoUiProvider tokens={...}> に自分の theme の値を渡す（tokens の中身は ui/tokenChecks.ts の PiyoUiTokens）。
 // まとめての入口（互換のために残す）。ここから import すると、使わない部品の絵（ki.svg・hoshi.svg）も
 // Metro が書き出すので、アプリは部品ごとの入口（./ui/Confetti など。package.json の exports）から import する。
 export { BigButton } from "./BigButton";

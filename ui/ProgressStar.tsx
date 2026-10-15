@@ -16,7 +16,8 @@ import {
   type ProgressStarMark,
   type StarState,
 } from "./progressStarMark";
-import { readProgressTokens, usePiyoUiTokens } from "./tokens";
+import { readProgressTokens } from "./tokenChecks";
+import { usePiyoUiTokens } from "./tokens";
 
 export {
   EMOJI_MARK,

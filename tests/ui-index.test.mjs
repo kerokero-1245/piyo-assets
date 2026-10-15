@@ -11,7 +11,10 @@
 //   - 1 つの部品を import しただけで、使わない部品の絵まで書き出される（Metro は import した module が
 //     require する絵をすべて書き出す。まとめての入口 ui/index.ts から Confetti だけを読んでも ki.svg・hoshi.svg が
 //     入り、ProgressStar.tsx が hoshi.svg を require していたときは、文字の ⭐ で出すアプリにも hoshi.svg が入った）
-//   - 部品ごとの入口が欠ける・指す先が無い・files に入らない（使う側の import が解決できない）
+//   - 入口（ui/ に限らず testing/ なども）が欠ける・指す先が無い・files に入らない（使う側の import が解決できない。
+//     files から testing を外しても、ui/ だけを見る検査では気付けなかった）
+//   - 部品ごとの入口が、部品の内部の関数まで公開する（./ui/tokens が検査の関数を出していた。公開名は使う側の
+//     import に入り、消すと非互換になる）
 //   - peerDependencies の react・react-native が optional でない（npm 7+ は peer を自動で入れるので、
 //     静的サイトのランドが devDependencies で取り込んだら lock が 82→293 項目に膨らんだ）
 // index.ts は .tsx を読み込むので Node では import できない。ソースからコメントを除いて export の文を読む。
@@ -28,13 +31,15 @@
 //   ⑦ ui/index.ts の export は `export { … } from "…"` の形だけ（`export *`・`export const` などは失敗）
 //   ⑧ .tsx の既定値: Confetti の count 18、TOWN_URL "/"、TOWN_LINK_HEIGHT 44（ソースの文を読む）
 //   ⑨ peerDependencies の全キーが peerDependenciesMeta で optional: true（キーは peerDependencies から列挙。0 件なら失敗）
-//   ⑩ 部品ごとの入口: exports の "./ui/<名前>" は ui/<名前>.ts か .tsx を指して実在し、files の ui に含まれる。
-//      ui/ の .tsx（部品）はすべて入口を持つ（入口も .tsx も package.json と ui/ から列挙。0 件なら失敗）
-//   ⑪ まとめての入口の名前は、どれもいずれかの部品ごとの入口からも読める（入口を替えても名前が欠けない）
+//   ⑩ すべての入口（exports の ./package.json 以外）は実在するファイルを指し、files に含まれる。
+//      部品ごとの入口 "./ui/<名前>" は ui/<名前>.ts か .tsx を指し、ui/ の .tsx（部品）はすべて入口を持つ
+//      （入口も .tsx も package.json と ui/ から列挙。0 件なら失敗）
+//   ⑪ 部品ごとの入口の公開名の和は、まとめての入口の公開名と同じ集合（入口を替えても名前が欠けず、
+//      部品ごとの入口だけが内部の名前を出すこともない）
 //   ⑫ 部品ごとの入口が（相対の import をたどって）require する絵は、TownLink の ki.svg と
 //      ProgressStarSticker の hoshi.svg だけ（ProgressStar・Confetti などは絵を読まない）
 import assert from "node:assert/strict";
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import test from "node:test";
 
 const root = new URL("../", import.meta.url);
@@ -264,11 +269,35 @@ function exportedNames(file) {
   return names;
 }
 
-test("⑩ 部品ごとの入口は ui/ の実在するファイルを指し、files の ui に含まれ、部品（.tsx）はすべて入口を持つ", () => {
+// files（ファイルかディレクトリ）に path（"./" を除いた相対パス）が含まれるか
+const inFiles = (files, rel) =>
+  files.some((entry) => rel === entry || rel.startsWith(`${entry}/`));
+
+test("⑩ すべての入口（exports の ./package.json 以外）は実在するファイルを指して files に含まれ、部品（.tsx）はすべて入口を持つ", () => {
+  const pkg = JSON.parse(read("package.json"));
+  const all = Object.entries(pkg.exports).filter(
+    ([key]) => key !== "./package.json",
+  );
+  assert.ok(all.length > 0, "入口が 0 件");
+  for (const [key, target] of all) {
+    assert.equal(typeof target, "string", `${key} の指す先が文字列ではない`);
+    assert.match(
+      target,
+      /^\.\//,
+      `${key} の指す先 ${target} が ./ で始まらない`,
+    );
+    const rel = target.slice(2);
+    assert.ok(
+      existsSync(new URL(rel, root)),
+      `${key} の指す先 ${target} が無い`,
+    );
+    assert.ok(
+      inFiles(pkg.files, rel),
+      `${key} の指す先 ${target} が files に含まれない（npm pack に入らない）`,
+    );
+  }
   const entries = partEntries();
   assert.ok(entries.length > 0, "部品ごとの入口が 0 件");
-  const pkg = JSON.parse(read("package.json"));
-  assert.ok(pkg.files.includes("ui"), "files に ui が無い");
   for (const { key, target, file } of entries) {
     assert.match(
       String(target),
@@ -289,14 +318,26 @@ test("⑩ 部品ごとの入口は ui/ の実在するファイルを指し、fi
   assert.deepEqual(missing, [], "入口の無い部品がある");
 });
 
-test("⑪ まとめての入口の名前は、どれも部品ごとの入口のどれかから読める", () => {
+test("⑪ 部品ごとの入口の公開名の和は、まとめての入口の公開名と同じ集合（どちら向きにも余りが無い）", () => {
+  const entries = partEntries();
+  assert.ok(entries.length > 0, "部品ごとの入口が 0 件");
   const fromEntries = new Set(
-    partEntries().flatMap(({ file }) => [...exportedNames(file)]),
+    entries.flatMap(({ file }) => [...exportedNames(file)]),
   );
-  const barrel = readIndexExports().flatMap((e) => e.names.map((n) => n.name));
-  assert.ok(barrel.length > 0, "まとめての入口の名前が 0 個");
-  const missing = barrel.filter((name) => !fromEntries.has(name));
+  const barrel = new Set(
+    readIndexExports().flatMap((e) => e.names.map((n) => n.name)),
+  );
+  assert.ok(barrel.size > 0, "まとめての入口の名前が 0 個");
+  const missing = [...barrel].filter((name) => !fromEntries.has(name));
   assert.deepEqual(missing, [], "部品ごとの入口から読めない名前がある");
+  for (const { key, file } of entries) {
+    const extra = [...exportedNames(file)].filter((name) => !barrel.has(name));
+    assert.deepEqual(
+      extra,
+      [],
+      `${key} が、まとめての入口に無い名前（部品の内部の名前）を出している`,
+    );
+  }
 });
 
 // ui/<file> から相対の import（import type は除く）をたどった先までに require される絵

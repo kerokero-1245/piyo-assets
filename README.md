@@ -131,7 +131,7 @@ tokens のキーと、3 本の theme のどの値を渡すかの対応:
 | `progressNow`・`progressOff`                                                               | 渡さない（ProgressStar を使わない）           | 同名                   | 同名                 |
 | ほか（`surface`・`text`・`white`・`buttonPressed`・`confetti`・`font`・`space`・`radius`） | 同名                                          | 同名                   | 同名                 |
 
-必須のキーの一覧は、全体の群が `PIYO_UI_TOKEN_KEYS`（入口から出している）、ProgressStar の群が `PIYO_UI_PROGRESS_TOKEN_KEYS`（`ui/tokens.ts`）。
+必須のキーの一覧は、全体の群が `PIYO_UI_TOKEN_KEYS`（入口から出している）、ProgressStar の群が `PIYO_UI_PROGRESS_TOKEN_KEYS`（`ui/tokenChecks.ts`。部品の内部用で、入口からは出さない）。
 
 ### 元の 3 本の部品との挙動の差
 

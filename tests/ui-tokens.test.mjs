@@ -1,9 +1,9 @@
-// 部品へ渡す見た目の値（ui/tokens.ts の PiyoUiTokens）の実行時の検査と、その配線を確かめる。
+// 部品へ渡す見た目の値（ui/tokenChecks.ts の PiyoUiTokens）の実行時の検査と、その配線（ui/tokens.ts）を確かめる。
 // tokens に既定値は無い。Provider を置き忘れた・値を 1 つ渡し忘れたときに既定の色で黙って動くと、
 // 別のアプリの色や undefined の色（透明）で部品が出ても気付けない。だから実行時にも止める。
 // 必須は群ごと: 全体の群（どの部品も使い得る値）は Provider が検査し、ProgressStar の群（進捗ドットの 2 色）は
 // ProgressStar を描くときにだけ検査する（ProgressStar を使わないアプリ = おつかいめいろ は渡さなくてよい）。
-// （型の PiyoUiTokens とキーの一覧・値の種類の表が同じ集合であることは tsc が止める。tokens.ts を参照）
+// （型の PiyoUiTokens とキーの一覧・値の種類の表が同じ集合であることは tsc が止める。tokenChecks.ts を参照）
 //
 // 見るもの:
 //   ① 群ごとのキーの一覧（この一覧が変わったら、使う側の 3 本が渡す値も変わる）
@@ -15,6 +15,7 @@
 //   ⑦ PiyoUiProvider を関数として呼ぶ: 欠けは例外、そろえば渡した tokens を context の値にする（progress の群は見ない）
 //   ⑧ usePiyoUiTokens を描く（react-test-renderer）: Provider の内側は渡した tokens、外側は例外
 import assert from "node:assert/strict";
+import { registerHooks } from "node:module";
 import test from "node:test";
 import { act, createElement } from "react";
 import TestRenderer from "react-test-renderer";
@@ -24,11 +25,28 @@ import {
   missingTokenKeys,
   PIYO_UI_PROGRESS_TOKEN_KEYS,
   PIYO_UI_TOKEN_KEYS,
-  PiyoUiProvider,
   readProgressTokens,
   readTokens,
-  usePiyoUiTokens,
-} from "../ui/tokens.ts";
+} from "../ui/tokenChecks.ts";
+
+// ui/tokens.ts は拡張子なしの相対 import（"./tokenChecks"）を持つ（Metro と tsc の書き方）。
+// Node はそのままでは解決できないので、このテストの中だけ ".ts" を補って読む。
+registerHooks({
+  resolve(specifier, context, next) {
+    try {
+      return next(specifier, context);
+    } catch (error) {
+      if (/^\.\.?\//.test(specifier) && !/\.[a-z]+$/.test(specifier)) {
+        return next(`${specifier}.ts`, context);
+      }
+      throw error;
+    }
+  },
+});
+const tokensEntry = await import("../ui/tokens.ts");
+const { PiyoUiProvider, usePiyoUiTokens } = tokensEntry;
+// 入口が再輸出する PIYO_UI_TOKEN_KEYS は、内部の一覧と同じ実体
+assert.equal(tokensEntry.PIYO_UI_TOKEN_KEYS, PIYO_UI_TOKEN_KEYS);
 
 // react-test-renderer は React 19 で非推奨の案内を console.error に出す。その 1 文だけを黙らせる。
 // 描画中の例外を React が console.error に出す分は、⑧ の中だけ黙らせる。

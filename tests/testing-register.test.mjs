@@ -10,6 +10,8 @@
 //   - 共有パッケージ（node_modules/@kerokero-1245/piyo-assets）の .ts を変換しない
 //     （Node は node_modules の中の .ts の型を除去しない: ERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING）
 //   - 構文エラーのファイルを黙って壊れた JS にする・どの行か分からない
+//   - 分岐の取り違え（拡張子の候補の順・`#` の落とし・JSON の import 属性・二重の登録・入れ子の node_modules の判定・
+//     前方一致の長さの順・typescript を root から探す順）が、ほかのケースでは green のまま入る
 //
 // 作り: 一時ディレクトリに偽のアプリ（src の .ts・.tsx・JSON・svg、偽の react/jsx-runtime、偽の共有パッケージ）を書き、
 // 子プロセスの `node --import <偽アプリの tests/register.mjs>` で読ませて、結果を JSON で受け取る
@@ -24,6 +26,7 @@ import {
   rmSync,
   writeFileSync,
 } from "node:fs";
+import { createRequire } from "node:module";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { after, test } from "node:test";
@@ -37,7 +40,16 @@ const STUB_RN = new URL("../testing/stubs/react-native.ts", import.meta.url)
 const APP = realpathSync(
   mkdtempSync(path.join(tmpdir(), "piyo-testing-register-")),
 );
-after(() => rmSync(APP, { recursive: true, force: true }));
+// typescript の入っていない別のアプリ（root から探して見つからないときに、ひな形の場所から探す経路を見る）
+const APP_NO_TS = realpathSync(
+  mkdtempSync(path.join(tmpdir(), "piyo-testing-register-no-ts-")),
+);
+after(() => {
+  rmSync(APP, { recursive: true, force: true });
+  rmSync(APP_NO_TS, { recursive: true, force: true });
+});
+// このリポジトリの devDependencies の typescript（偽のアプリの typescript はこれを読んで印を付ける）
+const REAL_TYPESCRIPT = createRequire(import.meta.url).resolve("typescript");
 
 function put(rel, text) {
   const file = path.join(APP, rel);
@@ -74,6 +86,9 @@ put(
   "src/importArt.ts",
   'import piyo from "../assets/piyo.svg";\nexport { piyo };\n',
 );
+put("src/both.ts", 'export const from: string = "ts";\n');
+put("src/both.tsx", 'export const from: string = "tsx";\n');
+put("src/comp/index.tsx", 'export const from: string = "index.tsx";\n');
 put("src/counter.ts", "let n = 0;\nexport const next = (): number => ++n;\n");
 put("src/broken.ts", "export const x: number = ;\n");
 put(
@@ -124,6 +139,30 @@ put(
   "node_modules/other-pkg/index.ts",
   "export const other = (n: number): number => n;\n",
 );
+// 入れ子の node_modules: 共有パッケージの下の別パッケージは変換しない・別パッケージの下の共有パッケージは変換する
+put(
+  "node_modules/@kerokero-1245/piyo-assets/node_modules/inner/index.ts",
+  "export const inner = (n: number): number => n;\n",
+);
+put(
+  "node_modules/other-pkg/node_modules/@kerokero-1245/piyo-assets/nested.ts",
+  "export const nested = (n: number): string => `nested:${n}`;\n",
+);
+// 偽のアプリの typescript（本物を読み、読まれたことを印にする。root から探す経路を通ったかを見る）
+put(
+  "node_modules/typescript/package.json",
+  '{ "name": "typescript", "version": "0.0.0", "main": "index.js" }\n',
+);
+put(
+  "node_modules/typescript/index.js",
+  `globalThis.__piyoAppTypescript = true;\nmodule.exports = require(${JSON.stringify(REAL_TYPESCRIPT)});\n`,
+);
+put("tests/prefix/expo-any.ts", 'export const which: string = "expo-*";\n');
+put("tests/prefix/expo-av.ts", 'export const which: string = "expo-av*";\n');
+writeFileSync(
+  path.join(APP_NO_TS, "package.json"),
+  '{ "name": "no-ts-app", "private": true }\n',
+);
 
 // アプリの tests/register.mjs（ひな形を読み、アプリ固有の差し替えだけを足す）
 const REGISTER = put(
@@ -164,6 +203,28 @@ register({
     },
   },
 });
+`,
+);
+
+// 前方一致の名前を 2 つ渡す版（短い "expo-*" を先に書く。長い "expo-av*" が勝つ）
+const REGISTER_PREFIX = put(
+  "tests/register-prefix.mjs",
+  `import { register } from ${JSON.stringify(TEMPLATE)};
+register({
+  root: new URL("../", import.meta.url),
+  stubs: {
+    "expo-*": new URL("./prefix/expo-any.ts", import.meta.url),
+    "expo-av*": new URL("./prefix/expo-av.ts", import.meta.url),
+  },
+});
+`,
+);
+
+// root に typescript の無い版（ひな形の場所の typescript を使う）
+const REGISTER_NO_TS = put(
+  "tests/register-no-ts.mjs",
+  `import { register } from ${JSON.stringify(TEMPLATE)};
+register({ root: ${JSON.stringify(pathToFileURL(APP_NO_TS + path.sep).href)} });
 `,
 );
 
@@ -210,22 +271,24 @@ test("② .tsx の変換: JSX を react/jsx-runtime の呼び出しにする（r
   });
 });
 
-test("③ 拡張子なしの相対 import の補完: 同名のファイルとディレクトリならファイル、ディレクトリなら index.ts", () => {
+test("③ 拡張子なしの相対 import の補完: 同名のファイルとディレクトリならファイル、.ts と .tsx なら .ts、ディレクトリなら index.ts か index.tsx", () => {
   assert.deepEqual(
     run(
-      'return [(await import(src("pick"))).from, (await import(src("lib"))).from];',
+      'return Promise.all(["pick", "lib", "both", "comp"].map(async (name) => (await import(src(name))).from));',
     ),
-    { ok: true, value: ["file", "directory index"] },
+    { ok: true, value: ["file", "directory index", "ts", "index.tsx"] },
   );
 });
 
-test("④ JSON の import を属性なしで読む。CJS の require（createRequire）でも読める", () => {
+test("④ JSON の import を属性なしで読む。属性つきの import と CJS の require（createRequire）も読める", () => {
   assert.deepEqual(
     runEach([
       'return (await import(src("json"))).data;',
+      'return (await import(src("data.json"), { with: { type: "json" } })).default;',
       'const { createRequire } = await import("node:module"); return createRequire(src("json.ts"))("./data.json");',
     ]),
     [
+      { ok: true, value: { answer: 42 } },
       { ok: true, value: { answer: 42 } },
       { ok: true, value: { answer: 42 } },
     ],
@@ -317,22 +380,37 @@ test("⑨ 差し替えの無い react-native-* は、本物を読まずに分か
   assert.match(result.message, /差し替えがありません/);
 });
 
-test("⑩ 共有パッケージ（node_modules/@kerokero-1245/piyo-assets）の .ts は変換し、ほかの node_modules の .ts は変換しない", () => {
-  const [shared, other] = runEach([
-    'return (await import(new URL("../node_modules/@kerokero-1245/piyo-assets/shared.ts", import.meta.url).href)).shared({ sides: 4 });',
-    'return (await import(new URL("../node_modules/other-pkg/index.ts", import.meta.url).href)).other(1);',
+test("⑩ 共有パッケージ（node_modules/@kerokero-1245/piyo-assets）の .ts は変換し、ほかの node_modules の .ts は変換しない（入れ子は一番内側の node_modules で決める）", () => {
+  const nm = (rel) =>
+    `return (await import(new URL("../node_modules/${rel}", import.meta.url).href))`;
+  const [shared, other, inner, nested] = runEach([
+    `${nm("@kerokero-1245/piyo-assets/shared.ts")}.shared({ sides: 4 });`,
+    `${nm("other-pkg/index.ts")}.other(1);`,
+    `${nm("@kerokero-1245/piyo-assets/node_modules/inner/index.ts")}.inner(1);`,
+    `${nm("other-pkg/node_modules/@kerokero-1245/piyo-assets/nested.ts")}.nested(5);`,
   ]);
   assert.deepEqual(shared, { ok: true, value: "shared:4" });
   assert.equal(other.ok, false);
   assert.equal(other.code, "ERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING");
+  assert.equal(inner.ok, false, "共有パッケージの下の別パッケージは変換しない");
+  assert.equal(inner.code, "ERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING");
+  assert.deepEqual(
+    nested,
+    { ok: true, value: "nested:5" },
+    "別パッケージの下の共有パッケージは変換する",
+  );
 });
 
-test("⑪ 問い合わせ（?n=1）が違えば別のモジュール、同じなら同じ実体", () => {
+test("⑪ 問い合わせ（?n=1）・`#` が違えば別のモジュール、同じなら同じ実体", () => {
   assert.deepEqual(
-    run(
+    runEach([
       'const a = await import(src("counter?n=1")); const b = await import(src("counter?n=1")); const c = await import(src("counter?n=2")); return [a.next(), b.next(), c.next()];',
-    ),
-    { ok: true, value: [1, 2, 1] },
+      'const a = await import(src("counter#a")); const b = await import(src("counter#a")); const c = await import(src("counter#b")); return [a.next(), b.next(), c.next()];',
+    ]),
+    [
+      { ok: true, value: [1, 2, 1] },
+      { ok: true, value: [1, 2, 1] },
+    ],
   );
 });
 
@@ -348,10 +426,15 @@ test("⑬ ひな形を通すと、パッケージの STICKER_MARK は svg/hoshi.
     path.join(REPO, "ui", "ProgressStarSticker.ts"),
   ).href;
   assert.deepEqual(
-    run(`return (await import(${JSON.stringify(sticker)})).STICKER_MARK;`),
+    run(
+      `const { STICKER_MARK } = await import(${JSON.stringify(sticker)}); return [STICKER_MARK, Object.isFrozen(STICKER_MARK)];`,
+    ),
     {
       ok: true,
-      value: { kind: "image", source: path.join(REPO, "svg", "hoshi.svg") },
+      value: [
+        { kind: "image", source: path.join(REPO, "svg", "hoshi.svg") },
+        true,
+      ],
     },
   );
 });
@@ -362,4 +445,44 @@ test("⑭ 素材を ESM の import で読むと、require に書き換える案�
   assert.equal(result.code, "ERR_UNKNOWN_FILE_EXTENSION");
   assert.match(result.message, /assets\/piyo\.svg/);
   assert.match(result.message, /require\("…"\) で書く/);
+});
+
+test("⑮ register() は 1 回だけ（2 回目は例外）", () => {
+  const result = run(
+    `const { register } = await import(${JSON.stringify(TEMPLATE)}); register(); return "registered twice";`,
+  );
+  assert.equal(result.ok, false);
+  assert.match(result.message, /register\(\) は 1 回だけ呼ぶ/);
+});
+
+test("⑯ 前方一致の差し替えは、書いた順ではなく長い名前が先（expo-av* が expo-* に勝つ）", () => {
+  assert.deepEqual(
+    runEach(
+      [
+        'return (await import("expo-av")).which;',
+        'return (await import("expo-haptics")).which;',
+      ],
+      REGISTER_PREFIX,
+    ),
+    [
+      { ok: true, value: "expo-av*" },
+      { ok: true, value: "expo-*" },
+    ],
+  );
+});
+
+test("⑰ typescript は root（アプリ）の node_modules から探し、無ければひな形の場所から探す", () => {
+  assert.deepEqual(
+    run(
+      'const m = await import(src("shape")); return [m.sides({ sides: 5 }), globalThis.__piyoAppTypescript === true];',
+    ),
+    { ok: true, value: [5, true] },
+  );
+  assert.deepEqual(
+    run(
+      'const m = await import(src("shape")); return [m.sides({ sides: 6 }), globalThis.__piyoAppTypescript === true];',
+      REGISTER_NO_TS,
+    ),
+    { ok: true, value: [6, false] },
+  );
 });
