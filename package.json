@@ -20,6 +20,8 @@
     "./testing/register": "./testing/register.mjs",
     "./testing/stubs/react-native": "./testing/stubs/react-native.mjs",
     "./testing/stubs/expo": "./testing/stubs/expo.mjs",
+    "./testing/storage": "./testing/storage.ts",
+    "./testing/random": "./testing/random.ts",
     "./package.json": "./package.json"
   },
   "files": [
