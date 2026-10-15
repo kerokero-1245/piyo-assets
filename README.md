@@ -13,7 +13,8 @@ piyo-assets/
 ├── bgm/            オルゴール風BGMの共有エンジン（engine.ts / engine.js）と4曲（songs.ts / songs.js）・試聴 preview/ ＋ bgm/README.md
 ├── keys/           保存キーの定数（keys/index.ts = 知育アプリ用 / keys/keys.js = 街の静的HTML用）
 ├── ui/             知育アプリで同じ役割の部品（Confetti・TownLink・BigButton・ProgressStar・useLongPress）と tokens
-├── tests/          node --test のテスト（keys の一致・ui/ の純関数と入口・フックの配線）
+├── testing/        知育アプリの node --test の道具（読み込みのひな形 register.mjs・stubs/・偽の localStorage・種つき乱数）
+├── tests/          node --test のテスト（keys の一致・ui/ の純関数と入口・フックの配線・testing/ の道具）
 ├── INDEX.md        id / ラベル / 使用アプリ / 用途の一覧表
 ├── README.md       このファイル
 ├── DESIGN.md       作り方の規則との違い・この repo 固有の約束
@@ -93,7 +94,7 @@ LINEスタンプ／ステッカー風。**太い白フチで型抜き（die-cut�
 import {
   PiyoUiProvider,
   type PiyoUiTokens,
-} from "@kerokero-1245/piyo-assets/ui";
+} from "@kerokero-1245/piyo-assets/ui/tokens";
 import { colors, font, radius, space } from "./src/theme";
 
 // モジュールの定数にして、描画のたびに作り直さない（作り直すと、部品が style を毎回作り直す。confetti の配列まで作り直すと、紙吹雪の配置も変わる）
@@ -144,11 +145,68 @@ tokens のキーと、3 本の theme のどの値を渡すかの対応:
 
 ### exports と files
 
-- 入口は `@kerokero-1245/piyo-assets/ui`（`./ui` → `ui/index.ts`）。`svg/` は `exports` に無い（アプリはパッケージの絵を import しない）
-- `files` に `ui` と `svg`（78 個すべて）を入れている。`TownLink`・`STICKER_MARK`（`ui/ProgressStarSticker.ts`）は `require("../svg/ki.svg")`・`require("../svg/hoshi.svg")` で正本を相対で読むので、svg/ が無いと部品が組めない。2 つだけを選ばず 78 個すべてを入れている（tarball は 96 ファイル・約 68 kB）
+- **アプリは部品ごとの入口から import する**。まとめての入口 `@kerokero-1245/piyo-assets/ui`（`./ui` → `ui/index.ts`）は互換のために残しているが、ここから 1 つの部品を import すると、Metro は使わない部品の絵（`ki.svg`・`hoshi.svg`）まで書き出す
+- `svg/` は `exports` に無い（アプリはパッケージの絵を import しない）
+
+| 入口（`@kerokero-1245/piyo-assets/…`） | 出すもの                                                                     | 読む絵      |
+| -------------------------------------- | ---------------------------------------------------------------------------- | ----------- |
+| `ui/BigButton`                         | `BigButton`・`BIG_BUTTON_DEFAULT_SIZE`・型 `BigButtonSize`                   | なし        |
+| `ui/Confetti`                          | `Confetti`                                                                   | なし        |
+| `ui/ProgressStar`                      | `ProgressStar`・`EMOJI_MARK`・型 `ProgressStarMark`・`StarState`             | なし        |
+| `ui/ProgressStarSticker`               | `STICKER_MARK`（画像の⭐の mark）                                            | `hoshi.svg` |
+| `ui/TownLink`                          | `TownLink`・`TOWN_URL`・`SHOW_TOWN`・`TOWN_LINK_HEIGHT`                      | `ki.svg`    |
+| `ui/tokens`                            | `PiyoUiProvider`・`usePiyoUiTokens`・`PIYO_UI_TOKEN_KEYS`・型 `PiyoUiTokens` | なし        |
+| `ui/useLongPress`                      | `useLongPress`・`LONG_PRESS_MS`                                              | なし        |
+
+```tsx
+import {
+  ProgressStar,
+  EMOJI_MARK,
+} from "@kerokero-1245/piyo-assets/ui/ProgressStar";
+// 画像の⭐で出すアプリだけ
+import { STICKER_MARK } from "@kerokero-1245/piyo-assets/ui/ProgressStarSticker";
+
+<ProgressStar state="star" mark={EMOJI_MARK} />;
+```
+
+- `files` に `ui` と `svg`（78 個すべて）を入れている。`TownLink`・`STICKER_MARK`（`ui/ProgressStarSticker.ts`）は `require("../svg/ki.svg")`・`require("../svg/hoshi.svg")` で正本を相対で読むので、svg/ が無いと部品が組めない。2 つだけを選ばず 78 個すべてを入れている（v0.4.0 の tarball は 102 ファイル・約 77 kB）
 - **2 重配布に注意**: Metro はパッケージの素材を `assets/node_modules/@kerokero-1245/piyo-assets/` の下（`svg/…`）に、アプリの素材を `assets/<アプリの中のパス>`（さんすう・ことばは `assets/assets/svg/…`、めいろは `assets/assets/piyo/…`）に書き出す。中身が同じでもパスが違えば 2 回書き出されるので、部品に移した絵（`ki.svg`・`hoshi.svg`）のアプリ側の写しは、アプリで使う箇所が無くなってから消す
 - **Pages は Jekyll を通さない**: パッケージの素材の書き出し先のパスに `node_modules` が入るので、GitHub Pages では Jekyll を通さない配信（`dist/.nojekyll`）が前提。知育 3 本の deploy.yml は `touch dist/.nojekyll` で書き出している
 - `react`・`react-native` は `peerDependencies`（`*`）。使う側のものを使い、パッケージは持ち込まない。`peerDependenciesMeta` で optional にしているので、react を使わない静的サイトが取り込んでも npm は react・react-native を入れない
+
+## テストの道具（testing/）
+
+知育 3 本の `node --test` で同じ役割の道具。テストでしか使わない（アプリの書き出しには入らない）。
+
+| 入口（`@kerokero-1245/piyo-assets/…`）             | 中身                                                                                                                                                                                                                                                              |
+| -------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `testing/register`                                 | 読み込みのひな形 `register({ root, stubs, asset })`。.ts・.tsx の変換（呼ぶ側の `typescript` の `transpileModule`・jsx は react-jsx。共有パッケージ自身の .ts も変換する）・拡張子なしの相対 import の補完・JSON・素材の require・react-native と expo の差し替え |
+| `testing/stubs/react-native`・`testing/stubs/expo` | ひな形の既定の差し替え（`Platform.OS` は `"web"`・ui/ の部品の import に要る名前・`StatusBar`）。アプリの stub が `export * from` して足せる                                                                                                                      |
+| `testing/storage`                                  | 偽の localStorage `FakeStorage`（`log`・`failGet`・`failSet`・`failRemove`・`snapshot`）と `installLocalStorage`・`installThrowingLocalStorage`（戻り値で元に戻す）                                                                                               |
+| `testing/random`                                   | 種つき乱数 `seededRandom`（mulberry32）・`withRandom`・`withSeed`・`replaceRandom`                                                                                                                                                                                |
+
+`typescript` はこのパッケージの依存に入れていない。アプリの devDependencies のものを、アプリのルートから探して使う。起動の形は今までどおり `node --test --import ./tests/register.mjs "tests/**/*.test.ts"` で、アプリの `tests/register.mjs` はひな形にアプリの差分だけを渡す。下は 3 本の写しで `npm test` の本数と pass が元の register.mjs と同じになった形（ことば）:
+
+```js
+import { register } from "@kerokero-1245/piyo-assets/testing/register";
+
+const expo = new URL("./stubs/expo.ts", import.meta.url);
+
+register({
+  root: new URL("../", import.meta.url),
+  stubs: {
+    "react-native": new URL("./stubs/react-native.ts", import.meta.url),
+    expo,
+    "expo-*": expo,
+    "expo/*": expo,
+  },
+});
+```
+
+- `stubs`: 名前 → 差し替えのファイル（パスか URL）。完全一致が先で、`"expo-*"` のように末尾が `*` の名前は前方一致。値に関数を渡すと、import の名前を受けてファイルを返す（無ければ例外で止められる。おつかいめいろは `tests/stubs/<名前>.ts` が無い expo-* をこれで止める）。渡さない名前は、`react-native` と `expo`・`expo-*` がひな形の stub に向く。差し替えの無い `react-native-*` は例外で止まる
+- `asset`: 画像・音声の `require("…")` の値（`{ specifier, file, root }` を受ける）。既定は素材ファイルの絶対パスの文字列。おつかいめいろは `"/" + root からの相対パス`、ぴよぴよさんすうは `{ uri: "asset:<require の文字列>" }` を渡す
+- 素材ではない `require` は「素材ではないので差し替えられません」で止まる。構文エラーのファイルは `SyntaxError`（ファイル名つき）で止まる
+- Node は symlink を実体のパスに直して読むので、ひな形の場所が node_modules の外（`npm link` など）だと、共有パッケージの判定と `typescript` の探し方が変わる。git 依存の install（実体のディレクトリ）で使う
 
 ## 音声（voice/）
 
