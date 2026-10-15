@@ -178,12 +178,12 @@ import { STICKER_MARK } from "@kerokero-1245/piyo-assets/ui/ProgressStarSticker"
 
 知育 3 本の `node --test` で同じ役割の道具。テストでしか使わない（アプリの書き出しには入らない）。
 
-| 入口（`@kerokero-1245/piyo-assets/…`）             | 中身                                                                                                                                                                                                                                                              |
-| -------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `testing/register`                                 | 読み込みのひな形 `register({ root, stubs, asset })`。.ts・.tsx の変換（呼ぶ側の `typescript` の `transpileModule`・jsx は react-jsx。共有パッケージ自身の .ts も変換する）・拡張子なしの相対 import の補完・JSON・素材の require・react-native と expo の差し替え |
-| `testing/stubs/react-native`・`testing/stubs/expo` | ひな形の既定の差し替え（`Platform.OS` は `"web"`・ui/ の部品の import に要る名前・`StatusBar`）。アプリの stub が `export * from` して足せる                                                                                                                      |
-| `testing/storage`                                  | 偽の localStorage `FakeStorage`（`log`・`failGet`・`failSet`・`failRemove`・`snapshot`）と `installLocalStorage`・`installThrowingLocalStorage`（戻り値で元に戻す）                                                                                               |
-| `testing/random`                                   | 種つき乱数 `seededRandom`（mulberry32）・`withRandom`・`withSeed`・`replaceRandom`                                                                                                                                                                                |
+| 入口（`@kerokero-1245/piyo-assets/…`）             | 中身                                                                                                                                                                                                                                                                                                                                                     |
+| -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `testing/register`                                 | 読み込みのひな形 `register({ root, stubs, asset })`。.ts・.tsx の変換（呼ぶ側の `typescript` の `transpileModule`・jsx は react-jsx。共有パッケージ自身の .ts も変換する）・拡張子なしの相対 import の補完・JSON・素材の require・react-native と expo の差し替え                                                                                        |
+| `testing/stubs/react-native`・`testing/stubs/expo` | ひな形の既定の差し替え（`Platform.OS` は `"web"`・ui/ の部品の import に要る名前・`StatusBar`）。`.ts` なので、アプリの `.ts` の stub が `export * from "@kerokero-1245/piyo-assets/testing/stubs/react-native"` で取り込んで名前を足しても、アプリの `tsc` が型を読める                                                                                 |
+| `testing/storage`                                  | 偽の localStorage `FakeStorage`（`log` は失敗した操作にだけ `failed: true` が付く・成功だけは `succeeded()`・`failGet`・`failSet`・`failRemove`・`snapshot`）と `installLocalStorage`・`installThrowingLocalStorage`（戻り値で、最初の install の前の状態に戻す。1 本のテストで何回置き換えても、戻す関数を全部 `t.after` に渡せば次のテストに漏れない） |
+| `testing/random`                                   | 種つき乱数 `seededRandom`（mulberry32）・`withRandom`・`withSeed`・`replaceRandom`                                                                                                                                                                                                                                                                       |
 
 `typescript` はこのパッケージの依存に入れていない。アプリの devDependencies のものを、アプリのルートから探して使う。起動の形は今までどおり `node --test --import ./tests/register.mjs "tests/**/*.test.ts"` で、アプリの `tests/register.mjs` はひな形にアプリの差分だけを渡す。下は 3 本の写しで `npm test` の本数と pass が元の register.mjs と同じになった形（ことば）:
 
@@ -203,10 +203,16 @@ register({
 });
 ```
 
-- `stubs`: 名前 → 差し替えのファイル（パスか URL）。完全一致が先で、`"expo-*"` のように末尾が `*` の名前は前方一致。値に関数を渡すと、import の名前を受けてファイルを返す（無ければ例外で止められる。おつかいめいろは `tests/stubs/<名前>.ts` が無い expo-* をこれで止める）。渡さない名前は、`react-native` と `expo`・`expo-*` がひな形の stub に向く。差し替えの無い `react-native-*` は例外で止まる
-- `asset`: 画像・音声の `require("…")` の値（`{ specifier, file, root }` を受ける）。既定は素材ファイルの絶対パスの文字列。おつかいめいろは `"/" + root からの相対パス`、ぴよぴよさんすうは `{ uri: "asset:<require の文字列>" }` を渡す
-- 素材ではない `require` は「素材ではないので差し替えられません」で止まる。構文エラーのファイルは `SyntaxError`（ファイル名つき）で止まる
+- `stubs`: 名前 → 差し替えのファイル（パスか URL）。完全一致が先で、`"expo-*"` のように末尾が `*` の名前は前方一致。値に関数を渡すと、import の名前を受けてファイルを返す（無ければ例外で止められる。おつかいめいろは `tests/stubs/<名前>.ts` が無い expo-* をこれで止める）。渡さない名前は、`react-native`・`expo`・`expo-status-bar` だけがひな形の stub に向く。差し替えの無い `react-native-*` と、ほかの `expo-*`（`expo-av` など）は、足す場所の分かる例外で止まる
+- `asset`: 画像・音声の `require("…")` の値（`{ specifier, file, root }` を受ける）。既定は素材ファイルの絶対パスの文字列で、ファイルが無ければ `MODULE_NOT_FOUND` で止まる（綴り違いの素材をテストで見つけられる）。`asset` を渡したときは実在を見ない。おつかいめいろは `"/" + root からの相対パス`、ぴよぴよさんすうは `{ uri: "asset:<require の文字列>" }` を渡す
+- 素材ではない `require` は「素材ではないので差し替えられません」で止まる。素材を ESM の `import` で読むと、`require` に書き換える案内つきで止まる。構文エラーのファイルは `SyntaxError`（`src/x.ts(3,14): error TS1109: …` の形）で止まる
+- JSON は `import` なら属性なしで読める。CJS の `require`（`createRequire`）は Node の読み方のまま
 - Node は symlink を実体のパスに直して読むので、ひな形の場所が node_modules の外（`npm link` など）だと、共有パッケージの判定と `typescript` の探し方が変わる。git 依存の install（実体のディレクトリ）で使う
+
+### 元の 3 本の register.mjs との差
+
+- `globalThis.require` を置く（素材ではない `require` を呼ぶと、上の例外を投げる関数）。テストのプロセス全体に入るので、`typeof require` を見て分岐するコードはテストの中では「ある」側を通る（3 本の src にこの分岐は無い）
+- `root`・`stubs` の値は URL（`new URL("../", import.meta.url)`）で渡すのが既定。文字列のパスを渡すと `process.cwd()` から解決する（`npm test` を repo のルート以外から打つと、指す先が変わる）
 
 ## 音声（voice/）
 

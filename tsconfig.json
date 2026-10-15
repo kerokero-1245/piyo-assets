@@ -11,5 +11,11 @@
     "customConditions": ["react-native"],
     "skipLibCheck": true
   },
-  "include": ["bgm/**/*.ts", "keys/**/*.ts", "ui/**/*.ts", "ui/**/*.tsx"]
+  "include": [
+    "bgm/**/*.ts",
+    "keys/**/*.ts",
+    "ui/**/*.ts",
+    "ui/**/*.tsx",
+    "testing/**/*.ts"
+  ]
 }

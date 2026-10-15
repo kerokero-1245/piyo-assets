@@ -2,15 +2,19 @@
 // 仕組みを 1 つずつ確かめる。ひな形が黙って壊れると、アプリのテストが「たまたま」読めているのか分からなくなる。
 // 防ぎたい事故:
 //   - 型だけの import（`import { Shape } from "./types"`）が残って「export が無い」で落ちる・JSX を読めない
-//   - 拡張子なしの相対 import・JSON の import・画像と音声の require が解決できない
-//   - react-native・expo を本物のまま読みにいく（Node では読めない）・差し替えの無い react-native-* を黙って読む
+//   - 拡張子なしの相対 import・JSON の import（CJS の require も）・画像と音声の require が解決できない
+//   - 綴り違いの素材の require が、値を返して素通りする（元の 3 本は MODULE_NOT_FOUND で止まっていた）
+//   - 素材を ESM の import で書いたときに、何を直せばよいか分からない例外で落ちる
+//   - react-native・expo を本物のまま読みにいく（Node では読めない）・差し替えの無い react-native-*・expo-* を
+//     黙って読む（StatusBar しか無い stub に向けると「export が無い」で落ち、何が足りないか分からない）
 //   - 共有パッケージ（node_modules/@kerokero-1245/piyo-assets）の .ts を変換しない
 //     （Node は node_modules の中の .ts の型を除去しない: ERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING）
-//   - 構文エラーのファイルを黙って壊れた JS にする
+//   - 構文エラーのファイルを黙って壊れた JS にする・どの行か分からない
 //
 // 作り: 一時ディレクトリに偽のアプリ（src の .ts・.tsx・JSON・svg、偽の react/jsx-runtime、偽の共有パッケージ）を書き、
 // 子プロセスの `node --import <偽アプリの tests/register.mjs>` で読ませて、結果を JSON で受け取る
 // （フックは登録したプロセス全体に効くので、このテストのプロセスには登録しない）。
+// 同じ register で読む確認は 1 つの子プロセスにまとめる（runEach）。子プロセスは 60 秒で打ち切る。
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import {
@@ -27,6 +31,8 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 
 const REPO = fileURLToPath(new URL("../", import.meta.url));
 const TEMPLATE = new URL("../testing/register.mjs", import.meta.url).href;
+const STUB_RN = new URL("../testing/stubs/react-native.ts", import.meta.url)
+  .href;
 // macOS の一時ディレクトリは symlink の先にある。Node は実体のパスで読むので、実体のパスで比べる
 const APP = realpathSync(
   mkdtempSync(path.join(tmpdir(), "piyo-testing-register-")),
@@ -59,6 +65,15 @@ put(
   "src/art.ts",
   'export const piyo: unknown = require("../assets/piyo.svg");\n',
 );
+put(
+  "src/missingArt.ts",
+  // 綴り違い（piyo.svg を piy.svg と書いた）
+  'export const piyo: unknown = require("../assets/piy.svg");\n',
+);
+put(
+  "src/importArt.ts",
+  'import piyo from "../assets/piyo.svg";\nexport { piyo };\n',
+);
 put("src/counter.ts", "let n = 0;\nexport const next = (): number => ++n;\n");
 put("src/broken.ts", "export const x: number = ;\n");
 put(
@@ -67,16 +82,25 @@ put(
 );
 put(
   "src/native.ts",
-  'import { Platform } from "react-native";\nimport { StatusBar } from "expo-status-bar";\nimport * as constants from "expo-constants";\n' +
-    "export const os: string = Platform.OS;\nexport const statusBar: unknown = StatusBar;\nexport const constantsKeys: string[] = Object.keys(constants);\n",
+  'import { Platform } from "react-native";\nimport { StatusBar } from "expo-status-bar";\nimport * as expo from "expo";\n' +
+    "export const os: string = Platform.OS;\nexport const statusBar: unknown = StatusBar;\nexport const expoKeys: string[] = Object.keys(expo);\n",
 );
 put(
   "src/unstubbed.ts",
   'import web from "react-native-web";\nexport const value: unknown = web;\n',
 );
 put(
+  "src/unstubbedExpo.ts",
+  'import { Audio } from "expo-av";\nexport const value: unknown = Audio;\n',
+);
+put(
   "tests/stubs/expo-status-bar.ts",
   'export const StatusBar = (): string => "app stub";\n',
+);
+// アプリの stub が、ひな形の stub を export * で取り込んで名前を足す形
+put(
+  "tests/stubs/react-native.ts",
+  `export * from ${JSON.stringify(STUB_RN)};\nexport const Linking = { openURL: (url: string): string => url };\n`,
 );
 // 偽の react/jsx-runtime（JSX の変換先。本物の react は入れない）
 put(
@@ -111,7 +135,7 @@ register({
 });
 `,
 );
-// 画像の require の値をアプリが決める版
+// 画像の require の値をアプリが決める版（差し替えは渡さない = ひな形の既定の stub だけ）
 const REGISTER_ASSET = put(
   "tests/register-asset.mjs",
   `import path from "node:path";
@@ -132,6 +156,7 @@ import { register } from ${JSON.stringify(TEMPLATE)};
 register({
   root: new URL("../", import.meta.url),
   stubs: {
+    "react-native": new URL("./stubs/react-native.ts", import.meta.url),
     "expo-*": (name) => {
       const file = new URL("./stubs/" + name + ".ts", import.meta.url);
       if (!existsSync(fileURLToPath(file))) throw new Error("tests/stubs/" + name + ".ts がありません");
@@ -142,26 +167,34 @@ register({
 `,
 );
 
-// 子プロセスで body（async の関数の中身。値を return する）を走らせ、戻り値か例外を受け取る
-function run(body, register = REGISTER) {
+// 子プロセスで bodies（async の関数の中身。値を return する）を順に走らせ、それぞれの戻り値か例外を受け取る
+function runEach(bodies, register = REGISTER) {
   const entry = put(
     `tests/entry-${Math.random().toString(36).slice(2)}.mjs`,
     `const src = (rel) => new URL("../src/" + rel, import.meta.url).href;
-try {
+const results = [];
+${bodies
+  .map(
+    (body) => `try {
   const value = await (async () => { ${body} })();
-  process.stdout.write(JSON.stringify({ ok: true, value }));
+  results.push({ ok: true, value });
 } catch (error) {
-  process.stdout.write(JSON.stringify({ ok: false, name: error?.name, code: error?.code, message: String(error?.message ?? error) }));
-}
+  results.push({ ok: false, name: error?.name, code: error?.code, message: String(error?.message ?? error) });
+}`,
+  )
+  .join("\n")}
+process.stdout.write(JSON.stringify(results));
 `,
   );
   const out = execFileSync(
     process.execPath,
     ["--import", pathToFileURL(register).href, entry],
-    { cwd: APP, encoding: "utf8" },
+    { cwd: APP, encoding: "utf8", timeout: 60_000 },
   );
   return JSON.parse(out);
 }
+
+const run = (body, register) => runEach([body], register)[0];
 
 test("① .ts の変換: `type` の付かない型だけの import が消えて読める", () => {
   assert.deepEqual(
@@ -186,24 +219,49 @@ test("③ 拡張子なしの相対 import の補完: 同名のファイルとデ
   );
 });
 
-test("④ JSON の import を属性なしで読む", () => {
-  assert.deepEqual(run('return (await import(src("json"))).data;'), {
-    ok: true,
-    value: { answer: 42 },
-  });
+test("④ JSON の import を属性なしで読む。CJS の require（createRequire）でも読める", () => {
+  assert.deepEqual(
+    runEach([
+      'return (await import(src("json"))).data;',
+      'const { createRequire } = await import("node:module"); return createRequire(src("json.ts"))("./data.json");',
+    ]),
+    [
+      { ok: true, value: { answer: 42 } },
+      { ok: true, value: { answer: 42 } },
+    ],
+  );
 });
 
-test("⑤ 画像の require: 既定は素材ファイルの絶対パス、asset を渡せばその値", () => {
-  assert.deepEqual(run('return (await import(src("art"))).piyo;'), {
+test("⑤ 画像の require: 既定は素材ファイルの絶対パス（無い素材は MODULE_NOT_FOUND）、asset を渡せばその値（実在は見ない）", () => {
+  const [found, missing] = runEach([
+    'return (await import(src("art"))).piyo;',
+    'return (await import(src("missingArt"))).piyo;',
+  ]);
+  assert.deepEqual(found, {
     ok: true,
     value: path.join(APP, "assets", "piyo.svg"),
   });
+  assert.equal(missing.ok, false);
+  assert.equal(missing.code, "MODULE_NOT_FOUND");
+  assert.match(missing.message, /\.\.\/assets\/piy\.svg/);
   assert.deepEqual(
-    run('return (await import(src("art"))).piyo;', REGISTER_ASSET),
-    {
-      ok: true,
-      value: { specifier: "../assets/piyo.svg", place: "/assets/piyo.svg" },
-    },
+    runEach(
+      [
+        'return (await import(src("art"))).piyo;',
+        'return (await import(src("missingArt"))).piyo;',
+      ],
+      REGISTER_ASSET,
+    ),
+    [
+      {
+        ok: true,
+        value: { specifier: "../assets/piyo.svg", place: "/assets/piyo.svg" },
+      },
+      {
+        ok: true,
+        value: { specifier: "../assets/piy.svg", place: "/assets/piy.svg" },
+      },
+    ],
   );
 });
 
@@ -213,29 +271,44 @@ test("⑥ 素材ではない require は、黙って通さずに落ちる", () =
   assert.match(result.message, /素材ではないので/);
 });
 
-test("⑦ 差し替え: react-native と expo-* はひな形の stub、アプリが渡した名前はアプリの stub", () => {
-  assert.deepEqual(
-    run(
-      'const m = await import(src("native")); return [m.os, m.statusBar(), m.constantsKeys];',
-    ),
+test("⑦ 差し替え: react-native・expo・expo-status-bar はひな形の stub、アプリが渡した名前はアプリの stub、ほかの expo-* は止まる", () => {
+  const native =
+    'const m = await import(src("native")); return [m.os, m.statusBar(), m.expoKeys];';
+  assert.deepEqual(runEach([native, 'return await import("expo-av");']), [
+    { ok: true, value: ["web", "app stub", ["StatusBar"]] },
     {
-      ok: true,
-      value: ["web", "app stub", ["StatusBar"]],
+      ok: false,
+      name: "Error",
+      message:
+        'piyo-assets/testing: "expo-av" の差し替えがありません。register({ stubs: { "expo-av": … } }) で渡す（"expo-*" で前方一致にもできる）',
     },
+  ]);
+  // アプリが何も渡さなければ expo-status-bar もひな形の stub（StatusBar は何も描かない）
+  const [defaults, unstubbed] = runEach(
+    [
+      'const m = await import(src("native")); return [m.os, m.statusBar(), m.expoKeys];',
+      'return (await import(src("unstubbedExpo"))).value;',
+    ],
+    REGISTER_ASSET,
   );
+  assert.deepEqual(defaults, { ok: true, value: ["web", null, ["StatusBar"]] });
+  assert.equal(unstubbed.ok, false);
+  assert.match(unstubbed.message, /"expo-av" の差し替えがありません/);
 });
 
-test("⑧ 差し替えを関数で渡すと、import の名前ごとにファイルを選べ、無ければ止められる", () => {
-  assert.deepEqual(
-    run(
+test("⑧ 差し替えを関数で渡すと、import の名前ごとにファイルを選べ、無ければ止められる。アプリの stub はひな形の stub を export * で取り込める", () => {
+  const [statusBar, missing, rn] = runEach(
+    [
       'return (await import("expo-status-bar")).StatusBar();',
-      REGISTER_STUB_FN,
-    ),
-    { ok: true, value: "app stub" },
+      'return await import("expo-av");',
+      'const m = await import("react-native"); return [m.Platform.OS, m.Linking.openURL("/"), typeof m.View, m.StyleSheet.create({ a: 1 })];',
+    ],
+    REGISTER_STUB_FN,
   );
-  const missing = run('return await import("expo-av");', REGISTER_STUB_FN);
+  assert.deepEqual(statusBar, { ok: true, value: "app stub" });
   assert.equal(missing.ok, false);
   assert.match(missing.message, /tests\/stubs\/expo-av\.ts がありません/);
+  assert.deepEqual(rn, { ok: true, value: ["web", "/", "function", { a: 1 }] });
 });
 
 test("⑨ 差し替えの無い react-native-* は、本物を読まずに分かる形で落ちる", () => {
@@ -245,15 +318,11 @@ test("⑨ 差し替えの無い react-native-* は、本物を読まずに分か
 });
 
 test("⑩ 共有パッケージ（node_modules/@kerokero-1245/piyo-assets）の .ts は変換し、ほかの node_modules の .ts は変換しない", () => {
-  assert.deepEqual(
-    run(
-      'return (await import(new URL("../node_modules/@kerokero-1245/piyo-assets/shared.ts", import.meta.url).href)).shared({ sides: 4 });',
-    ),
-    { ok: true, value: "shared:4" },
-  );
-  const other = run(
+  const [shared, other] = runEach([
+    'return (await import(new URL("../node_modules/@kerokero-1245/piyo-assets/shared.ts", import.meta.url).href)).shared({ sides: 4 });',
     'return (await import(new URL("../node_modules/other-pkg/index.ts", import.meta.url).href)).other(1);',
-  );
+  ]);
+  assert.deepEqual(shared, { ok: true, value: "shared:4" });
   assert.equal(other.ok, false);
   assert.equal(other.code, "ERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING");
 });
@@ -267,11 +336,11 @@ test("⑪ 問い合わせ（?n=1）が違えば別のモジュール、同じな
   );
 });
 
-test("⑫ 構文エラーのファイルは SyntaxError で止まり、ファイル名が出る", () => {
+test("⑫ 構文エラーのファイルは SyntaxError で止まり、ファイル名・行・桁・TS の番号が出る", () => {
   const result = run('return (await import(src("broken"))).x;');
   assert.equal(result.ok, false);
   assert.equal(result.name, "SyntaxError");
-  assert.match(result.message, /broken\.ts/);
+  assert.match(result.message, /src\/broken\.ts\(1,26\): error TS1109: /);
 });
 
 test("⑬ ひな形を通すと、パッケージの STICKER_MARK は svg/hoshi.svg の画像の mark になる", () => {
@@ -285,4 +354,12 @@ test("⑬ ひな形を通すと、パッケージの STICKER_MARK は svg/hoshi.
       value: { kind: "image", source: path.join(REPO, "svg", "hoshi.svg") },
     },
   );
+});
+
+test("⑭ 素材を ESM の import で読むと、require に書き換える案内つきで止まる", () => {
+  const result = run('return (await import(src("importArt"))).piyo;');
+  assert.equal(result.ok, false);
+  assert.equal(result.code, "ERR_UNKNOWN_FILE_EXTENSION");
+  assert.match(result.message, /assets\/piyo\.svg/);
+  assert.match(result.message, /require\("…"\) で書く/);
 });

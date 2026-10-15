@@ -18,8 +18,8 @@
     "./ui/tokens": "./ui/tokens.ts",
     "./ui/useLongPress": "./ui/useLongPress.ts",
     "./testing/register": "./testing/register.mjs",
-    "./testing/stubs/react-native": "./testing/stubs/react-native.mjs",
-    "./testing/stubs/expo": "./testing/stubs/expo.mjs",
+    "./testing/stubs/react-native": "./testing/stubs/react-native.ts",
+    "./testing/stubs/expo": "./testing/stubs/expo.ts",
     "./testing/storage": "./testing/storage.ts",
     "./testing/random": "./testing/random.ts",
     "./package.json": "./package.json"

@@ -1,6 +1,7 @@
 // 知育アプリのテストの種つき乱数。出題・迷路の生成は Math.random を直に使うので、テストの間だけ種つきの乱数に
 // 差し替えると、何度回しても同じ結果になり、失敗したときに同じ種で再現できる。
-// 3 本の使い方で要るものだけを置く:
+// 3 本の使い方から決めた構成（和集合ではない。withRandom はぴよぴよさんすう、withSeed はぴよぴよことば、
+// replaceRandom はおつかいめいろだけが使う）:
 //   seededRandom(seed)       … 種つきの乱数（mulberry32。3 本が同じ式で書いていた）
 //   withRandom(random, run)  … run の間だけ Math.random を差し替える（例外でも戻す。乱数に決めた列を渡すときにも使う）
 //   withSeed(seed, run)      … withRandom(seededRandom(seed), run)
