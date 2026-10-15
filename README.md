@@ -168,7 +168,7 @@ import { STICKER_MARK } from "@kerokero-1245/piyo-assets/ui/ProgressStarSticker"
 
 ### exports と files
 
-- **アプリは部品ごとの入口から import する**。まとめての入口 `@kerokero-1245/piyo-assets/ui`（`./ui` → `ui/index.ts`）は **パスだけ互換**（barrel は残る）のために残しているが、ここから 1 つの部品を import すると、Metro は使わない部品の絵（`ki.svg`・`hoshi.svg`）まで書き出す。v0.4.0 の API は非互換で、`ProgressStar` は `variant` を廃止して `mark` が必須（下の「ProgressStar の移行」）
+- **アプリは部品ごとの入口から import する**。まとめての入口 `@kerokero-1245/piyo-assets/ui`（`./ui` → `ui/index.ts`）は **パスだけ互換**（barrel は残る）のために残しているが、ここから 1 つの部品を import すると、Metro は使わない部品の絵（`ki.svg`・`hoshi.svg`）まで書き出す。v0.4.0 の API は非互換で、`ProgressStar` は `variant` を廃止して `mark` が必須（上の「ProgressStar の移行」）
 - `svg/` は `exports` に無い（アプリはパッケージの絵を import しない）
 
 | 入口（`@kerokero-1245/piyo-assets/…`） | 出すもの                                                                     | 読む絵      |
